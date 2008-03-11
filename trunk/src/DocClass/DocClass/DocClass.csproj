@@ -66,6 +66,22 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Src\Classification\BayesClassificator\BayesClassificator.cs" />
+    <Compile Include="Src\Classification\Classificator.cs" />
+    <Compile Include="Src\Classification\RadialNetwork\INeuron.cs" />
+    <Compile Include="Src\Classification\RadialNetwork\LinearNeuron.cs" />
+    <Compile Include="Src\Classification\RadialNetwork\RadialNetwork.cs" />
+    <Compile Include="Src\Classification\RadialNetwork\RadialNeuron.cs" />
+    <Compile Include="Src\Dictionaries\CtfIdfDictionary.cs" />
+    <Compile Include="Src\Dictionaries\FixedDictionary.cs" />
+    <Compile Include="Src\Dictionaries\FrequentDictionarycs.cs" />
+    <Compile Include="Src\Dictionaries\IDictionary.cs" />
+    <Compile Include="Src\DocumentRepresentation\BinaryDocument.cs" />
+    <Compile Include="Src\DocumentRepresentation\IDocument.cs" />
+    <Compile Include="Src\DocumentRepresentation\OwnDocument.cs" />
+    <Compile Include="Src\DocumentRepresentation\TfIdfDocument.cs" />
+    <Compile Include="Src\Preprocessing\PortersStemmer.cs" />
+    <Compile Include="Src\Preprocessing\StopWordsRemover.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

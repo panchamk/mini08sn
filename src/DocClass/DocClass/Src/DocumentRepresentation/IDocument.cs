@@ -6,5 +6,8 @@ namespace DocClass.Src.DocumentRepresentation
 {
     interface IDocument
     {
+        int getSpaceDimensionNumber();
+        double[] toVector();
+        bool addWord(string word);
     }
 }

@@ -7,7 +7,7 @@ namespace DocClass.src.classification
 {
     abstract class Classificator
     {
-        public abstract bool learn(IDocument doc);
-        public abstract int classificate(IDocument doc);
+        public abstract bool Learn(IDocument doc);
+        public abstract int Classificate(IDocument doc);
     }
 }

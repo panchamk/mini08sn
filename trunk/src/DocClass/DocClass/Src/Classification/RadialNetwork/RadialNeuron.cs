@@ -8,12 +8,12 @@ namespace DocClass.src.classification.radialNetwork
     {
         #region INeuron Members
 
-        public double process()
+        public double Process()
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public double setInput(double[] input)
+        public double SetInput(double[] input)
         {
             throw new Exception("The method or operation is not implemented.");
         }

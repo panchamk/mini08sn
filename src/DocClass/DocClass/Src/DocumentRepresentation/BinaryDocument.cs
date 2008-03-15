@@ -13,7 +13,7 @@ namespace DocClass.Src.DocumentRepresentation
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public double[] ToVector()
+        public Dictionary<String, double> ToMap()
         {
             throw new Exception("The method or operation is not implemented.");
         }

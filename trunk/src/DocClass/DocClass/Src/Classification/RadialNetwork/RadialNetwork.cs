@@ -96,8 +96,8 @@ namespace DocClass.src.classification.radialNetwork
         /// <returns></returns>
         private double[,] CreateGreenMatrix()
         {
-            double[,] result = new double[learningData.Count, neuronHiddenLayer.Count + 1];
-            for (int y = 0; y < learningData.Count; y++)
+            double[,] result = new double[learningData.DataVectors.Count, neuronHiddenLayer.Count + 1];
+            for (int y = 0; y < learningData.DataVectors.Count; y++)
             {
                 for (int x = 0; x < neuronHiddenLayer.Count + 1; x++)
                 {
@@ -105,11 +105,11 @@ namespace DocClass.src.classification.radialNetwork
                         result[y, x] = 1;
                     else
                     {
-                        result[y, x] = GaussianFunction(learningData[y].Vector, cellCenters[x]);
+                        result[y, x] = GaussianFunction(learningData.DataVectors[y].Vector, cellCenters[x]);
                     }
                 }
             }
-            return null;
+            return result;
         }
 
         #endregion
@@ -118,11 +118,7 @@ namespace DocClass.src.classification.radialNetwork
 
         public override bool Learn(IDictionary[] docs)
         {
-            learningData = CreateLearningData();
-            List<double[]> outputDesirableData = CreateLearningDesiredOutputData();
-            OutputLearning(outputDesirableData);
-            //double[] desiredOutputVector
-
+            OutputLearning(learningData.OutputVectors);
             throw new Exception("The method or operation is not implemented.");
         }
 
@@ -131,11 +127,13 @@ namespace DocClass.src.classification.radialNetwork
             
             for (int i = 0; i < OUTPUT_LAYER_NEURON_COUNT; i++)
             {
-                outputLayerNeutonWeights[i] = Pseudoinverse(CreateGreenMatrix(), outputDesirableData[i]);
+                outputLayerNeutonWeights[i] = Pseudoinverse(CreateGreenMatrix(), outputDesirableData[private]);
             }
         }
 
-        private double[] Pseudoinverse(double[,] p, double[] p_2)
+
+        //TODO: skasowac, jak bedzie prawdziwa funkcja
+        double[] Pseudoinverse(double[,] p, double[] p_2)
         {
             throw new Exception("The method or operation is not implemented.");
         }

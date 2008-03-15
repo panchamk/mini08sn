@@ -9,8 +9,6 @@ namespace DocClass.src.classification.radialNetwork
     {
         #region private members
 
-       
-
         #endregion
 
         #region INeuron Members

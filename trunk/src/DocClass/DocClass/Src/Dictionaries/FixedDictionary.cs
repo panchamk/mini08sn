@@ -6,5 +6,13 @@ namespace DocClass.Src.Dictionaries
 {
     class FixedDictionary : IDictionary
     {
+        #region IDictionary Members
+
+        public Dictionary<string, double> ToMap()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        #endregion
     }
 }

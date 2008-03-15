@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="Src\Classification\BayesClassificator\BayesClassificator.cs" />
     <Compile Include="Src\Classification\Classificator.cs" />
+    <Compile Include="Src\Classification\DocumentClass.cs" />
     <Compile Include="Src\Classification\RadialNetwork\INeuron.cs" />
     <Compile Include="Src\Classification\RadialNetwork\LinearNeuron.cs" />
     <Compile Include="Src\Classification\RadialNetwork\RadialNetwork.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Src\DocumentRepresentation\OwnDocument.cs" />
     <Compile Include="Src\DocumentRepresentation\TfIdfDocument.cs" />
     <Compile Include="Src\Exceptions\IncompatibleArrayLength.cs" />
+    <Compile Include="Src\Learning\LearningPair.cs" />
     <Compile Include="Src\Preprocessing\PortersStemmer.cs" />
     <Compile Include="Src\Preprocessing\StopWordsRemover.cs" />
   </ItemGroup>

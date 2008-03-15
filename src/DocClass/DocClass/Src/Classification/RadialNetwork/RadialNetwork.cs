@@ -29,6 +29,12 @@ namespace DocClass.src.classification.radialNetwork
 
         //sigma dla funkcji gaussa
         private double sigma = 0.5;
+
+        //centra funkcji gaussa
+        List<double[]> cellCenters;
+
+        //wagi poszczegolnych neuronow wyjsciowych;
+        List<double[]> outputLayerNeutonWeights;
         
         #endregion
 
@@ -40,6 +46,8 @@ namespace DocClass.src.classification.radialNetwork
         {
             neuronHiddenLayer = new Collection<INeuron>();
             neuronOutputLayer = new Collection<INeuron>();
+            cellCenters = new List<double[]>();
+            outputLayerNeutonWeights = new List<double[]>();
             for (int i = 0; i < hiddenLayerInitNeuronCount; i++)
             {
                 INeuron r = new LinearNeuron();
@@ -79,18 +87,25 @@ namespace DocClass.src.classification.radialNetwork
             return Math.Pow(Math.E, result);
         }
 
-        private double[,] CreateGreenMatrix(double[] x)
+
+        //TODO: Sprawdzic
+        /// <summary>
+        /// Tworzy macierz greena na podstawie wektorw uczacych i wyznaczonych wektorow
+        /// centralnych komorek
+        /// </summary>
+        /// <returns></returns>
+        private double[,] CreateGreenMatrix()
         {
-            double[,] result = new double[x.Length, neuronHiddenLayer.Count + 1];
-            for (int i = 0; i < x.Length; i++)
+            double[,] result = new double[learningData.Count, neuronHiddenLayer.Count + 1];
+            for (int y = 0; y < learningData.Count; y++)
             {
-                for (int j = 0; j < neuronHiddenLayer.Count + 1; j++)
+                for (int x = 0; x < neuronHiddenLayer.Count + 1; x++)
                 {
-                    if (j == 0)
-                        result[i, j] = 1;
+                    if (x == 0)
+                        result[y, x] = 1;
                     else
                     {
-
+                        result[y, x] = GaussianFunction(learningData[y].Vector, cellCenters[x]);
                     }
                 }
             }
@@ -103,9 +118,29 @@ namespace DocClass.src.classification.radialNetwork
 
         public override bool Learn(IDictionary[] docs)
         {
+            learningData = CreateLearningData();
+            List<double[]> outputDesirableData = CreateLearningDesiredOutputData();
+            OutputLearning(outputDesirableData);
+            //double[] desiredOutputVector
 
             throw new Exception("The method or operation is not implemented.");
         }
+
+        private void OutputLearning(List<double[]> outputDesirableData)
+        {
+            
+            for (int i = 0; i < OUTPUT_LAYER_NEURON_COUNT; i++)
+            {
+                outputLayerNeutonWeights[i] = Pseudoinverse(CreateGreenMatrix(), outputDesirableData[i]);
+            }
+        }
+
+        private double[] Pseudoinverse(double[,] p, double[] p_2)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+
 
         public override int Classificate(DocClass.Src.DocumentRepresentation.IDocument doc)
         {

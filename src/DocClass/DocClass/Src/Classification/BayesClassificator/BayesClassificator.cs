@@ -7,12 +7,12 @@ namespace DocClass.src.classification.beyesClassificator
     class BayesClassificator : Classificator
     {
 
-        public override bool learn(DocClass.Src.DocumentRepresentation.IDocument doc)
+        public override bool Learn(DocClass.Src.DocumentRepresentation.IDocument doc)
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public override int classificate(DocClass.Src.DocumentRepresentation.IDocument doc)
+        public override int Classificate(DocClass.Src.DocumentRepresentation.IDocument doc)
         {
             throw new Exception("The method or operation is not implemented.");
         }

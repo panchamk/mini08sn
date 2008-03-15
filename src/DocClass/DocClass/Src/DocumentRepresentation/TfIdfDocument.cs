@@ -8,17 +8,17 @@ namespace DocClass.Src.DocumentRepresentation
     {
         #region IDocument Members
 
-        public int getSpaceDimensionNumber()
+        public int GetSpaceDimensionNumber()
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public double[] toVector()
+        public double[] ToVector()
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public bool addWord(string word)
+        public bool AddWord(string word)
         {
             throw new Exception("The method or operation is not implemented.");
         }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections.ObjectModel;
+using DocClass.Src.Exceptions;
+using DocClass.Src.Dictionaries;
 
 namespace DocClass.src.classification.radialNetwork
 {
@@ -24,6 +26,9 @@ namespace DocClass.src.classification.radialNetwork
         
         //neurony radialne warstwy ukrytej
         private Collection<INeuron> neuronHiddenLayer;
+
+        //sigma dla funkcji gaussa
+        private double sigma = 0.5;
         
         #endregion
 
@@ -57,12 +62,48 @@ namespace DocClass.src.classification.radialNetwork
 
         #region private methods
 
+        //funkcja gaussa dla neuronu
+        //TODO: sprawdzic poprawnosc dzialania
+        private double GaussianFunction(double[] x, double[] c)
+        {
+            double result = 0;
+            if (x.Length != c.Length)
+                throw new IncompatibleArrayLength();
+            int len = x.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                result += (c[i] - x[i]) * (c[i] - x[i]);
+            }
+            result /= -2 * sigma * sigma;
+            return Math.Pow(Math.E, result);
+        }
+
+        private double[,] CreateGreenMatrix(double[] x)
+        {
+            double[,] result = new double[x.Length, neuronHiddenLayer.Count + 1];
+            for (int i = 0; i < x.Length; i++)
+            {
+                for (int j = 0; j < neuronHiddenLayer.Count + 1; j++)
+                {
+                    if (j == 0)
+                        result[i, j] = 1;
+                    else
+                    {
+
+                    }
+                }
+            }
+            return null;
+        }
+
         #endregion
 
 
 
-        public override bool Learn(DocClass.Src.DocumentRepresentation.IDocument doc)
+        public override bool Learn(IDictionary[] docs)
         {
+
             throw new Exception("The method or operation is not implemented.");
         }
 

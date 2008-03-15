@@ -11,7 +11,9 @@ namespace DocClass.src.classification.radialNetwork
 
         public const int OUTPUT_LAYER_NEURON_COUNT = 20;
         
-        public const int HIDDEN_LAYER_INIT_NEURON_COUNT = 20;
+        public const int HIDDEN_LAYER_INIT_NEURON_COUNT = 1;
+
+        public const int HIDDEN_LAYER_MAX_NEURON_COUNT = 40;
 
         #endregion
 
@@ -55,18 +57,16 @@ namespace DocClass.src.classification.radialNetwork
 
         #endregion
 
-        #region Classificator Members
 
-        public bool learn(DocClass.Src.DocumentRepresentation.IDocument doc)
+
+        public override bool learn(DocClass.Src.DocumentRepresentation.IDocument doc)
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public int classificate(DocClass.Src.DocumentRepresentation.IDocument doc)
+        public override int classificate(DocClass.Src.DocumentRepresentation.IDocument doc)
         {
             throw new Exception("The method or operation is not implemented.");
         }
-
-        #endregion
     }
 }

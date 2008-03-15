@@ -6,5 +6,6 @@ namespace DocClass.Src.Dictionaries
 {
     interface IDictionary
     {
+        Dictionary<String, double> ToMap();
     }
 }

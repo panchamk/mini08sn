@@ -5,9 +5,9 @@ using DocClass.Src.DocumentRepresentation;
 
 namespace DocClass.src.classification
 {
-    interface Classificator
+    abstract class Classificator
     {
-        bool learn(IDocument doc);
-        int classificate(IDocument doc);
+        public abstract bool learn(IDocument doc);
+        public abstract int classificate(IDocument doc);
     }
 }

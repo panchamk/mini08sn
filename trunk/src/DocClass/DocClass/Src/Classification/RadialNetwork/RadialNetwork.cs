@@ -19,8 +19,10 @@ namespace DocClass.src.classification.radialNetwork
 
         #region private variables
 
+        //neurony liniowe warstwy wyjciowej
         private Collection<INeuron> neuronOutputLayer;
         
+        //neurony radialne warstwy ukrytej
         private Collection<INeuron> neuronHiddenLayer;
         
         #endregion

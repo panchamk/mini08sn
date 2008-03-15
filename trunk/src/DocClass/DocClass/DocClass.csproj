@@ -80,6 +80,7 @@
     <Compile Include="Src\DocumentRepresentation\IDocument.cs" />
     <Compile Include="Src\DocumentRepresentation\OwnDocument.cs" />
     <Compile Include="Src\DocumentRepresentation\TfIdfDocument.cs" />
+    <Compile Include="Src\Exceptions\IncompatibleArrayLength.cs" />
     <Compile Include="Src\Preprocessing\PortersStemmer.cs" />
     <Compile Include="Src\Preprocessing\StopWordsRemover.cs" />
   </ItemGroup>

@@ -41,10 +41,6 @@ namespace DocClass.Src.Learning
             }
         }
          
-        
-
-
-
         /// <summary>
         /// Tworzenie listy par uczacych
         /// </summary>
@@ -70,6 +66,11 @@ namespace DocClass.Src.Learning
             }
         }
 
+        /// <summary>
+        /// Dodawanie slownika do zestawu danych uczacych
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
         public bool AddDictionary(IDictionary dict)
         {
             dictionaries.Add(dict);

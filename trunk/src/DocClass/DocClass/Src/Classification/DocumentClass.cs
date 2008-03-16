@@ -8,6 +8,13 @@ namespace DocClass.Src.Classification
     {
         private static List<String> documentCathegories = new List<string>();
 
+        public static int CathegoriesCount
+        {
+            get
+            {
+                return documentCathegories.Count;
+            }
+        }
         //TODO: Zrobic dodawanie i pobieranie klas
     }
 }

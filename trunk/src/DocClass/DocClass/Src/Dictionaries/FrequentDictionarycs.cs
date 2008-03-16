@@ -14,5 +14,15 @@ namespace DocClass.Src.Dictionaries
         }
 
         #endregion
+
+        #region IDictionary Members
+
+
+        public int GetDesiredOutput()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        #endregion
     }
 }

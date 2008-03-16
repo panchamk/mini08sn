@@ -31,10 +31,10 @@ namespace DocClass.src.classification.radialNetwork
         private double sigma = 0.5;
 
         //centra funkcji gaussa
-        List<double[]> cellCenters;
+        private List<double[]> cellCenters;
 
         //wagi poszczegolnych neuronow wyjsciowych;
-        List<double[]> outputLayerNeutonWeights;
+        private List<double[]> outputLayerNeutonWeights;
         
         #endregion
 
@@ -69,6 +69,12 @@ namespace DocClass.src.classification.radialNetwork
         #endregion
 
         #region private methods
+
+        //TODO: skasowac, jak bedzie prawdziwa funkcja
+        private double[] Pseudoinverse(double[,] p, double[] p_2)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
 
         //funkcja gaussa dla neuronu
         //TODO: sprawdzic poprawnosc dzialania
@@ -112,37 +118,38 @@ namespace DocClass.src.classification.radialNetwork
             return result;
         }
 
+        /// <summary>
+        /// Uczenie warstwy wyjsciowej
+        /// </summary>
+        /// <param name="outputDesirableData"></param>
+        private void OutputLearning(List<double[]> outputDesirableData)
+        {
+            
+            for (int i = 0; i < OUTPUT_LAYER_NEURON_COUNT; i++)
+            {
+                outputLayerNeutonWeights[i] = Pseudoinverse(CreateGreenMatrix(), outputDesirableData[i]);
+            }
+        }
+
+
         #endregion
 
-
-
+        #region overriden methods
+        /// <summary>
+        /// Procedura uczenia
+        /// </summary>
+        /// <param name="docs"></param>
+        /// <returns></returns>
         public override bool Learn(IDictionary[] docs)
         {
             OutputLearning(learningData.OutputVectors);
             throw new Exception("The method or operation is not implemented.");
         }
 
-        private void OutputLearning(List<double[]> outputDesirableData)
-        {
-            
-            for (int i = 0; i < OUTPUT_LAYER_NEURON_COUNT; i++)
-            {
-                outputLayerNeutonWeights[i] = Pseudoinverse(CreateGreenMatrix(), outputDesirableData[private]);
-            }
-        }
-
-
-        //TODO: skasowac, jak bedzie prawdziwa funkcja
-        double[] Pseudoinverse(double[,] p, double[] p_2)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-
-
         public override int Classificate(DocClass.Src.DocumentRepresentation.IDocument doc)
         {
             throw new Exception("The method or operation is not implemented.");
         }
+        #endregion
     }
 }

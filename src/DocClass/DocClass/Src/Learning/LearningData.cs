@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using DocClass.Src.Dictionaries;
+using DocClass.Src.Classification;
 
 namespace DocClass.Src.Learning
 {
@@ -41,6 +42,7 @@ namespace DocClass.Src.Learning
             }
         }
          
+        //TODO: sprawdzic
         /// <summary>
         /// Tworzenie listy par uczacych
         /// </summary>
@@ -49,18 +51,41 @@ namespace DocClass.Src.Learning
         {
             if (dataPrepared == false)
             {
-                //TODO: tworzenie listy wszystkich danych ze slownikow (wektory pionowo) 
-                // na podstawie dictionaries
-                throw new Exception("The method or operation is not implemented.");
+                //budowanie listy slow
+                List<string> contener = new List<string>();
+                foreach(IDictionary d in dictionaries)
+                {
+                    foreach(string word in d.ToMap().Keys)
+                    {
+                        if (!contener.Contains(word))
+                        {
+                            contener.Add(word);
+                        }
+                    }
+                }
 
-                // Tworzy liste wektorow wyjsciowych (dla kazdego neuronu wyjsciowego jest to osobny wektor
-                // na liscie) na podstawie listy LearningData. Kazdy wektor odpowiada jednemu neuronowi wyjsciowemu.
-                // Jedynka jest ustawiana wtedy, gdy odpowiadajacy w learningData.Output jest liczba wskazujaca na 
-                // ten neuron wyjsciowy. Zero w przeciwnym wypadku
-                throw new Exception("The method or operation is not implemented.");
+                //tworzenie wekrotow wedluw stworzonej wlasnie definicji przestrzeni
+                foreach (IDictionary d in dictionaries)
+                {
+                    double[] vector = new double[contener.Count];
+                    foreach (string word in d.ToMap().Keys)
+                    {
+                        vector[contener.IndexOf(word)] = d.ToMap()[word];
+                    }
+                    learningData.Add(new LearningPair(vector, d.GetDesiredOutput()));
+                    inputData.Add(vector);
+                }
 
-                //wypelnia liste wszystkich wektorow danych wejsciowych
-                throw new Exception("The method or operation is not implemented.");
+                //tworzenie wektorow wyjsciowych w celu uzycia ich w macierzy greena
+                for (int i = 0; i < DocumentClass.CathegoriesCount; i++)
+                {
+                    double[] vector = new double[contener.Count];
+                    outputData.Add(vector);
+                }
+                for(int i =0; i<dictionaries.Count; i++)
+                {
+                    outputData[dictionaries[i].GetDesiredOutput()][i] = 1;
+                }
 
                 dataPrepared = true;
             }

@@ -91,6 +91,26 @@ namespace DocClass.Src.Learning.MathOperations
         }
 
         /// <summary>
+        /// Operacja mnozenia macierzy i wektora.
+        /// x = Ay
+        /// </summary>
+        /// <param name="matrix">Macierz.</param>
+        /// <param name="vector">Wektor.</param>
+        /// <returns>Iloczyn macierzy i wektora.</returns>
+        public static double[] Multiply(double[,] matrix, double[] vector)
+        {
+            if(matrix.GetLength(1) != vector.Length)
+                throw new InvalidOperationException("Niedozwolone mnozenie macierzy i wektora!");
+
+            int lenght = matrix.GetLength(0);
+            double[] multiply = new double[lenght];
+            for (int i = 0; i < lenght; i++)
+                multiply[i] = Vector.Scalar(GetRow(matrix, i), vector);
+
+            return multiply;
+        }
+
+        /// <summary>
         /// Pobiera wiersz macierzy o podanym indeksie.
         /// </summary>
         /// <param name="matrix">Macierz z ktorej ma zostac pobrany wiersz.</param>

@@ -8,7 +8,7 @@ namespace DocClass.Src.Dictionaries
     {
         #region IDictionary Members
 
-        public Dictionary<string, double> ToMap()
+        public Dictionary<String, Double> ToMap()
         {
             throw new Exception("The method or operation is not implemented.");
         }

@@ -6,7 +6,7 @@ namespace DocClass.Src.Classification
 {
     static class DocumentClass
     {
-        private static List<String> documentCathegories = new List<string>();
+        private static List<String> documentCathegories = new List<String>();
 
         public static int CathegoriesCount
         {

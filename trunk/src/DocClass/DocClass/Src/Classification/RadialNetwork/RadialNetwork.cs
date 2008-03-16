@@ -106,7 +106,7 @@ namespace DocClass.src.classification.radialNetwork
                         result[y, x] = 1;
                     else
                     {
-                        result[y, x] = GaussianFunction(learningData.DataVectors[y].Vector, cellCenters[x]);
+                        result[y, x] = GaussianFunction(learningData.InputVectors[y], cellCenters[x]);
                     }
                 }
             }
@@ -135,7 +135,7 @@ namespace DocClass.src.classification.radialNetwork
         /// </summary>
         /// <param name="docs"></param>
         /// <returns></returns>
-        public override bool Learn(IDictionary[] docs)
+        public override bool Learn(Dictionary dict)
         {
             OutputLearning(learningData.OutputVectors);
             throw new Exception("The method or operation is not implemented.");

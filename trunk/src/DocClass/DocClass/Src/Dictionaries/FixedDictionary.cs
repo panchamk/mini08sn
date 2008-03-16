@@ -4,25 +4,11 @@ using System.Text;
 
 namespace DocClass.Src.Dictionaries
 {
-    class FixedDictionary : IDictionary
+    class FixedDictionary : Dictionary
     {
-        #region IDictionary Members
-
-        public Dictionary<String, Double> ToMap()
+        public override bool Init(ICollection<DocClass.Src.DocumentRepresentation.IDocument> docs)
         {
             throw new Exception("The method or operation is not implemented.");
         }
-
-        #endregion
-
-        #region IDictionary Members
-
-        //Pytanie, czy to powinno tu jednak byc?
-        public int GetDesiredOutput()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        #endregion
     }
 }

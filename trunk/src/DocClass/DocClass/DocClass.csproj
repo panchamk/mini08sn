@@ -57,6 +57,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -75,15 +76,26 @@
     <Compile Include="Src\Classification\RadialNetwork\RadialNeuron.cs" />
     <Compile Include="Src\Dictionaries\CtfIdfDictionary.cs" />
     <Compile Include="Src\Dictionaries\FixedDictionary.cs" />
-    <Compile Include="Src\Dictionaries\FrequentDictionarycs.cs" />
-    <Compile Include="Src\Dictionaries\IDictionary.cs" />
+    <Compile Include="Src\Dictionaries\FrequentDictionary.cs" />
+    <Compile Include="Src\Dictionaries\Dictionary.cs" />
     <Compile Include="Src\DocumentRepresentation\BinaryDocument.cs" />
     <Compile Include="Src\DocumentRepresentation\IDocument.cs" />
     <Compile Include="Src\DocumentRepresentation\OwnDocument.cs" />
     <Compile Include="Src\DocumentRepresentation\TfIdfDocument.cs" />
     <Compile Include="Src\Exceptions\IncompatibleArrayLength.cs" />
-    <Compile Include="Src\Learning\LearningData.cs" />
     <Compile Include="Src\Learning\LearningPair.cs" />
+    <Compile Include="Src\Learning\MathOperations\BdSvd.cs" />
+    <Compile Include="Src\Learning\MathOperations\Bidiagonal.cs" />
+    <Compile Include="Src\Learning\MathOperations\Blas.cs" />
+    <Compile Include="Src\Learning\MathOperations\Common.cs" />
+    <Compile Include="Src\Learning\MathOperations\LQ.cs" />
+    <Compile Include="Src\Learning\MathOperations\Matrix.cs" />
+    <Compile Include="Src\Learning\MathOperations\Pseudoinverse.cs" />
+    <Compile Include="Src\Learning\MathOperations\QR.cs" />
+    <Compile Include="Src\Learning\MathOperations\Reflections.cs" />
+    <Compile Include="Src\Learning\MathOperations\Rotations.cs" />
+    <Compile Include="Src\Learning\MathOperations\SVD.cs" />
+    <Compile Include="Src\Learning\MathOperations\Vector.cs" />
     <Compile Include="Src\Preprocessing\PortersStemmer.cs" />
     <Compile Include="Src\Preprocessing\StopWordsRemover.cs" />
   </ItemGroup>

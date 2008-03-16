@@ -9,5 +9,7 @@ namespace DocClass.Src.DocumentRepresentation
         int GetSpaceDimensionNumber();
         Dictionary<String, double> ToMap();
         bool AddWord(string word);
+        int DesiredOutput { get; }
+
     }
 }

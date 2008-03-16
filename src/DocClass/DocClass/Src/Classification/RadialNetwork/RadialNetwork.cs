@@ -71,8 +71,8 @@ namespace DocClass.src.classification.radialNetwork
 
         #region private methods
 
-        //funkcja gaussa dla neuronu
         //TODO: sprawdzic poprawnosc dzialania
+        //funkcja gaussa dla neuronu
         private double GaussianFunction(double[] x, double[] c)
         {
             double result = 0;
@@ -119,10 +119,10 @@ namespace DocClass.src.classification.radialNetwork
         /// <param name="outputDesirableData"></param>
         private void OutputLearning(List<double[]> outputDesirableData)
         {
-            
+            double[,] greenmatrix = Pseudoinverse.Solve(CreateGreenMatrix());
             for (int i = 0; i < OUTPUT_LAYER_NEURON_COUNT; i++)
             {
-                outputLayerNeutonWeights[i] = Matrix.Multiply(Pseudoinverse.Solve(CreateGreenMatrix()), outputDesirableData[i]);
+                outputLayerNeutonWeights[i] = Matrix.Multiply(greenmatrix, outputDesirableData[i]);
             }
         }
 

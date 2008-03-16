@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DocClass.Src.Dictionaries
 {
-    class FrequentDictionarycs : IDictionary
+    class FrequentDictionary : IDictionary
     {
         #region IDictionary Members
 

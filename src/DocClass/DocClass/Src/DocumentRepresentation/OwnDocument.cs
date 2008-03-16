@@ -6,6 +6,7 @@ namespace DocClass.Src.DocumentRepresentation
 {
     class OwnDocument : IDocument
     {
+
         #region IDocument Members
 
         public int GetSpaceDimensionNumber()
@@ -13,7 +14,7 @@ namespace DocClass.Src.DocumentRepresentation
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public Dictionary<String, double> ToMap()
+        public Dictionary<string, double> ToMap()
         {
             throw new Exception("The method or operation is not implemented.");
         }
@@ -21,6 +22,11 @@ namespace DocClass.Src.DocumentRepresentation
         public bool AddWord(string word)
         {
             throw new Exception("The method or operation is not implemented.");
+        }
+
+        public int DesiredOutput
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
         }
 
         #endregion

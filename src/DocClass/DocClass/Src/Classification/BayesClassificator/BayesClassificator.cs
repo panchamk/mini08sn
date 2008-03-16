@@ -8,7 +8,7 @@ namespace DocClass.src.classification.beyesClassificator
     class BayesClassificator : Classificator
     {
 
-        public override bool Learn(IDictionary[] docs)
+        public override bool Learn(Dictionary dict)
         {
             throw new Exception("The method or operation is not implemented.");
         }

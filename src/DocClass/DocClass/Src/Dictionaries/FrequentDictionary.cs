@@ -4,25 +4,11 @@ using System.Text;
 
 namespace DocClass.Src.Dictionaries
 {
-    class FrequentDictionary : IDictionary
+    class FrequentDictionary : Dictionary
     {
-        #region IDictionary Members
-
-        public Dictionary<string, double> ToMap()
+        public override bool Init(ICollection<DocClass.Src.DocumentRepresentation.IDocument> docs)
         {
             throw new Exception("The method or operation is not implemented.");
         }
-
-        #endregion
-
-        #region IDictionary Members
-
-
-        public int GetDesiredOutput()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        #endregion
     }
 }

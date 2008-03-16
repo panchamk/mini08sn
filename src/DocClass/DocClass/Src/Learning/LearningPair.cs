@@ -6,18 +6,18 @@ namespace DocClass.Src.Learning
 {
     class LearningPair
     {
-        private double[] vector;
+        private Dictionary<String, Double> dict;
         private double output;
 
-        public LearningPair(double[] v, int o)
+        public LearningPair(Dictionary<String, Double> d, int o)
         {
-            this.vector = v;
+            this.dict = d;
             this.output = o;
         }
 
-        public double[] Vector
+        public Dictionary<String, Double> Map
         {
-            get { return this.vector; }
+            get { return this.dict; }
         }
 
         public double Output

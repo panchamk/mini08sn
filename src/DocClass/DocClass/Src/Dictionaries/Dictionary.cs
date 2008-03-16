@@ -1,26 +1,29 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using DocClass.Src.Dictionaries;
+using DocClass.Src.DocumentRepresentation;
+using DocClass.Src.Learning;
 using DocClass.Src.Classification;
 
-namespace DocClass.Src.Learning
+namespace DocClass.Src.Dictionaries
 {
-    class LearningData
+    abstract class Dictionary
     {
-        #region private members
-        private List<LearningPair> learningData;
-        private List<IDictionary> dictionaries;
+
+        //int GetDesiredOutput();
+        abstract public bool Init(ICollection<IDocument> docs);
+        
+        protected List<LearningPair> learningData;
+        protected List<IDocument> documents;
+        private bool dataPrepared = false;
         private List<double[]> outputData;
         private List<double[]> inputData;
-        private bool dataPrepared = false;
-        #endregion
 
         public List<double[]> InputVectors
         {
             get
             {
-                CreateLearningData();
+                CreateVectorsData();
                 return inputData;
             }
         }
@@ -29,7 +32,7 @@ namespace DocClass.Src.Learning
         {
             get
             {
-                CreateLearningData();
+                CreateVectorsData();
                 return learningData;
             }
         }
@@ -37,7 +40,7 @@ namespace DocClass.Src.Learning
         public List<double[]> OutputVectors
         {
             get{
-                CreateLearningData();
+                CreateVectorsData();
                 return outputData;
             }
         }
@@ -47,15 +50,15 @@ namespace DocClass.Src.Learning
         /// Tworzenie listy par uczacych
         /// </summary>
         /// <returns></returns>
-        private void CreateLearningData()
+        private void CreateVectorsData()
         {
             if (dataPrepared == false)
             {
                 //budowanie listy slow
                 List<string> contener = new List<string>();
-                foreach(IDictionary d in dictionaries)
+                foreach(LearningPair d in learningData)
                 {
-                    foreach(string word in d.ToMap().Keys)
+                    foreach(string word in d.Map.Keys)
                     {
                         if (!contener.Contains(word))
                         {
@@ -65,54 +68,29 @@ namespace DocClass.Src.Learning
                 }
 
                 //tworzenie wekrotow wedluw stworzonej wlasnie definicji przestrzeni
-                foreach (IDictionary d in dictionaries)
+                foreach (IDocument d in documents)
                 {
                     double[] vector = new double[contener.Count];
                     foreach (string word in d.ToMap().Keys)
                     {
                         vector[contener.IndexOf(word)] = d.ToMap()[word];
                     }
-                    learningData.Add(new LearningPair(vector, d.GetDesiredOutput()));
                     inputData.Add(vector);
                 }
 
                 //tworzenie wektorow wyjsciowych w celu uzycia ich w macierzy greena
                 for (int i = 0; i < DocumentClass.CathegoriesCount; i++)
                 {
-                    double[] vector = new double[contener.Count];
+                    double[] vector = new double[learningData.Count];
                     outputData.Add(vector);
                 }
-                for(int i =0; i<dictionaries.Count; i++)
+                for(int i =0; i<learningData.Count; i++)
                 {
-                    outputData[dictionaries[i].GetDesiredOutput()][i] = 1;
+                    outputData[documents[i].DesiredOutput][i] = 1;
                 }
 
                 dataPrepared = true;
             }
-        }
-
-        /// <summary>
-        /// Dodawanie slownika do zestawu danych uczacych
-        /// </summary>
-        /// <param name="dict"></param>
-        /// <returns></returns>
-        public bool AddDictionary(IDictionary dict)
-        {
-            dictionaries.Add(dict);
-            dataPrepared = false;
-            return true;
-        }
-
-        /// <summary>
-        /// Dodawanie wiekszej ilosci slownikow
-        /// </summary>
-        /// <param name="dict"></param>
-        /// <returns></returns>
-        public bool AddDictionaries(List<IDictionary> dict)
-        {
-            dictionaries.AddRange(dict);
-            dataPrepared = false;
-            return true;
         }
     }
 }

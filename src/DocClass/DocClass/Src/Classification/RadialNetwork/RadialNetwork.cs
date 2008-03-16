@@ -4,6 +4,7 @@ using System.Text;
 using System.Collections.ObjectModel;
 using DocClass.Src.Exceptions;
 using DocClass.Src.Dictionaries;
+using DocClass.Src.Learning.MathOperations;
 
 namespace DocClass.src.classification.radialNetwork
 {
@@ -70,12 +71,6 @@ namespace DocClass.src.classification.radialNetwork
 
         #region private methods
 
-        //TODO: skasowac, jak bedzie prawdziwa funkcja
-        private double[] Pseudoinverse(double[,] p, double[] p_2)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
         //funkcja gaussa dla neuronu
         //TODO: sprawdzic poprawnosc dzialania
         private double GaussianFunction(double[] x, double[] c)
@@ -127,7 +122,7 @@ namespace DocClass.src.classification.radialNetwork
             
             for (int i = 0; i < OUTPUT_LAYER_NEURON_COUNT; i++)
             {
-                outputLayerNeutonWeights[i] = Pseudoinverse(CreateGreenMatrix(), outputDesirableData[i]);
+                outputLayerNeutonWeights[i] = Matrix.Multiply(Pseudoinverse.Solve(CreateGreenMatrix()), outputDesirableData[i]);
             }
         }
 

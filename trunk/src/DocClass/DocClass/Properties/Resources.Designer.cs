@@ -61,20 +61,74 @@ namespace DocClass.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to dfbdfbdfb.
+        ///   Looks up a localized string similar to Mieszana.
         /// </summary>
-        internal static string bbb {
+        internal static string _fixed {
             get {
-                return ResourceManager.GetString("bbb", resourceCulture);
+                return ResourceManager.GetString("_fixed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to dsvsdv.
+        ///   Looks up a localized string similar to Bayes&apos;a.
         /// </summary>
-        internal static string www {
+        internal static string bayes {
             get {
-                return ResourceManager.GetString("www", resourceCulture);
+                return ResourceManager.GetString("bayes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Binarna.
+        /// </summary>
+        internal static string binary {
+            get {
+                return ResourceManager.GetString("binary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CTF-IDF.
+        /// </summary>
+        internal static string ctfIdf {
+            get {
+                return ResourceManager.GetString("ctfIdf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Najczęściej występujące.
+        /// </summary>
+        internal static string frequence {
+            get {
+                return ResourceManager.GetString("frequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sieć radialna.
+        /// </summary>
+        internal static string radialNeural {
+            get {
+                return ResourceManager.GetString("radialNeural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TF.
+        /// </summary>
+        internal static string tf {
+            get {
+                return ResourceManager.GetString("tf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TF-IDF.
+        /// </summary>
+        internal static string tflId {
+            get {
+                return ResourceManager.GetString("tflId", resourceCulture);
             }
         }
     }

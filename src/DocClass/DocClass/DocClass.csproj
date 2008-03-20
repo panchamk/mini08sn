@@ -111,7 +111,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Src\Classification\BayesClassificator\BayesClassificator.cs" />
-    <Compile Include="Src\Classification\RadialNetwork\Classificator.cs" />
+    <Compile Include="Src\Classification\Classificator.cs" />
     <Compile Include="Src\Classification\ClassificatorType\ClassyficatorTypeUtil.cs" />
     <Compile Include="Src\Classification\ClassificatorType\ClasyficatorType.cs" />
     <Compile Include="Src\Classification\DocumentClass.cs" />

@@ -29,6 +29,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,10 +58,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileInput.cs">
+    <Compile Include="Src\GUI\FileInput.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FileInput.Designer.cs">
+    <Compile Include="Src\GUI\FileInput.Designer.cs">
       <DependentUpon>FileInput.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
@@ -70,7 +72,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FileInput.resx">
+    <EmbeddedResource Include="Src\GUI\FileInput.resx">
       <DependentUpon>FileInput.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -91,7 +93,7 @@
     <None Include="app.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">
@@ -99,18 +101,33 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Src\GUI\RadioButtonClassification.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Src\GUI\radioButtonDictionary.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Src\GUI\RadioButtonDocumentRepresentation.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Src\Classification\BayesClassificator\BayesClassificator.cs" />
-    <Compile Include="Src\Classification\Classificator.cs" />
+    <Compile Include="Src\Classification\RadialNetwork\Classificator.cs" />
+    <Compile Include="Src\Classification\ClassificatorType\ClassyficatorTypeUtil.cs" />
+    <Compile Include="Src\Classification\ClassificatorType\ClasyficatorType.cs" />
     <Compile Include="Src\Classification\DocumentClass.cs" />
     <Compile Include="Src\Classification\RadialNetwork\INeuron.cs" />
     <Compile Include="Src\Classification\RadialNetwork\LinearNeuron.cs" />
     <Compile Include="Src\Classification\RadialNetwork\RadialNetwork.cs" />
     <Compile Include="Src\Classification\RadialNetwork\RadialNeuron.cs" />
     <Compile Include="Src\Dictionaries\CtfIdfDictionary.cs" />
+    <Compile Include="Src\Dictionaries\DictionaryType\DictionaryTypeUtil.cs" />
+    <Compile Include="Src\Dictionaries\DictionaryType\DictionaryType.cs" />
     <Compile Include="Src\Dictionaries\FixedDictionary.cs" />
     <Compile Include="Src\Dictionaries\FrequentDictionary.cs" />
     <Compile Include="Src\Dictionaries\Dictionary.cs" />
     <Compile Include="Src\DocumentRepresentation\BinaryDocument.cs" />
+    <Compile Include="Src\DocumentRepresentation\DocumentRepresentationType\DocumentRepresentationType.cs" />
+    <Compile Include="Src\DocumentRepresentation\DocumentRepresentationType\DocumentRepresentationTypeUtil.cs" />
     <Compile Include="Src\DocumentRepresentation\IDocument.cs" />
     <Compile Include="Src\DocumentRepresentation\OwnDocument.cs" />
     <Compile Include="Src\DocumentRepresentation\TfIdfDocument.cs" />

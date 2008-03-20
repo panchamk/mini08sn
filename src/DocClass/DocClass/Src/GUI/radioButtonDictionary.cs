@@ -38,6 +38,7 @@ namespace DocClass
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
+            Text = DictionaryTypeUtil.ToString(dictionaryType);
             Checked = (Properties.Settings.Default.dictionaryType == (int)dictionaryType);
         }
 

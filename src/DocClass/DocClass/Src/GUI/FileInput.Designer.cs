@@ -38,7 +38,6 @@
             this.textBoxPath.Name = "textBoxPath";
             this.textBoxPath.Size = new System.Drawing.Size(184, 20);
             this.textBoxPath.TabIndex = 0;
-            this.textBoxPath.TextChanged += new System.EventHandler(this.textBoxPath_TextChanged);
             // 
             // buttonBrowse
             // 
@@ -58,7 +57,6 @@
             this.Controls.Add(this.textBoxPath);
             this.Name = "FileInput";
             this.Size = new System.Drawing.Size(305, 27);
-            this.Load += new System.EventHandler(this.FileInput_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

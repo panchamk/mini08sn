@@ -34,6 +34,7 @@ namespace DocClass
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
+            Text = DocumentRepresentationTypeUtil.ToString(documentRepresentationType);
             Checked = (Properties.Settings.Default.documentRepresentationType == (int)documentRepresentationType);
         }
     }

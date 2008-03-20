@@ -34,6 +34,7 @@ namespace DocClass
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
+            Text = ClassyficatorTypeUtil.ToString(classificationType);
             Checked = (Properties.Settings.Default.clasificatorType == (int)classificationType);
         }
 

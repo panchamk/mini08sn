@@ -117,10 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="bbb" xml:space="preserve">
-    <value>dfbdfbdfb</value>
+  <data name="bayes" xml:space="preserve">
+    <value>Bayes'a</value>
   </data>
-  <data name="www" xml:space="preserve">
-    <value>dsvsdv</value>
+  <data name="binary" xml:space="preserve">
+    <value>Binarna</value>
+  </data>
+  <data name="ctfIdf" xml:space="preserve">
+    <value>CTF-IDF</value>
+  </data>
+  <data name="frequence" xml:space="preserve">
+    <value>Najczęściej występujące</value>
+  </data>
+  <data name="radialNeural" xml:space="preserve">
+    <value>Sieć radialna</value>
+  </data>
+  <data name="tf" xml:space="preserve">
+    <value>TF</value>
+  </data>
+  <data name="tflId" xml:space="preserve">
+    <value>TF-IDF</value>
+  </data>
+  <data name="_fixed" xml:space="preserve">
+    <value>Mieszana</value>
   </data>
 </root>

@@ -6,3 +6,5 @@ obj\Debug\DocClass.Properties.Resources.resources
 obj\Debug\DocClass.csproj.GenerateResource.Cache
 obj\Debug\DocClass.exe
 obj\Debug\DocClass.pdb
+bin\Debug\DocClass.exe.config
+obj\Debug\DocClass.FileInput.resources

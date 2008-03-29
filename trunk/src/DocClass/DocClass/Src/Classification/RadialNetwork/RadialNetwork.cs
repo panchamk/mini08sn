@@ -137,6 +137,7 @@ namespace DocClass.src.classification.radialNetwork
         /// <returns></returns>
         public override bool Learn(Dictionary dict)
         {
+            this.learningData = dict;
             OutputLearning(learningData.OutputVectors);
             throw new Exception("The method or operation is not implemented.");
         }

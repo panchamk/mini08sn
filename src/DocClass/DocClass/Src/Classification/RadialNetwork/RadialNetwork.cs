@@ -119,11 +119,17 @@ namespace DocClass.src.classification.radialNetwork
         /// <param name="outputDesirableData"></param>
         private void OutputLearning(List<double[]> outputDesirableData)
         {
+            cellCenters = CreateCellCenters();
             double[,] greenmatrix = Pseudoinverse.Solve(CreateGreenMatrix());
             for (int i = 0; i < OUTPUT_LAYER_NEURON_COUNT; i++)
             {
                 outputLayerNeutonWeights[i] = Matrix.Multiply(greenmatrix, outputDesirableData[i]);
             }
+        }
+
+        private List<double[]> CreateCellCenters()
+        {
+            
         }
 
 

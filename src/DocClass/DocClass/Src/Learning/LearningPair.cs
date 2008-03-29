@@ -7,7 +7,7 @@ namespace DocClass.Src.Learning
     class LearningPair
     {
         private Dictionary<String, Double> dict;
-        private double output;
+        private int output;
 
         public LearningPair(Dictionary<String, Double> d, int o)
         {
@@ -20,7 +20,7 @@ namespace DocClass.Src.Learning
             get { return this.dict; }
         }
 
-        public double Output
+        public int Output
         {
             get { return this.output; }
         }

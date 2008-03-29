@@ -15,6 +15,12 @@ namespace DocClass.Src.Classification
                 return documentCathegories.Count;
             }
         }
+
+        public static void addClass(String className)
+        {
+            if (!documentCathegories.Contains(className))
+                documentCathegories.Add(className);
+        }
         //TODO: Zrobic dodawanie i pobieranie klas
     }
 }

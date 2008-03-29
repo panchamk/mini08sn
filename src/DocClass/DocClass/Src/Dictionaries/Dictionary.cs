@@ -14,7 +14,7 @@ namespace DocClass.Src.Dictionaries
         abstract public bool Init(ICollection<IDocument> docs);
         
         protected List<LearningPair> learningData;
-        protected List<IDocument> documents;
+        //private List<IDocument> documents;
         private bool dataPrepared = false;
         private List<double[]> outputData;
         private List<double[]> inputData;
@@ -68,17 +68,19 @@ namespace DocClass.Src.Dictionaries
                 }
 
                 //tworzenie wekrotow wedluw stworzonej wlasnie definicji przestrzeni
-                foreach (IDocument d in documents)
+                inputData = new List<double[]>();
+                foreach (LearningPair d in learningData)
                 {
                     double[] vector = new double[contener.Count];
-                    foreach (string word in d.ToMap().Keys)
+                    foreach (string word in d.Map.Keys)
                     {
-                        vector[contener.IndexOf(word)] = d.ToMap()[word];
+                        vector[contener.IndexOf(word)] = d.Map[word];
                     }
                     inputData.Add(vector);
                 }
 
                 //tworzenie wektorow wyjsciowych w celu uzycia ich w macierzy greena
+                outputData = new List<double[]>();
                 for (int i = 0; i < DocumentClass.CathegoriesCount; i++)
                 {
                     double[] vector = new double[learningData.Count];
@@ -86,7 +88,7 @@ namespace DocClass.Src.Dictionaries
                 }
                 for(int i =0; i<learningData.Count; i++)
                 {
-                    outputData[documents[i].DesiredOutput][i] = 1;
+                    outputData[learningData[i].Output][i] = 1;
                 }
 
                 dataPrepared = true;

@@ -19,7 +19,7 @@ namespace DocClass.Src.Tests
         [Test]
         public void Tests()
         {
-            testedClassificator = new RadialNetwork(2, 2);
+            testedClassificator = new RadialNetwork(4, 2);
             Console.WriteLine("Instance crated");
             Assert.IsNotNull(testedClassificator);
             dictionary = new DictionaryFake(1000);

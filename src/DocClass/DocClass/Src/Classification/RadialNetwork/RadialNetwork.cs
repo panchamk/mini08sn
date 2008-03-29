@@ -28,8 +28,7 @@ namespace DocClass.src.classification.radialNetwork
         //neurony radialne warstwy ukrytej
         private Collection<INeuron> neuronHiddenLayer;
 
-        //sigma dla funkcji gaussa
-        private double sigma = 0.5;
+
 
         //centra funkcji gaussa
         private List<double[]> cellCenters;
@@ -71,22 +70,7 @@ namespace DocClass.src.classification.radialNetwork
 
         #region private methods
 
-        //TODO: sprawdzic poprawnosc dzialania
-        //funkcja gaussa dla neuronu
-        private double GaussianFunction(double[] x, double[] c)
-        {
-            double result = 0;
-            if (x.Length != c.Length)
-                throw new IncompatibleArrayLength();
-            int len = x.Length;
-
-            for (int i = 0; i < len; i++)
-            {
-                result += (c[i] - x[i]) * (c[i] - x[i]);
-            }
-            result /= -2 * sigma * sigma;
-            return Math.Pow(Math.E, result);
-        }
+        
 
 
         //TODO: Sprawdzic
@@ -106,7 +90,7 @@ namespace DocClass.src.classification.radialNetwork
                         result[y, x] = 1;
                     else
                     {
-                        result[y, x] = GaussianFunction(learningData.InputVectors[y], cellCenters[x]);
+                        result[y, x] = ((RadialNeuron)neuronHiddenLayer[x]).GaussianFunction(learningData.InputVectors[y]);
                     }
                 }
             }
@@ -119,7 +103,6 @@ namespace DocClass.src.classification.radialNetwork
         /// <param name="outputDesirableData"></param>
         private void OutputLearning(List<double[]> outputDesirableData)
         {
-            cellCenters = CreateCellCenters();
             double[,] greenmatrix = Pseudoinverse.Solve(CreateGreenMatrix());
             for (int i = 0; i < OUTPUT_LAYER_NEURON_COUNT; i++)
             {
@@ -127,13 +110,7 @@ namespace DocClass.src.classification.radialNetwork
             }
         }
 
-        private List<double[]> CreateCellCenters()
-        {
-            
-        }
-
-
-        #endregion
+#endregion
 
         #region overriden methods
         /// <summary>

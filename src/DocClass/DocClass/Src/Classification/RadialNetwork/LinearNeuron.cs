@@ -19,7 +19,7 @@ namespace DocClass.src.classification.radialNetwork
 
         #region INeuron Members
 
-        public double Process()
+        public double Process(double[] vector)
         {
             throw new Exception("The method or operation is not implemented.");
         }

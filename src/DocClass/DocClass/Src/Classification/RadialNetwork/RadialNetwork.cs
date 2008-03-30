@@ -121,20 +121,67 @@ namespace DocClass.src.classification.radialNetwork
         public override bool Learn(Dictionary dict)
         {
             this.learningData = dict;
+
+            //TODO: to ma byc w petli
             OutputLayerLearning(learningData.OutputVectors);
             HiddenLayerLearning();
+            //koniec petli z warunkiem
             throw new Exception("The method or operation is not implemented.");
         }
 
         private void HiddenLayerLearning()
         {
+            for (int i = 0; i < learningData.DataVectors.Count; i++)
+            {
+                double[] hiddenOutput = HiddenLayerForward(learningData.InputVectors[i]);
+                double[] outputLayer = OutputLayerForward(hiddenOutput);
+                double[] errorFactorVector = ComputeErrors(outputLayer, learningData.DataVectors[i].OutputVector);
+            }
             throw new Exception("The method or operation is not implemented.");
+        }
+
+        private double[] ComputeErrors(double[] outputLayer, double[] desiredOutput)
+        {
+            double[] result = new double[outputLayer.Length];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = (desiredOutput[i] - outputLayer[i]) / desiredOutput[i];
+            }
+            return result;
         }
 
         public override int Classificate(DocClass.Src.DocumentRepresentation.IDocument doc)
         {
-            throw new Exception("The method or operation is not implemented.");
+            return this.Classificate(this.learningData.FitDocumentToVector(doc));
         }
+
+        private double[] OutputLayerForward(double[] inputVector)
+        {
+            double[] outputVector = new double[neuronOutputLayer.Count];
+            for(int i=0; i<neuronOutputLayer.Count; i ++)
+            {
+                outputVector[i] = neuronOutputLayer[i].Process(inputVector);
+            }
+            return outputVector;
+        }
+
+        private double[] HiddenLayerForward(double[] inputVector)
+        {
+            double[] outputVector = new double[neuronHiddenLayer.Count];
+            for (int i = 0; i < outputVector.Length; i++)
+            {
+                outputVector[i] = neuronHiddenLayer[i].Process(inputVector);
+            }
+            return outputVector;
+        }
+
+        public override int Classificate(double[] vector)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
+
+
     }
 }

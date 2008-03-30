@@ -94,5 +94,10 @@ namespace DocClass.Src.Dictionaries
                 dataPrepared = true;
             }
         }
+
+        public double[] FitDocumentToVector(IDocument doc)
+        {
+            throw new NotImplementedException("a szkoda ;p");
+        }
     }
 }

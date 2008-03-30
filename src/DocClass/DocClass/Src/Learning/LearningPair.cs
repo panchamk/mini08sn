@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using DocClass.Src.Classification;
 
 namespace DocClass.Src.Learning
 {
@@ -23,6 +24,16 @@ namespace DocClass.Src.Learning
         public int Output
         {
             get { return this.output; }
+        }
+
+        public double[] OutputVector
+        {
+            get
+            {
+                double[] output = new double[DocumentClass.CathegoriesCount];
+                output[this.output] = 1;
+                return output;
+            }
         }
 
     }

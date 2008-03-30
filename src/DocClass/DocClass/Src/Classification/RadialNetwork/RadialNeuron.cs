@@ -85,6 +85,7 @@ namespace DocClass.src.classification.radialNetwork
         public double GaussianFunction(double[] x)
         {
             double result = 0;
+            VecotrSize = x.Length;
             if (x.Length != CellCenter.Length)
                 throw new IncompatibleArrayLength();
             int len = x.Length;

@@ -50,14 +50,14 @@ namespace DocClass.src.classification.radialNetwork
             outputLayerNeutonWeights = new List<double[]>();
             for (int i = 0; i < hiddenLayerInitNeuronCount; i++)
             {
-                INeuron r = new LinearNeuron();
+                INeuron r = new RadialNeuron();
                 neuronHiddenLayer.Add(r);
             }
 
             for (int i = 0; i < outputLayerNeuronCount; i++)
             {
-                INeuron r = new RadialNeuron();
-                neuronHiddenLayer.Add(r);
+                INeuron r = new LinearNeuron();
+                neuronOutputLayer.Add(r);
             }
         }
 
@@ -90,7 +90,7 @@ namespace DocClass.src.classification.radialNetwork
                         result[y, x] = 1;
                     else
                     {
-                        result[y, x] = ((RadialNeuron)neuronHiddenLayer[x]).GaussianFunction(learningData.InputVectors[y]);
+                        result[y, x] = ((RadialNeuron)neuronHiddenLayer[x-1]).GaussianFunction(learningData.InputVectors[y]);
                     }
                 }
             }
@@ -101,16 +101,16 @@ namespace DocClass.src.classification.radialNetwork
         /// Uczenie warstwy wyjsciowej
         /// </summary>
         /// <param name="outputDesirableData"></param>
-        private void OutputLearning(List<double[]> outputDesirableData)
+        private void OutputLayerLearning(List<double[]> outputDesirableData)
         {
             double[,] greenmatrix = Pseudoinverse.Solve(CreateGreenMatrix());
-            for (int i = 0; i < OUTPUT_LAYER_NEURON_COUNT; i++)
+            for (int i = 0; i < neuronOutputLayer.Count ; i++)
             {
-                outputLayerNeutonWeights[i] = Matrix.Multiply(greenmatrix, outputDesirableData[i]);
+                outputLayerNeutonWeights.Add(Matrix.Multiply(greenmatrix, outputDesirableData[i]));
             }
         }
 
-#endregion
+        #endregion
 
         #region overriden methods
         /// <summary>
@@ -121,7 +121,13 @@ namespace DocClass.src.classification.radialNetwork
         public override bool Learn(Dictionary dict)
         {
             this.learningData = dict;
-            OutputLearning(learningData.OutputVectors);
+            OutputLayerLearning(learningData.OutputVectors);
+            HiddenLayerLearning();
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        private void HiddenLayerLearning()
+        {
             throw new Exception("The method or operation is not implemented.");
         }
 

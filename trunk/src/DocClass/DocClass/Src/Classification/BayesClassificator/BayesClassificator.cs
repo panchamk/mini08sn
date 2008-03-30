@@ -15,6 +15,11 @@ namespace DocClass.src.classification.beyesClassificator
 
         public override int Classificate(DocClass.Src.DocumentRepresentation.IDocument doc)
         {
+            return this.Classificate(this.learningData.FitDocumentToVector(doc));
+        }
+
+        public override int Classificate(double[] vector)
+        {
             throw new Exception("The method or operation is not implemented.");
         }
     }

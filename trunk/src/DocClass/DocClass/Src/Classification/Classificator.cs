@@ -31,6 +31,7 @@ namespace DocClass.src.classification
         /// <param name="doc"></param>
         /// <returns></returns>
         public abstract int Classificate(IDocument doc);
+        public abstract int Classificate(double[] vector);
         #endregion
 
         #region public methods

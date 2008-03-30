@@ -7,7 +7,7 @@ namespace DocClass.src.classification.radialNetwork
 {
     interface INeuron
     {
-        double Process();
         double SetInput(double[] input);
+        double Process(double[] vector);
     }
 }

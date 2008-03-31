@@ -136,9 +136,37 @@ namespace DocClass.src.classification.radialNetwork
                 double[] hiddenOutput = HiddenLayerForward(learningData.InputVectors[i]);
                 double[] outputLayer = OutputLayerForward(hiddenOutput);
                 double[] errorFactorVector = ComputeErrors(outputLayer, learningData.DataVectors[i].OutputVector);
+                CorrectErrorsInHiddenLayer(errorFactorVector);
             }
             throw new Exception("The method or operation is not implemented.");
         }
+
+        #region hidden layer error correction
+        private void CorrectErrorsInHiddenLayer(double[] errorFactorVector)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        private double u(int i, int k, double[] x)
+        {
+            double result = 0;
+            for (int ii = 0; ii < x.Length; ii++)
+            {
+                //x[i] - c
+            }
+
+            return result;
+        }
+
+
+
+
+
+
+
+        #endregion
+
+
 
         private double[] ComputeErrors(double[] outputLayer, double[] desiredOutput)
         {

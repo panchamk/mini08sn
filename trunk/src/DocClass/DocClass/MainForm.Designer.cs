@@ -31,23 +31,23 @@ namespace DocClass
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.programToolStripMenuItemProgram = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.metodaKlasyfikacjiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BayesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RadialNetworkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
-            this.groupBoxClasificationMethode = new System.Windows.Forms.GroupBox();
             this.groupBoxDictionary = new System.Windows.Forms.GroupBox();
             this.groupBoxDocumentRepresentation = new System.Windows.Forms.GroupBox();
             this.tabControlUse = new System.Windows.Forms.TabControl();
             this.tabPageLearning = new System.Windows.Forms.TabPage();
-            this.splitContainerLearning = new System.Windows.Forms.SplitContainer();
-            this.groupBoxLearningParameters = new System.Windows.Forms.GroupBox();
+            this.mLearningTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.groupBoxLearningFile = new System.Windows.Forms.GroupBox();
-            this.labelLearningResults = new System.Windows.Forms.Label();
+            this.groupBoxLearningActions = new System.Windows.Forms.GroupBox();
+            this.mStartStopTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonLearningStop = new System.Windows.Forms.Button();
+            this.buttonLearningStart = new System.Windows.Forms.Button();
+            this.groupBoxLearningParameters = new System.Windows.Forms.GroupBox();
+            this.splitContainerLearning = new System.Windows.Forms.SplitContainer();
             this.tabPageClasyfication = new System.Windows.Forms.TabPage();
-            this.splitContainerClasification = new System.Windows.Forms.SplitContainer();
-            this.groupBoxClasificationParameters = new System.Windows.Forms.GroupBox();
-            this.groupBoxClasificationFile = new System.Windows.Forms.GroupBox();
-            this.labeClasificationResults = new System.Windows.Forms.Label();
-            this.radioButtonClassificationRadialNeural = new DocClass.RadioButtonClassification();
-            this.radioButtonClassificationBayes = new DocClass.RadioButtonClassification();
             this.radioButtonDictionaryFrequance = new DocClass.RadioButtonDictionary();
             this.radioButtonDictionaryFixed = new DocClass.RadioButtonDictionary();
             this.radioButtonDictionaryCtfIdf = new DocClass.RadioButtonDictionary();
@@ -55,43 +55,46 @@ namespace DocClass
             this.radioButtonDocumentRepresentationOwn = new DocClass.RadioButtonDocumentRepresentation();
             this.radioButtonDocumentRepresentationTfIdf = new DocClass.RadioButtonDocumentRepresentation();
             this.fileInput1 = new DocClass.FileInput();
+            this.splitContainerClasification = new System.Windows.Forms.SplitContainer();
+            this.mClassificationTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBoxClasificationFile = new System.Windows.Forms.GroupBox();
             this.fileInput3 = new DocClass.FileInput();
-            this.fileInput2 = new DocClass.FileInput();
-            this.groupBoxLearningActions = new System.Windows.Forms.GroupBox();
+            this.groupBoxClasificationParameters = new System.Windows.Forms.GroupBox();
             this.groupBoxClassificationAction = new System.Windows.Forms.GroupBox();
-            this.buttonClassificationStart = new System.Windows.Forms.Button();
+            this.mClassStartStoptableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.buttonClassificationStop = new System.Windows.Forms.Button();
-            this.buttonLearningStart = new System.Windows.Forms.Button();
-            this.buttonLearningStop = new System.Windows.Forms.Button();
+            this.buttonClassificationStart = new System.Windows.Forms.Button();
+            this.fileInput2 = new DocClass.FileInput();
             this.menuStripMain.SuspendLayout();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
             this.splitContainerMain.SuspendLayout();
-            this.groupBoxClasificationMethode.SuspendLayout();
             this.groupBoxDictionary.SuspendLayout();
             this.groupBoxDocumentRepresentation.SuspendLayout();
             this.tabControlUse.SuspendLayout();
             this.tabPageLearning.SuspendLayout();
-            this.splitContainerLearning.Panel1.SuspendLayout();
-            this.splitContainerLearning.Panel2.SuspendLayout();
-            this.splitContainerLearning.SuspendLayout();
+            this.mLearningTableLayoutPanel.SuspendLayout();
             this.groupBoxLearningFile.SuspendLayout();
+            this.groupBoxLearningActions.SuspendLayout();
+            this.mStartStopTableLayoutPanel.SuspendLayout();
+            this.splitContainerLearning.SuspendLayout();
             this.tabPageClasyfication.SuspendLayout();
             this.splitContainerClasification.Panel1.SuspendLayout();
-            this.splitContainerClasification.Panel2.SuspendLayout();
             this.splitContainerClasification.SuspendLayout();
+            this.mClassificationTableLayoutPanel.SuspendLayout();
             this.groupBoxClasificationFile.SuspendLayout();
-            this.groupBoxLearningActions.SuspendLayout();
             this.groupBoxClassificationAction.SuspendLayout();
+            this.mClassStartStoptableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripMain
             // 
             this.menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.programToolStripMenuItemProgram});
+            this.programToolStripMenuItemProgram,
+            this.metodaKlasyfikacjiToolStripMenuItem});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Size = new System.Drawing.Size(735, 24);
+            this.menuStripMain.Size = new System.Drawing.Size(960, 24);
             this.menuStripMain.TabIndex = 0;
             this.menuStripMain.Text = "menuStripMain";
             // 
@@ -106,9 +109,34 @@ namespace DocClass
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // metodaKlasyfikacjiToolStripMenuItem
+            // 
+            this.metodaKlasyfikacjiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BayesToolStripMenuItem,
+            this.RadialNetworkToolStripMenuItem});
+            this.metodaKlasyfikacjiToolStripMenuItem.Name = "metodaKlasyfikacjiToolStripMenuItem";
+            this.metodaKlasyfikacjiToolStripMenuItem.Size = new System.Drawing.Size(110, 20);
+            this.metodaKlasyfikacjiToolStripMenuItem.Text = "Metoda Klasyfikacji";
+            // 
+            // BayesToolStripMenuItem
+            // 
+            this.BayesToolStripMenuItem.Checked = true;
+            this.BayesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.BayesToolStripMenuItem.Name = "BayesToolStripMenuItem";
+            this.BayesToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.BayesToolStripMenuItem.Text = "Klasyfikator Bayes\'a";
+            this.BayesToolStripMenuItem.Click += new System.EventHandler(this.OnBayesaToolStripMenuItem_Click);
+            // 
+            // RadialNetworkToolStripMenuItem
+            // 
+            this.RadialNetworkToolStripMenuItem.Name = "RadialNetworkToolStripMenuItem";
+            this.RadialNetworkToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.RadialNetworkToolStripMenuItem.Text = "Siec Radialna";
+            this.RadialNetworkToolStripMenuItem.Click += new System.EventHandler(this.RadialNetworkToolStripMenuItem_Click);
             // 
             // splitContainerMain
             // 
@@ -119,7 +147,6 @@ namespace DocClass
             // 
             // splitContainerMain.Panel1
             // 
-            this.splitContainerMain.Panel1.Controls.Add(this.groupBoxClasificationMethode);
             this.splitContainerMain.Panel1.Controls.Add(this.groupBoxDictionary);
             this.splitContainerMain.Panel1.Controls.Add(this.groupBoxDocumentRepresentation);
             this.splitContainerMain.Panel1MinSize = 10;
@@ -127,20 +154,9 @@ namespace DocClass
             // splitContainerMain.Panel2
             // 
             this.splitContainerMain.Panel2.Controls.Add(this.tabControlUse);
-            this.splitContainerMain.Size = new System.Drawing.Size(735, 439);
-            this.splitContainerMain.SplitterDistance = 118;
+            this.splitContainerMain.Size = new System.Drawing.Size(960, 481);
+            this.splitContainerMain.SplitterDistance = 129;
             this.splitContainerMain.TabIndex = 2;
-            // 
-            // groupBoxClasificationMethode
-            // 
-            this.groupBoxClasificationMethode.Controls.Add(this.radioButtonClassificationRadialNeural);
-            this.groupBoxClasificationMethode.Controls.Add(this.radioButtonClassificationBayes);
-            this.groupBoxClasificationMethode.Location = new System.Drawing.Point(496, 15);
-            this.groupBoxClasificationMethode.Name = "groupBoxClasificationMethode";
-            this.groupBoxClasificationMethode.Size = new System.Drawing.Size(203, 100);
-            this.groupBoxClasificationMethode.TabIndex = 2;
-            this.groupBoxClasificationMethode.TabStop = false;
-            this.groupBoxClasificationMethode.Text = "Metoda klasyfikacji";
             // 
             // groupBoxDictionary
             // 
@@ -174,19 +190,106 @@ namespace DocClass
             this.tabControlUse.Location = new System.Drawing.Point(0, 0);
             this.tabControlUse.Name = "tabControlUse";
             this.tabControlUse.SelectedIndex = 0;
-            this.tabControlUse.Size = new System.Drawing.Size(735, 317);
+            this.tabControlUse.Size = new System.Drawing.Size(960, 348);
             this.tabControlUse.TabIndex = 0;
             // 
             // tabPageLearning
             // 
+            this.tabPageLearning.Controls.Add(this.mLearningTableLayoutPanel);
             this.tabPageLearning.Controls.Add(this.splitContainerLearning);
             this.tabPageLearning.Location = new System.Drawing.Point(4, 22);
             this.tabPageLearning.Name = "tabPageLearning";
             this.tabPageLearning.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLearning.Size = new System.Drawing.Size(727, 291);
+            this.tabPageLearning.Size = new System.Drawing.Size(952, 322);
             this.tabPageLearning.TabIndex = 0;
             this.tabPageLearning.Text = "Nauka";
             this.tabPageLearning.UseVisualStyleBackColor = true;
+            // 
+            // mLearningTableLayoutPanel
+            // 
+            this.mLearningTableLayoutPanel.ColumnCount = 3;
+            this.mLearningTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.mLearningTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.mLearningTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.mLearningTableLayoutPanel.Controls.Add(this.groupBoxLearningFile, 0, 0);
+            this.mLearningTableLayoutPanel.Controls.Add(this.groupBoxLearningActions, 2, 0);
+            this.mLearningTableLayoutPanel.Controls.Add(this.groupBoxLearningParameters, 1, 0);
+            this.mLearningTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.mLearningTableLayoutPanel.Location = new System.Drawing.Point(3, 3);
+            this.mLearningTableLayoutPanel.Name = "mLearningTableLayoutPanel";
+            this.mLearningTableLayoutPanel.RowCount = 1;
+            this.mLearningTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.mLearningTableLayoutPanel.Size = new System.Drawing.Size(946, 66);
+            this.mLearningTableLayoutPanel.TabIndex = 3;
+            // 
+            // groupBoxLearningFile
+            // 
+            this.groupBoxLearningFile.Controls.Add(this.fileInput1);
+            this.groupBoxLearningFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxLearningFile.Location = new System.Drawing.Point(3, 3);
+            this.groupBoxLearningFile.Name = "groupBoxLearningFile";
+            this.groupBoxLearningFile.Size = new System.Drawing.Size(277, 60);
+            this.groupBoxLearningFile.TabIndex = 0;
+            this.groupBoxLearningFile.TabStop = false;
+            this.groupBoxLearningFile.Text = "Plik";
+            // 
+            // groupBoxLearningActions
+            // 
+            this.groupBoxLearningActions.Controls.Add(this.mStartStopTableLayoutPanel);
+            this.groupBoxLearningActions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxLearningActions.Location = new System.Drawing.Point(759, 3);
+            this.groupBoxLearningActions.Name = "groupBoxLearningActions";
+            this.groupBoxLearningActions.Size = new System.Drawing.Size(184, 60);
+            this.groupBoxLearningActions.TabIndex = 2;
+            this.groupBoxLearningActions.TabStop = false;
+            this.groupBoxLearningActions.Text = "Akcje";
+            // 
+            // mStartStopTableLayoutPanel
+            // 
+            this.mStartStopTableLayoutPanel.ColumnCount = 2;
+            this.mStartStopTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.mStartStopTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.mStartStopTableLayoutPanel.Controls.Add(this.buttonLearningStop, 1, 0);
+            this.mStartStopTableLayoutPanel.Controls.Add(this.buttonLearningStart, 0, 0);
+            this.mStartStopTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.mStartStopTableLayoutPanel.Location = new System.Drawing.Point(3, 16);
+            this.mStartStopTableLayoutPanel.Name = "mStartStopTableLayoutPanel";
+            this.mStartStopTableLayoutPanel.RowCount = 1;
+            this.mStartStopTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.mStartStopTableLayoutPanel.Size = new System.Drawing.Size(178, 36);
+            this.mStartStopTableLayoutPanel.TabIndex = 2;
+            // 
+            // buttonLearningStop
+            // 
+            this.buttonLearningStop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonLearningStop.Location = new System.Drawing.Point(92, 3);
+            this.buttonLearningStop.Name = "buttonLearningStop";
+            this.buttonLearningStop.Size = new System.Drawing.Size(83, 30);
+            this.buttonLearningStop.TabIndex = 1;
+            this.buttonLearningStop.Text = "Stop";
+            this.buttonLearningStop.UseVisualStyleBackColor = true;
+            this.buttonLearningStop.Click += new System.EventHandler(this.OnLearningStopButton_Click);
+            // 
+            // buttonLearningStart
+            // 
+            this.buttonLearningStart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonLearningStart.Location = new System.Drawing.Point(3, 3);
+            this.buttonLearningStart.Name = "buttonLearningStart";
+            this.buttonLearningStart.Size = new System.Drawing.Size(83, 30);
+            this.buttonLearningStart.TabIndex = 0;
+            this.buttonLearningStart.Text = "Start";
+            this.buttonLearningStart.UseVisualStyleBackColor = true;
+            this.buttonLearningStart.Click += new System.EventHandler(this.OnLearningStartButton_Click);
+            // 
+            // groupBoxLearningParameters
+            // 
+            this.groupBoxLearningParameters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxLearningParameters.Location = new System.Drawing.Point(286, 3);
+            this.groupBoxLearningParameters.Name = "groupBoxLearningParameters";
+            this.groupBoxLearningParameters.Size = new System.Drawing.Size(467, 60);
+            this.groupBoxLearningParameters.TabIndex = 1;
+            this.groupBoxLearningParameters.TabStop = false;
+            this.groupBoxLearningParameters.Text = "Parametry";
             // 
             // splitContainerLearning
             // 
@@ -194,47 +297,9 @@ namespace DocClass
             this.splitContainerLearning.Location = new System.Drawing.Point(3, 3);
             this.splitContainerLearning.Name = "splitContainerLearning";
             this.splitContainerLearning.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainerLearning.Panel1
-            // 
-            this.splitContainerLearning.Panel1.Controls.Add(this.groupBoxLearningActions);
-            this.splitContainerLearning.Panel1.Controls.Add(this.groupBoxLearningParameters);
-            this.splitContainerLearning.Panel1.Controls.Add(this.groupBoxLearningFile);
-            // 
-            // splitContainerLearning.Panel2
-            // 
-            this.splitContainerLearning.Panel2.Controls.Add(this.labelLearningResults);
-            this.splitContainerLearning.Size = new System.Drawing.Size(721, 285);
-            this.splitContainerLearning.SplitterDistance = 70;
+            this.splitContainerLearning.Size = new System.Drawing.Size(946, 316);
+            this.splitContainerLearning.SplitterDistance = 72;
             this.splitContainerLearning.TabIndex = 0;
-            // 
-            // groupBoxLearningParameters
-            // 
-            this.groupBoxLearningParameters.Location = new System.Drawing.Point(379, 4);
-            this.groupBoxLearningParameters.Name = "groupBoxLearningParameters";
-            this.groupBoxLearningParameters.Size = new System.Drawing.Size(169, 63);
-            this.groupBoxLearningParameters.TabIndex = 1;
-            this.groupBoxLearningParameters.TabStop = false;
-            this.groupBoxLearningParameters.Text = "Parametry";
-            // 
-            // groupBoxLearningFile
-            // 
-            this.groupBoxLearningFile.Controls.Add(this.fileInput1);
-            this.groupBoxLearningFile.Location = new System.Drawing.Point(21, 3);
-            this.groupBoxLearningFile.Name = "groupBoxLearningFile";
-            this.groupBoxLearningFile.Size = new System.Drawing.Size(337, 64);
-            this.groupBoxLearningFile.TabIndex = 0;
-            this.groupBoxLearningFile.TabStop = false;
-            this.groupBoxLearningFile.Text = "Plik";
-            // 
-            // labelLearningResults
-            // 
-            this.labelLearningResults.AutoSize = true;
-            this.labelLearningResults.Location = new System.Drawing.Point(18, 0);
-            this.labelLearningResults.Name = "labelLearningResults";
-            this.labelLearningResults.Size = new System.Drawing.Size(39, 13);
-            this.labelLearningResults.TabIndex = 0;
-            this.labelLearningResults.Text = "Wyniki";
             // 
             // tabPageClasyfication
             // 
@@ -242,83 +307,10 @@ namespace DocClass
             this.tabPageClasyfication.Location = new System.Drawing.Point(4, 22);
             this.tabPageClasyfication.Name = "tabPageClasyfication";
             this.tabPageClasyfication.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageClasyfication.Size = new System.Drawing.Size(727, 291);
+            this.tabPageClasyfication.Size = new System.Drawing.Size(952, 322);
             this.tabPageClasyfication.TabIndex = 1;
             this.tabPageClasyfication.Text = "Klasyfikacja";
             this.tabPageClasyfication.UseVisualStyleBackColor = true;
-            // 
-            // splitContainerClasification
-            // 
-            this.splitContainerClasification.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerClasification.Location = new System.Drawing.Point(3, 3);
-            this.splitContainerClasification.Name = "splitContainerClasification";
-            this.splitContainerClasification.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainerClasification.Panel1
-            // 
-            this.splitContainerClasification.Panel1.Controls.Add(this.groupBoxClassificationAction);
-            this.splitContainerClasification.Panel1.Controls.Add(this.groupBoxClasificationParameters);
-            this.splitContainerClasification.Panel1.Controls.Add(this.groupBoxClasificationFile);
-            // 
-            // splitContainerClasification.Panel2
-            // 
-            this.splitContainerClasification.Panel2.Controls.Add(this.labeClasificationResults);
-            this.splitContainerClasification.Size = new System.Drawing.Size(721, 285);
-            this.splitContainerClasification.SplitterDistance = 70;
-            this.splitContainerClasification.TabIndex = 0;
-            // 
-            // groupBoxClasificationParameters
-            // 
-            this.groupBoxClasificationParameters.Location = new System.Drawing.Point(361, 4);
-            this.groupBoxClasificationParameters.Name = "groupBoxClasificationParameters";
-            this.groupBoxClasificationParameters.Size = new System.Drawing.Size(180, 63);
-            this.groupBoxClasificationParameters.TabIndex = 1;
-            this.groupBoxClasificationParameters.TabStop = false;
-            this.groupBoxClasificationParameters.Text = "Parametry";
-            // 
-            // groupBoxClasificationFile
-            // 
-            this.groupBoxClasificationFile.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.groupBoxClasificationFile.Controls.Add(this.fileInput3);
-            this.groupBoxClasificationFile.Location = new System.Drawing.Point(5, 3);
-            this.groupBoxClasificationFile.Name = "groupBoxClasificationFile";
-            this.groupBoxClasificationFile.Size = new System.Drawing.Size(348, 64);
-            this.groupBoxClasificationFile.TabIndex = 0;
-            this.groupBoxClasificationFile.TabStop = false;
-            this.groupBoxClasificationFile.Text = "Plik";
-            // 
-            // labeClasificationResults
-            // 
-            this.labeClasificationResults.AutoSize = true;
-            this.labeClasificationResults.Location = new System.Drawing.Point(5, 0);
-            this.labeClasificationResults.Name = "labeClasificationResults";
-            this.labeClasificationResults.Size = new System.Drawing.Size(39, 13);
-            this.labeClasificationResults.TabIndex = 0;
-            this.labeClasificationResults.Text = "Wyniki";
-            // 
-            // radioButtonClassificationRadialNeural
-            // 
-            this.radioButtonClassificationRadialNeural.AutoSize = true;
-            this.radioButtonClassificationRadialNeural.ClassificationType = DocClass.Src.Classification.ClasyficatorType.RadialNeural;
-            this.radioButtonClassificationRadialNeural.Location = new System.Drawing.Point(24, 67);
-            this.radioButtonClassificationRadialNeural.Name = "radioButtonClassificationRadialNeural";
-            this.radioButtonClassificationRadialNeural.Size = new System.Drawing.Size(86, 17);
-            this.radioButtonClassificationRadialNeural.TabIndex = 1;
-            this.radioButtonClassificationRadialNeural.Text = "RadialNeural";
-            this.radioButtonClassificationRadialNeural.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonClassificationBayes
-            // 
-            this.radioButtonClassificationBayes.AutoSize = true;
-            this.radioButtonClassificationBayes.Checked = true;
-            this.radioButtonClassificationBayes.ClassificationType = DocClass.Src.Classification.ClasyficatorType.Bayes;
-            this.radioButtonClassificationBayes.Location = new System.Drawing.Point(24, 31);
-            this.radioButtonClassificationBayes.Name = "radioButtonClassificationBayes";
-            this.radioButtonClassificationBayes.Size = new System.Drawing.Size(54, 17);
-            this.radioButtonClassificationBayes.TabIndex = 0;
-            this.radioButtonClassificationBayes.TabStop = true;
-            this.radioButtonClassificationBayes.Text = "Bayes";
-            this.radioButtonClassificationBayes.UseVisualStyleBackColor = true;
             // 
             // radioButtonDictionaryFrequance
             // 
@@ -341,7 +333,7 @@ namespace DocClass
             this.radioButtonDictionaryFixed.Size = new System.Drawing.Size(50, 17);
             this.radioButtonDictionaryFixed.TabIndex = 1;
             this.radioButtonDictionaryFixed.TabStop = true;
-            this.radioButtonDictionaryFixed.Text = "Fixed";
+            this.radioButtonDictionaryFixed.Text = "CtfIdf";
             this.radioButtonDictionaryFixed.UseVisualStyleBackColor = true;
             // 
             // radioButtonDictionaryCtfIdf
@@ -352,7 +344,7 @@ namespace DocClass
             this.radioButtonDictionaryCtfIdf.Name = "radioButtonDictionaryCtfIdf";
             this.radioButtonDictionaryCtfIdf.Size = new System.Drawing.Size(50, 17);
             this.radioButtonDictionaryCtfIdf.TabIndex = 2;
-            this.radioButtonDictionaryCtfIdf.Text = "CtfIdf";
+            this.radioButtonDictionaryCtfIdf.Text = "Fixed";
             this.radioButtonDictionaryCtfIdf.UseVisualStyleBackColor = true;
             // 
             // radioButtonDocumentRepresentationBinary
@@ -392,17 +384,117 @@ namespace DocClass
             // 
             // fileInput1
             // 
-            this.fileInput1.Location = new System.Drawing.Point(-20, 19);
+            this.fileInput1.Location = new System.Drawing.Point(-19, 19);
             this.fileInput1.Name = "fileInput1";
-            this.fileInput1.Size = new System.Drawing.Size(357, 27);
+            this.fileInput1.Size = new System.Drawing.Size(294, 27);
             this.fileInput1.TabIndex = 0;
+            // 
+            // splitContainerClasification
+            // 
+            this.splitContainerClasification.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerClasification.Location = new System.Drawing.Point(3, 3);
+            this.splitContainerClasification.Name = "splitContainerClasification";
+            this.splitContainerClasification.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainerClasification.Panel1
+            // 
+            this.splitContainerClasification.Panel1.Controls.Add(this.mClassificationTableLayoutPanel);
+            this.splitContainerClasification.Size = new System.Drawing.Size(946, 316);
+            this.splitContainerClasification.SplitterDistance = 78;
+            this.splitContainerClasification.TabIndex = 0;
+            // 
+            // mClassificationTableLayoutPanel
+            // 
+            this.mClassificationTableLayoutPanel.ColumnCount = 3;
+            this.mClassificationTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.mClassificationTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.mClassificationTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.mClassificationTableLayoutPanel.Controls.Add(this.groupBoxClasificationFile, 0, 0);
+            this.mClassificationTableLayoutPanel.Controls.Add(this.groupBoxClasificationParameters, 1, 0);
+            this.mClassificationTableLayoutPanel.Controls.Add(this.groupBoxClassificationAction, 2, 0);
+            this.mClassificationTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.mClassificationTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.mClassificationTableLayoutPanel.Name = "mClassificationTableLayoutPanel";
+            this.mClassificationTableLayoutPanel.RowCount = 1;
+            this.mClassificationTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.mClassificationTableLayoutPanel.Size = new System.Drawing.Size(946, 66);
+            this.mClassificationTableLayoutPanel.TabIndex = 3;
+            // 
+            // groupBoxClasificationFile
+            // 
+            this.groupBoxClasificationFile.Controls.Add(this.fileInput3);
+            this.groupBoxClasificationFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxClasificationFile.Location = new System.Drawing.Point(3, 3);
+            this.groupBoxClasificationFile.Name = "groupBoxClasificationFile";
+            this.groupBoxClasificationFile.Size = new System.Drawing.Size(277, 60);
+            this.groupBoxClasificationFile.TabIndex = 0;
+            this.groupBoxClasificationFile.TabStop = false;
+            this.groupBoxClasificationFile.Text = "Plik";
             // 
             // fileInput3
             // 
-            this.fileInput3.Location = new System.Drawing.Point(-8, 19);
+            this.fileInput3.Location = new System.Drawing.Point(-19, 19);
             this.fileInput3.Name = "fileInput3";
-            this.fileInput3.Size = new System.Drawing.Size(357, 27);
+            this.fileInput3.Size = new System.Drawing.Size(294, 27);
             this.fileInput3.TabIndex = 0;
+            // 
+            // groupBoxClasificationParameters
+            // 
+            this.groupBoxClasificationParameters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxClasificationParameters.Location = new System.Drawing.Point(286, 3);
+            this.groupBoxClasificationParameters.Name = "groupBoxClasificationParameters";
+            this.groupBoxClasificationParameters.Size = new System.Drawing.Size(467, 60);
+            this.groupBoxClasificationParameters.TabIndex = 1;
+            this.groupBoxClasificationParameters.TabStop = false;
+            this.groupBoxClasificationParameters.Text = "Parametry";
+            // 
+            // groupBoxClassificationAction
+            // 
+            this.groupBoxClassificationAction.Controls.Add(this.mClassStartStoptableLayoutPanel);
+            this.groupBoxClassificationAction.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxClassificationAction.Location = new System.Drawing.Point(759, 3);
+            this.groupBoxClassificationAction.Name = "groupBoxClassificationAction";
+            this.groupBoxClassificationAction.Size = new System.Drawing.Size(184, 60);
+            this.groupBoxClassificationAction.TabIndex = 2;
+            this.groupBoxClassificationAction.TabStop = false;
+            this.groupBoxClassificationAction.Text = "Akcje";
+            // 
+            // mClassStartStoptableLayoutPanel
+            // 
+            this.mClassStartStoptableLayoutPanel.ColumnCount = 2;
+            this.mClassStartStoptableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.mClassStartStoptableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.mClassStartStoptableLayoutPanel.Controls.Add(this.buttonClassificationStop, 1, 0);
+            this.mClassStartStoptableLayoutPanel.Controls.Add(this.buttonClassificationStart, 0, 0);
+            this.mClassStartStoptableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.mClassStartStoptableLayoutPanel.Location = new System.Drawing.Point(3, 16);
+            this.mClassStartStoptableLayoutPanel.Name = "mClassStartStoptableLayoutPanel";
+            this.mClassStartStoptableLayoutPanel.RowCount = 1;
+            this.mClassStartStoptableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.mClassStartStoptableLayoutPanel.Size = new System.Drawing.Size(178, 42);
+            this.mClassStartStoptableLayoutPanel.TabIndex = 2;
+            // 
+            // buttonClassificationStop
+            // 
+            this.buttonClassificationStop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.buttonClassificationStop.Location = new System.Drawing.Point(92, 3);
+            this.buttonClassificationStop.Name = "buttonClassificationStop";
+            this.buttonClassificationStop.Size = new System.Drawing.Size(83, 30);
+            this.buttonClassificationStop.TabIndex = 1;
+            this.buttonClassificationStop.Text = "Stop";
+            this.buttonClassificationStop.UseVisualStyleBackColor = true;
+            this.buttonClassificationStop.Click += new System.EventHandler(this.OnClassificationStopButton_Click);
+            // 
+            // buttonClassificationStart
+            // 
+            this.buttonClassificationStart.Dock = System.Windows.Forms.DockStyle.Top;
+            this.buttonClassificationStart.Location = new System.Drawing.Point(3, 3);
+            this.buttonClassificationStart.Name = "buttonClassificationStart";
+            this.buttonClassificationStart.Size = new System.Drawing.Size(83, 30);
+            this.buttonClassificationStart.TabIndex = 0;
+            this.buttonClassificationStart.Text = "Start";
+            this.buttonClassificationStart.UseVisualStyleBackColor = true;
+            this.buttonClassificationStart.Click += new System.EventHandler(this.OnClassificationStartButton_Click);
             // 
             // fileInput2
             // 
@@ -411,69 +503,11 @@ namespace DocClass
             this.fileInput2.Size = new System.Drawing.Size(357, 27);
             this.fileInput2.TabIndex = 0;
             // 
-            // groupBoxLearningActions
-            // 
-            this.groupBoxLearningActions.Controls.Add(this.buttonLearningStop);
-            this.groupBoxLearningActions.Controls.Add(this.buttonLearningStart);
-            this.groupBoxLearningActions.Location = new System.Drawing.Point(554, 4);
-            this.groupBoxLearningActions.Name = "groupBoxLearningActions";
-            this.groupBoxLearningActions.Size = new System.Drawing.Size(164, 63);
-            this.groupBoxLearningActions.TabIndex = 2;
-            this.groupBoxLearningActions.TabStop = false;
-            this.groupBoxLearningActions.Text = "Akcje";
-            // 
-            // groupBoxClassificationAction
-            // 
-            this.groupBoxClassificationAction.Controls.Add(this.buttonClassificationStop);
-            this.groupBoxClassificationAction.Controls.Add(this.buttonClassificationStart);
-            this.groupBoxClassificationAction.Location = new System.Drawing.Point(547, 4);
-            this.groupBoxClassificationAction.Name = "groupBoxClassificationAction";
-            this.groupBoxClassificationAction.Size = new System.Drawing.Size(169, 63);
-            this.groupBoxClassificationAction.TabIndex = 2;
-            this.groupBoxClassificationAction.TabStop = false;
-            this.groupBoxClassificationAction.Text = "Akcje";
-            // 
-            // buttonClassificationStart
-            // 
-            this.buttonClassificationStart.Location = new System.Drawing.Point(7, 18);
-            this.buttonClassificationStart.Name = "buttonClassificationStart";
-            this.buttonClassificationStart.Size = new System.Drawing.Size(75, 23);
-            this.buttonClassificationStart.TabIndex = 0;
-            this.buttonClassificationStart.Text = "Start";
-            this.buttonClassificationStart.UseVisualStyleBackColor = true;
-            // 
-            // buttonClassificationStop
-            // 
-            this.buttonClassificationStop.Location = new System.Drawing.Point(88, 18);
-            this.buttonClassificationStop.Name = "buttonClassificationStop";
-            this.buttonClassificationStop.Size = new System.Drawing.Size(75, 23);
-            this.buttonClassificationStop.TabIndex = 1;
-            this.buttonClassificationStop.Text = "Stop";
-            this.buttonClassificationStop.UseVisualStyleBackColor = true;
-            // 
-            // buttonLearningStart
-            // 
-            this.buttonLearningStart.Location = new System.Drawing.Point(0, 20);
-            this.buttonLearningStart.Name = "buttonLearningStart";
-            this.buttonLearningStart.Size = new System.Drawing.Size(75, 23);
-            this.buttonLearningStart.TabIndex = 0;
-            this.buttonLearningStart.Text = "Start";
-            this.buttonLearningStart.UseVisualStyleBackColor = true;
-            // 
-            // buttonLearningStop
-            // 
-            this.buttonLearningStop.Location = new System.Drawing.Point(81, 18);
-            this.buttonLearningStop.Name = "buttonLearningStop";
-            this.buttonLearningStop.Size = new System.Drawing.Size(75, 23);
-            this.buttonLearningStop.TabIndex = 1;
-            this.buttonLearningStop.Text = "Stop";
-            this.buttonLearningStop.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(735, 463);
+            this.ClientSize = new System.Drawing.Size(960, 505);
             this.Controls.Add(this.splitContainerMain);
             this.Controls.Add(this.menuStripMain);
             this.MainMenuStrip = this.menuStripMain;
@@ -484,27 +518,24 @@ namespace DocClass
             this.splitContainerMain.Panel1.ResumeLayout(false);
             this.splitContainerMain.Panel2.ResumeLayout(false);
             this.splitContainerMain.ResumeLayout(false);
-            this.groupBoxClasificationMethode.ResumeLayout(false);
-            this.groupBoxClasificationMethode.PerformLayout();
             this.groupBoxDictionary.ResumeLayout(false);
             this.groupBoxDictionary.PerformLayout();
             this.groupBoxDocumentRepresentation.ResumeLayout(false);
             this.groupBoxDocumentRepresentation.PerformLayout();
             this.tabControlUse.ResumeLayout(false);
             this.tabPageLearning.ResumeLayout(false);
-            this.splitContainerLearning.Panel1.ResumeLayout(false);
-            this.splitContainerLearning.Panel2.ResumeLayout(false);
-            this.splitContainerLearning.Panel2.PerformLayout();
-            this.splitContainerLearning.ResumeLayout(false);
+            this.mLearningTableLayoutPanel.ResumeLayout(false);
             this.groupBoxLearningFile.ResumeLayout(false);
+            this.groupBoxLearningActions.ResumeLayout(false);
+            this.mStartStopTableLayoutPanel.ResumeLayout(false);
+            this.splitContainerLearning.ResumeLayout(false);
             this.tabPageClasyfication.ResumeLayout(false);
             this.splitContainerClasification.Panel1.ResumeLayout(false);
-            this.splitContainerClasification.Panel2.ResumeLayout(false);
-            this.splitContainerClasification.Panel2.PerformLayout();
             this.splitContainerClasification.ResumeLayout(false);
+            this.mClassificationTableLayoutPanel.ResumeLayout(false);
             this.groupBoxClasificationFile.ResumeLayout(false);
-            this.groupBoxLearningActions.ResumeLayout(false);
             this.groupBoxClassificationAction.ResumeLayout(false);
+            this.mClassStartStoptableLayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -514,7 +545,6 @@ namespace DocClass
 
         private System.Windows.Forms.MenuStrip menuStripMain;
         private System.Windows.Forms.SplitContainer splitContainerMain;
-        private System.Windows.Forms.GroupBox groupBoxClasificationMethode;
         private System.Windows.Forms.GroupBox groupBoxDictionary;
         private System.Windows.Forms.GroupBox groupBoxDocumentRepresentation;
         private System.Windows.Forms.ToolStripMenuItem programToolStripMenuItemProgram;
@@ -525,28 +555,31 @@ namespace DocClass
         private System.Windows.Forms.SplitContainer splitContainerLearning;
         private System.Windows.Forms.GroupBox groupBoxLearningFile;
         private System.Windows.Forms.GroupBox groupBoxLearningParameters;
-        private System.Windows.Forms.Label labelLearningResults;
         private FileInput fileInput1;
         private System.Windows.Forms.SplitContainer splitContainerClasification;
         private System.Windows.Forms.GroupBox groupBoxClasificationFile;
         private FileInput fileInput2;
         private System.Windows.Forms.GroupBox groupBoxClasificationParameters;
         private FileInput fileInput3;
-        private System.Windows.Forms.Label labeClasificationResults;
         private RadioButtonDictionary radioButtonDictionaryFixed;
         private RadioButtonDictionary radioButtonDictionaryCtfIdf;
         private RadioButtonDictionary radioButtonDictionaryFrequance;
         private RadioButtonDocumentRepresentation radioButtonDocumentRepresentationBinary;
         private RadioButtonDocumentRepresentation radioButtonDocumentRepresentationOwn;
         private RadioButtonDocumentRepresentation radioButtonDocumentRepresentationTfIdf;
-        private RadioButtonClassification radioButtonClassificationRadialNeural;
-        private RadioButtonClassification radioButtonClassificationBayes;
         private System.Windows.Forms.GroupBox groupBoxLearningActions;
         private System.Windows.Forms.Button buttonLearningStop;
         private System.Windows.Forms.Button buttonLearningStart;
         private System.Windows.Forms.GroupBox groupBoxClassificationAction;
         private System.Windows.Forms.Button buttonClassificationStop;
         private System.Windows.Forms.Button buttonClassificationStart;
+        private System.Windows.Forms.ToolStripMenuItem metodaKlasyfikacjiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem BayesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem RadialNetworkToolStripMenuItem;
+        private System.Windows.Forms.TableLayoutPanel mLearningTableLayoutPanel;
+        private System.Windows.Forms.TableLayoutPanel mStartStopTableLayoutPanel;
+        private System.Windows.Forms.TableLayoutPanel mClassificationTableLayoutPanel;
+        private System.Windows.Forms.TableLayoutPanel mClassStartStoptableLayoutPanel;
     }
 }
 

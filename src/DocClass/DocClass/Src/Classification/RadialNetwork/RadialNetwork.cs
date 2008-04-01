@@ -18,6 +18,11 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         public const int HIDDEN_LAYER_MAX_NEURON_COUNT = 40;
 
+        /// <summary>
+        /// Wspolczynnik uczenia sieci
+        /// </summary>
+        public const double eta = 0.3;
+
         #endregion
 
         #region private variables
@@ -27,8 +32,6 @@ namespace DocClass.Src.Classification.RadialNetwork
         
         //neurony radialne warstwy ukrytej
         private Collection<INeuron> neuronHiddenLayer;
-
-
 
         //centra funkcji gaussa
         private List<double[]> cellCenters;
@@ -105,6 +108,17 @@ namespace DocClass.Src.Classification.RadialNetwork
             return result;
         }
 
+        private void printMatrix(double[,] matrix)
+        {
+            for (int x = 0; x < matrix.GetLength(1); x++)
+            {
+                for (int y = 0; y < matrix.GetLength(1); y++)
+                {
+                    Console.Write("\t{1}", matrix[y, x]);
+                }
+            }
+        }
+
         /// <summary>
         /// Uczenie warstwy wyjsciowej
         /// </summary>
@@ -112,9 +126,11 @@ namespace DocClass.Src.Classification.RadialNetwork
         private void OutputLayerLearning(List<double[]> outputDesirableData)
         {
             double[,] greenmatrix = Pseudoinverse.Solve(CreateGreenMatrix());
+            Console.WriteLine(Matrix.ToString(greenmatrix));
             for (int i = 0; i < neuronOutputLayer.Count ; i++)
             {
-                outputLayerNeutonWeights.Add(Matrix.Multiply(greenmatrix, outputDesirableData[i]));
+                double[] weight = Matrix.Multiply(greenmatrix, outputDesirableData[i]);
+                outputLayerNeutonWeights.Add(weight);
             }
         }
 
@@ -159,33 +175,71 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <param name="errorFactorVector"></param>
         private void CorrectErrorsInHiddenLayer(double[] errorFactorVector)
         {
-            throw new Exception("The method or operation is not implemented.");
+            //dla kazdej kalsy wyjsciowej
+            for (int i = 0; i < DocumentClass.CathegoriesCount; i++)
+            {
+                // kazdego neuronu warstwy ukrytej
+                for (int j = 0; j < neuronHiddenLayer.Count; j++)
+                {
+                    ((RadialNeuron)neuronHiddenLayer[j]).CorrectFactors(dE_dc(i, j), dE_dSigma(i, j));
+                }
+            }
         }
 
         /// <summary>
-        /// Funkcja z definicji
-        /// Uzywana do poprawy wspolczynnikow warstwy ukrytej neuronow
+        /// Funkcja y z definicji uzywana do modyfikacji wag neuronow radialnych
         /// </summary>
-        /// <param name="i"></param>
-        /// <param name="k"></param>
-        /// <param name="x"></param>
+        /// <param name="fi"></param>
         /// <returns></returns>
-        private double u(int i, int k, double[] x)
+        private double y(double[] xk)
         {
             double result = 0;
-            for (int ii = 0; ii < x.Length; ii++)
+            foreach( RadialNeuron neu in neuronHiddenLayer)
             {
-                //x[i] - c
+                result += neu.fi(neu.u2(xk));
             }
-
             return result;
         }
 
+        /// <summary>
+        /// Gradient funkcji gaussa wzgledem c
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        private double dE_dc(int nth_Output, int nth_Neuron)
+        {
+            double result = 0;
+            RadialNeuron radialNeuron = (RadialNeuron)neuronHiddenLayer[nth_Neuron];
+            double[] inputVector;
+            double exp;
+            for (int i = 0; i < learningData.DataVectors.Count; i++)
+            {
+                inputVector = learningData.InputVectors[i];
+                exp = Math.Pow(Math.E, radialNeuron.u(inputVector) * radialNeuron.u(inputVector));
+                result += ((y(learningData.InputVectors[i]) - (learningData.OutputVectors[nth_Output])[i]) * exp);
+            }
+            return result;
+        }
 
-
-
-
-
+                /// <summary>
+        /// Gradient funkcji gaussa wzgledem sigma
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        private double dE_dSigma(int nth_Output, int nth_Neuron)
+        {
+            double result = 0;
+            RadialNeuron radialNeuron = (RadialNeuron)neuronHiddenLayer[nth_Neuron];
+            double[] inputVector;
+            double exp;
+            for (int i = 0; i < learningData.DataVectors.Count; i++)
+            {
+                inputVector = learningData.InputVectors[i];
+                exp = Math.Pow(Math.E, radialNeuron.u(inputVector) * radialNeuron.u3(inputVector));
+                result += ((y(learningData.InputVectors[i]) - (learningData.OutputVectors[nth_Output])[i]) * exp);
+            }
+            return result;
+        }
 
         #endregion
 

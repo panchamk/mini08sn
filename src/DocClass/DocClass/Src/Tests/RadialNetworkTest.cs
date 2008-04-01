@@ -5,6 +5,7 @@ using NUnit.Framework;
 using DocClass.Src.Classification;
 using DocClass.Src.Classification.RadialNetwork;
 using DocClass.Src.Dictionaries;
+using System.Diagnostics;
 
 namespace DocClass.Src.Tests
 {

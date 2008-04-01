@@ -22,7 +22,7 @@ namespace DocClass.Src.Tests
             testedClassificator = new RadialNetwork(4, 2);
             Console.WriteLine("Instance crated");
             Assert.IsNotNull(testedClassificator);
-            dictionary = new DictionaryFake(1000);
+            dictionary = new DictionaryFake(10);
             dictionary.Init(null);
             Console.WriteLine("Instance crated");
             Assert.IsNotNull(testedClassificator);

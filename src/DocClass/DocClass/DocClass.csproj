@@ -29,7 +29,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <StartupObject>DocClass.Src.Preprocessing.PreprocessingTest</StartupObject>
+    <StartupObject>DocClass.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -173,6 +173,7 @@
     <Compile Include="Src\Preprocessing\ZIP\ZipManager.cs" />
     <Compile Include="Src\Tests\BayesClassificationTest.cs" />
     <Compile Include="Src\Tests\DictionaryFake.cs" />
+    <Compile Include="Src\Tests\PseudoinverseTest.cs" />
     <Compile Include="Src\Tests\RadialNetworkTest.cs" />
   </ItemGroup>
   <ItemGroup>

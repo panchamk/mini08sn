@@ -31,6 +31,14 @@ namespace DocClass.Src.Classification
         /// <param name="doc"></param>
         /// <returns></returns>
         public abstract int Classificate(IDocument doc);
+
+        /// <summary>
+        /// Klasyfikacja wektora
+        /// Wykona sie poprawnie przy zalozeniu, ze odpowiednie wspolrzedne wektora
+        /// odpowiadaja odpowiednim wspolrzednym wektorow uczacych
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns></returns>
         public abstract int Classificate(double[] vector);
         #endregion
 

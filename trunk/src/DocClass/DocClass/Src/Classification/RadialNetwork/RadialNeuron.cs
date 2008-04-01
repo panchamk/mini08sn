@@ -76,9 +76,92 @@ namespace DocClass.Src.Classification.RadialNetwork
             //TODO: rozwiazac kwestie szerokoscie zakresu losowania srodkow komorek
         }
 
+        
         #endregion
 
         #region public methods
+
+        public void CorrectFactors(double c, double sigma)
+        {
+            //TODO: przemyslec dokladnie to
+            throw new NotImplementedException();
+        }
+
+        //TODO: do sprawdzenia
+        /// <summary>
+        /// Funkcja z definicji
+        /// Uzywana do poprawy wspolczynnikow warstwy ukrytej neuronow
+        /// Licznik w kwadracie
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="k"></param>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public double u2(double[] x)
+        {
+            double result = 0;
+            for (int ii = 0; ii < x.Length; ii++)
+            {
+                result += (x[ii] - cellCenter[ii]) * (x[ii] - cellCenter[ii]) / sigma / sigma;
+            }
+
+            return result;
+        }
+
+        //TODO: do sprawdzenia
+        /// <summary>
+        /// Funkcja z definicji
+        /// Uzywana do poprawy wspolczynnikow warstwy ukrytej neuronow.
+        /// Licznik w kwadracie.
+        /// Mianownik w trzeciej potedze
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="k"></param>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public double u3(double[] x)
+        {
+            double result = 0;
+            for (int ii = 0; ii < x.Length; ii++)
+            {
+                result += (x[ii] - cellCenter[ii]) * (x[ii] - cellCenter[ii]) / sigma / sigma;
+            }
+
+            return result;
+        }
+
+        //TODO: do sprawdzenia
+        /// <summary>
+        /// Funkcja z definicji
+        /// Uzywana do poprawy wspolczynnikow warstwy ukrytej neuronow
+        /// Licznik bez kwadratu
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="k"></param>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public double u(double[] x)
+        {
+            double result = 0;
+            for (int ii = 0; ii < x.Length; ii++)
+            {
+                result += (x[ii] - cellCenter[ii]) / sigma / sigma;
+            }
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// Funkcja fi uzywana przy uczeniu warstwy ukrytej
+        /// </summary>
+        /// <param name="u"></param>
+        /// <returns></returns>
+        public double fi(double u)
+        {
+            return Math.Pow(Math.E, (-1 / 2 * u));
+        }
+
 
         //TODO: sprawdzic poprawnosc dzialania
         /// <summary>

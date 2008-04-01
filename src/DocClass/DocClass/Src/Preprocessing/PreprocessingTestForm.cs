@@ -78,7 +78,7 @@ namespace DocClass.Src.Preprocessing
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                FixedDictionary dictionary = new FixedDictionary(openFileDialog1.FileName,10);
+                FrequentDictionary dictionary = new FrequentDictionary(openFileDialog1.FileName, 10);
                 Console.WriteLine("Dictionary:");
                 Console.WriteLine(dictionary.ToString());
             }

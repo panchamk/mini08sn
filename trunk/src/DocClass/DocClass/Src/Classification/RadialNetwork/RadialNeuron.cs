@@ -81,7 +81,11 @@ namespace DocClass.Src.Classification.RadialNetwork
         #region public methods
 
         //TODO: sprawdzic poprawnosc dzialania
-        //funkcja gaussa dla neuronu
+        /// <summary>
+        /// Funkcja gaussa dla neuronu
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         public double GaussianFunction(double[] x)
         {
             double result = 0;

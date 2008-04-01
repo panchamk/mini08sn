@@ -40,8 +40,16 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         #region constructors
 
+        /// <summary>
+        /// Konstruktor domyslnej struktory neuronu
+        /// </summary>
         public RadialNetwork() : this(HIDDEN_LAYER_INIT_NEURON_COUNT, OUTPUT_LAYER_NEURON_COUNT) { }
 
+        /// <summary>
+        /// Konstruktor neuronu o okreslonej strukturze
+        /// </summary>
+        /// <param name="hiddenLayerInitNeuronCount">liczba neuronow ukrytych</param>
+        /// <param name="outputLayerNeuronCount">liczba neuronow wyjsciowych</param>
         public RadialNetwork(int hiddenLayerInitNeuronCount, int outputLayerNeuronCount)
         {
             neuronHiddenLayer = new Collection<INeuron>();
@@ -128,7 +136,9 @@ namespace DocClass.Src.Classification.RadialNetwork
             //koniec petli z warunkiem
             throw new Exception("The method or operation is not implemented.");
         }
-
+        /// <summary>
+        /// Uczenie warstwy ukrytej neuronow radialnych
+        /// </summary>
         private void HiddenLayerLearning()
         {
             for (int i = 0; i < learningData.DataVectors.Count; i++)
@@ -142,11 +152,24 @@ namespace DocClass.Src.Classification.RadialNetwork
         }
 
         #region hidden layer error correction
+
+        /// <summary>
+        /// Poprawa wspolczynnikow neuronow warstwy ukrytej
+        /// </summary>
+        /// <param name="errorFactorVector"></param>
         private void CorrectErrorsInHiddenLayer(double[] errorFactorVector)
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
+        /// <summary>
+        /// Funkcja z definicji
+        /// Uzywana do poprawy wspolczynnikow warstwy ukrytej neuronow
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="k"></param>
+        /// <param name="x"></param>
+        /// <returns></returns>
         private double u(int i, int k, double[] x)
         {
             double result = 0;
@@ -167,7 +190,13 @@ namespace DocClass.Src.Classification.RadialNetwork
         #endregion
 
 
-
+        /// <summary>
+        /// Liczbnie bledow warstwy wyjsciowej w celu przerzucenia ich do warstwy ukrytej i poprawy
+        /// wspolczynnikow radialnych neutronow
+        /// </summary>
+        /// <param name="outputLayer"></param>
+        /// <param name="desiredOutput"></param>
+        /// <returns></returns>
         private double[] ComputeErrors(double[] outputLayer, double[] desiredOutput)
         {
             double[] result = new double[outputLayer.Length];
@@ -178,11 +207,23 @@ namespace DocClass.Src.Classification.RadialNetwork
             return result;
         }
 
+
+        /// <summary>
+        /// Klasyfikacja dokumentu
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <returns></returns>
         public override int Classificate(DocClass.Src.DocumentRepresentation.IDocument doc)
         {
             return this.Classificate(this.learningData.FitDocumentToVector(doc));
         }
 
+        /// <summary>
+        /// Tworzenie wektora wyjsciowego z warstwy wyjsciowej na podstawie
+        /// wektora sygnalow do warstwy wyjsciowej dochodzacych
+        /// </summary>
+        /// <param name="inputVector"></param>
+        /// <returns></returns>
         private double[] OutputLayerForward(double[] inputVector)
         {
             double[] outputVector = new double[neuronOutputLayer.Count];
@@ -193,6 +234,12 @@ namespace DocClass.Src.Classification.RadialNetwork
             return outputVector;
         }
 
+        /// <summary>
+        /// Tworzenie wektora wyjsciowego z warstwy ukrytej na podstawie
+        /// wektora wejsciowego
+        /// </summary>
+        /// <param name="inputVector"></param>
+        /// <returns></returns>
         private double[] HiddenLayerForward(double[] inputVector)
         {
             double[] outputVector = new double[neuronHiddenLayer.Count];
@@ -202,6 +249,7 @@ namespace DocClass.Src.Classification.RadialNetwork
             }
             return outputVector;
         }
+
 
         public override int Classificate(double[] vector)
         {

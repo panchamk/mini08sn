@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
-using DocClass.src.classification;
+using DocClass.Src.Classification;
 using DocClass.Src.Dictionaries;
 using DocClass.Src.DocumentRepresentation;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections;
 
-namespace DocClass.src.classification.radialNetwork
+namespace DocClass.Src.Classification.RadialNetwork
 {
     class LinearNeuron : INeuron
     {

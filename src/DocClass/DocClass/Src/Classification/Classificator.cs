@@ -5,7 +5,7 @@ using DocClass.Src.DocumentRepresentation;
 using DocClass.Src.Dictionaries;
 using DocClass.Src.Learning;
 
-namespace DocClass.src.classification
+namespace DocClass.Src.Classification
 {
     abstract class Classificator
     {

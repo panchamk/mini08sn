@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DocClass.src.preprocessing
+namespace DocClass.Src.preprocessing
 {
     class PortersStemmer
     {

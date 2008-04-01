@@ -6,7 +6,7 @@ using DocClass.Src.Exceptions;
 using DocClass.Src.Dictionaries;
 using DocClass.Src.Learning.MathOperations;
 
-namespace DocClass.src.classification.radialNetwork
+namespace DocClass.Src.Classification.RadialNetwork
 {
     class RadialNetwork : Classificator
     {

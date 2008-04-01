@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
-using DocClass.src.classification;
-using DocClass.src.classification.radialNetwork;
-using DocClass.Src.Dictionaries;
 using DocClass.Src.Classification;
+using DocClass.Src.Classification.RadialNetwork;
+using DocClass.Src.Dictionaries;
 
 namespace DocClass.Src.Tests
 {

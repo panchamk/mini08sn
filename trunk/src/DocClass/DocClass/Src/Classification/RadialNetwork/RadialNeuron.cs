@@ -11,6 +11,7 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         private double[] cellCenter;
         private int vectorSize;
+        private static Random r = new Random();
 
         //sigma dla funkcji gaussa
         private double sigma = 0.5;
@@ -69,7 +70,6 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         private void RandomizeCellCenter()
         {
-            Random r = new Random((int)DateTime.Now.Ticks);
             cellCenter = new double[VecotrSize];
             for (int i = 0; i < VecotrSize; i++)
                 cellCenter[i] = r.NextDouble();

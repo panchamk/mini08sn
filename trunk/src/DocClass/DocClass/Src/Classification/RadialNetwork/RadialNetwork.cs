@@ -105,8 +105,13 @@ namespace DocClass.Src.Classification.RadialNetwork
                     }
                 }
             }
+#if DEBUG
+            Console.WriteLine("CreateGreenMatrix");
+            Console.WriteLine(Matrix.ToString(result));
+#endif
             return result;
         }
+
 
         private void printMatrix(double[,] matrix)
         {
@@ -125,11 +130,13 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <param name="outputDesirableData"></param>
         private void OutputLayerLearning(List<double[]> outputDesirableData)
         {
-            double[,] greenmatrix = Pseudoinverse.Solve(CreateGreenMatrix());
-            Console.WriteLine(Matrix.ToString(greenmatrix));
+            double[,] greenMatrix = CreateGreenMatrix();
+            Console.WriteLine(Matrix.ToString(greenMatrix));
+            double[,] invertedGreenmatrix = Pseudoinverse.Solve(greenMatrix);
+            Console.WriteLine(Matrix.ToString(invertedGreenmatrix));
             for (int i = 0; i < neuronOutputLayer.Count ; i++)
             {
-                double[] weight = Matrix.Multiply(greenmatrix, outputDesirableData[i]);
+                double[] weight = Matrix.Multiply(invertedGreenmatrix, outputDesirableData[i]);
                 outputLayerNeutonWeights.Add(weight);
             }
         }

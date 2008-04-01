@@ -8,10 +8,10 @@ using DocClass.Src.Classification.BayesClassificator;
 namespace DocClass.Src.Tests
 {
     [TestFixture]
-    class BayesClassificationTest
+    public class BayesClassificationTest
     {
         [Test]
-        public static void Test()
+        public void Test()
         {
             string[] boys = new String[] { "Michal", "Pawel", "Jan", "Wiktor", "Zbigniew", "Emil", "Tomek" };
             string[] girls = new String[] { "Wika", "Ania", "Aga", "Joanna", "Gosia", "Iwona" };
@@ -33,6 +33,7 @@ namespace DocClass.Src.Tests
             test = bayes.Classificate(testDiferent);
             if (test == 1) Console.WriteLine("Mysli ze to imiona dziewczyn.");
             else if (test == 0) Console.WriteLine("Mysli ze to imiona chlopcow.");
+            Assert.IsTrue(true);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace DocClass.Src.Dictionaries
         abstract public bool Init(ICollection<IDocument> docs);
         
         protected List<LearningPair> learningData;
+        protected List<String> wordList;
         //private List<IDocument> documents;
         private bool dataPrepared = false;
         private List<double[]> outputData;
@@ -98,6 +99,20 @@ namespace DocClass.Src.Dictionaries
         public double[] FitDocumentToVector(IDocument doc)
         {
             throw new NotImplementedException("a szkoda ;p");
+        }
+        /// <summary>
+        /// Zwraca listę słów należących do słownika oddzieloną spacjami.
+        /// </summary>
+        /// <returns>należących do słownika oddzieloną spacjami.</returns>
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (String word in wordList)
+            {
+                sb.Append(word);
+                sb.Append(' ');
+            }
+            return sb.ToString();
         }
     }
 }

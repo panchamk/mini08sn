@@ -9,3 +9,4 @@ obj\Debug\DocClass.pdb
 bin\Debug\DocClass.exe.config
 obj\Debug\DocClass.FileInput.resources
 obj\Debug\DocClass.Src.Preprocessing.PreprocessingTestForm.resources
+bin\Debug\nunit.framework.dll

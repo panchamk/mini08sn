@@ -18,10 +18,7 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         public const int HIDDEN_LAYER_MAX_NEURON_COUNT = 40;
 
-        /// <summary>
-        /// Wspolczynnik uczenia sieci
-        /// </summary>
-        public const double eta = 0.3;
+
 
         #endregion
 
@@ -92,10 +89,10 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <returns></returns>
         private double[,] CreateGreenMatrix()
         {
-            double[,] result = new double[learningData.DataVectors.Count, neuronHiddenLayer.Count + 1];
+            double[,] result = new double[learningData.DataVectors.Count, neuronHiddenLayer.Count];
             for (int y = 0; y < learningData.DataVectors.Count; y++)
             {
-                for (int x = 0; x < neuronHiddenLayer.Count + 1; x++)
+                for (int x = 0; x < neuronHiddenLayer.Count; x++)
                 {
                     if (x == 0)
                         result[y, x] = 1;
@@ -137,7 +134,7 @@ namespace DocClass.Src.Classification.RadialNetwork
             for (int i = 0; i < neuronOutputLayer.Count ; i++)
             {
                 double[] weight = Matrix.Multiply(invertedGreenmatrix, outputDesirableData[i]);
-                outputLayerNeutonWeights.Add(weight);
+                ((LinearNeuron)neuronOutputLayer[i]).Weights = weight;
             }
         }
 
@@ -157,7 +154,7 @@ namespace DocClass.Src.Classification.RadialNetwork
             OutputLayerLearning(learningData.OutputVectors);
             HiddenLayerLearning();
             //koniec petli z warunkiem
-            throw new Exception("The method or operation is not implemented.");
+            return true;
         }
         /// <summary>
         /// Uczenie warstwy ukrytej neuronow radialnych
@@ -166,12 +163,11 @@ namespace DocClass.Src.Classification.RadialNetwork
         {
             for (int i = 0; i < learningData.DataVectors.Count; i++)
             {
-                double[] hiddenOutput = HiddenLayerForward(learningData.InputVectors[i]);
-                double[] outputLayer = OutputLayerForward(hiddenOutput);
-                double[] errorFactorVector = ComputeErrors(outputLayer, learningData.DataVectors[i].OutputVector);
-                CorrectErrorsInHiddenLayer(errorFactorVector);
+                //double[] hiddenOutput = HiddenLayerForward(learningData.InputVectors[i]);
+                //double[] outputLayer = OutputLayerForward(hiddenOutput);
+                //double[] errorFactorVector = ComputeErrors(outputLayer, learningData.DataVectors[i].OutputVector);
+                CorrectErrorsInHiddenLayer(/*errorFactorVector*/);
             }
-            throw new Exception("The method or operation is not implemented.");
         }
 
         #region hidden layer error correction
@@ -180,7 +176,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// Poprawa wspolczynnikow neuronow warstwy ukrytej
         /// </summary>
         /// <param name="errorFactorVector"></param>
-        private void CorrectErrorsInHiddenLayer(double[] errorFactorVector)
+        private void CorrectErrorsInHiddenLayer(/*double[] errorFactorVector*/)
         {
             //dla kazdej kalsy wyjsciowej
             for (int i = 0; i < DocumentClass.CathegoriesCount; i++)
@@ -188,7 +184,15 @@ namespace DocClass.Src.Classification.RadialNetwork
                 // kazdego neuronu warstwy ukrytej
                 for (int j = 0; j < neuronHiddenLayer.Count; j++)
                 {
-                    ((RadialNeuron)neuronHiddenLayer[j]).CorrectFactors(dE_dc(i, j), dE_dSigma(i, j));
+                    double[] dif_c = new double[cellCenters.Count], 
+                        dif_sigma = new double[cellCenters.Count];
+                    for (int k = 0; k < cellCenters.Count; k++)
+                    {
+                        dif_c[k] = dE_dc(i, j, k);
+                        dif_sigma[k] = dE_dSigma(i, j, k);
+                      
+                    }
+                    ((RadialNeuron)neuronHiddenLayer[j]).CorrectFactors(dif_c, dif_sigma);
                 }
             }
         }
@@ -213,7 +217,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        private double dE_dc(int nth_Output, int nth_Neuron)
+        private double dE_dc(int nth_Output, int nth_Neuron, int k)
         {
             double result = 0;
             RadialNeuron radialNeuron = (RadialNeuron)neuronHiddenLayer[nth_Neuron];
@@ -222,7 +226,7 @@ namespace DocClass.Src.Classification.RadialNetwork
             for (int i = 0; i < learningData.DataVectors.Count; i++)
             {
                 inputVector = learningData.InputVectors[i];
-                exp = Math.Pow(Math.E, radialNeuron.u(inputVector) * radialNeuron.u(inputVector));
+                exp = Math.Pow(Math.E, radialNeuron.u2(inputVector) * radialNeuron.u(inputVector, k));
                 result += ((y(learningData.InputVectors[i]) - (learningData.OutputVectors[nth_Output])[i]) * exp);
             }
             return result;
@@ -233,7 +237,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        private double dE_dSigma(int nth_Output, int nth_Neuron)
+        private double dE_dSigma(int nth_Output, int nth_Neuron, int k)
         {
             double result = 0;
             RadialNeuron radialNeuron = (RadialNeuron)neuronHiddenLayer[nth_Neuron];
@@ -242,7 +246,7 @@ namespace DocClass.Src.Classification.RadialNetwork
             for (int i = 0; i < learningData.DataVectors.Count; i++)
             {
                 inputVector = learningData.InputVectors[i];
-                exp = Math.Pow(Math.E, radialNeuron.u(inputVector) * radialNeuron.u3(inputVector));
+                exp = Math.Pow(Math.E, radialNeuron.u2(inputVector) * radialNeuron.u3(inputVector, k));
                 result += ((y(learningData.InputVectors[i]) - (learningData.OutputVectors[nth_Output])[i]) * exp);
             }
             return result;

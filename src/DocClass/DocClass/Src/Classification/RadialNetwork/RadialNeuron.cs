@@ -10,17 +10,22 @@ namespace DocClass.Src.Classification.RadialNetwork
         #region private members
 
         private double[] cellCenter;
+        private double[] sigma;
         private int vectorSize;
         private static Random r = new Random();
 
+        /// <summary>
+        /// Wspolczynnik uczenia sieci
+        /// </summary>
+        public const double eta = 0.3;
+
         //sigma dla funkcji gaussa
-        private double sigma = 0.5;
 
         #endregion
 
         #region accessors
 
-        private int VecotrSize
+        private int VectorSize
         {
             get
             {
@@ -43,7 +48,7 @@ namespace DocClass.Src.Classification.RadialNetwork
             get
             {
                 if (cellCenter == null)
-                    RandomizeCellCenter();
+                    RandomizeCells();
                 return cellCenter;
             }
         }
@@ -60,7 +65,7 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         public double SetInput(double[] input)
         {
-            VecotrSize = input.Length;
+            VectorSize = input.Length;
             throw new Exception("The method or operation is not implemented.");
         }
 
@@ -68,11 +73,20 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         #region private methods
 
-        private void RandomizeCellCenter()
+
+        /// <summary>
+        /// Losuje wartosci CellCenter, czyli srodki komorek oraz wspolczynniki szerokosci komorek
+        /// </summary>
+        private void RandomizeCells()
         {
-            cellCenter = new double[VecotrSize];
-            for (int i = 0; i < VecotrSize; i++)
+            cellCenter = new double[VectorSize];
+            sigma = new double[VectorSize];
+            for (int i = 0; i < VectorSize; i++)
+            {
                 cellCenter[i] = r.NextDouble();
+                sigma[i] = r.NextDouble();
+
+            }
             //TODO: rozwiazac kwestie szerokoscie zakresu losowania srodkow komorek
         }
 
@@ -81,10 +95,14 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         #region public methods
 
-        public void CorrectFactors(double c, double sigma)
+        public void CorrectFactors(double[] c, double[] sigma)
         {
-            //TODO: przemyslec dokladnie to
-            throw new NotImplementedException();
+            for (int i = 0; i < c.Length; i++)
+            {
+                c[i] -= RadialNeuron.eta * c[i];
+                sigma[i] -= RadialNeuron.eta * sigma[i];
+            }
+            
         }
 
         //TODO: do sprawdzenia
@@ -102,7 +120,7 @@ namespace DocClass.Src.Classification.RadialNetwork
             double result = 0;
             for (int ii = 0; ii < x.Length; ii++)
             {
-                result += (x[ii] - cellCenter[ii]) * (x[ii] - cellCenter[ii]) / sigma / sigma;
+                result += (x[ii] - cellCenter[ii]) * (x[ii] - cellCenter[ii]) / sigma[ii] / sigma[ii];
             }
 
             return result;
@@ -119,15 +137,9 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <param name="k"></param>
         /// <param name="x"></param>
         /// <returns></returns>
-        public double u3(double[] x)
+        public double u3(double[] x, int t)
         {
-            double result = 0;
-            for (int ii = 0; ii < x.Length; ii++)
-            {
-                result += (x[ii] - cellCenter[ii]) * (x[ii] - cellCenter[ii]) / sigma / sigma;
-            }
-
-            return result;
+            return (x[t] - cellCenter[t]) * (x[t] - cellCenter[t]) / sigma[t] / sigma[t];
         }
 
         //TODO: do sprawdzenia
@@ -140,15 +152,9 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <param name="k"></param>
         /// <param name="x"></param>
         /// <returns></returns>
-        public double u(double[] x)
+        public double u(double[] x, int k)
         {
-            double result = 0;
-            for (int ii = 0; ii < x.Length; ii++)
-            {
-                result += (x[ii] - cellCenter[ii]) / sigma / sigma;
-            }
-
-            return result;
+            return (x[k] - cellCenter[k]) / sigma[k] / sigma[k];
         }
 
 
@@ -172,16 +178,16 @@ namespace DocClass.Src.Classification.RadialNetwork
         public double GaussianFunction(double[] x)
         {
             double result = 0;
-            VecotrSize = x.Length;
+            VectorSize = x.Length;
             if (x.Length != CellCenter.Length)
                 throw new IncompatibleArrayLength();
             int len = x.Length;
 
             for (int i = 0; i < len; i++)
             {
-                result += (CellCenter[i] - x[i]) * (CellCenter[i] - x[i]);
+                result += (CellCenter[i] - x[i]) * (CellCenter[i] - x[i]) / sigma[i] / sigma[i];
             }
-            result /= -2 * sigma * sigma;
+            result /= -2;
             return Math.Pow(Math.E, result);
         }
 

@@ -68,6 +68,15 @@
     <Compile Include="Src\Classification\BayesClassificator\Category.cs" />
     <Compile Include="Src\Classification\BayesClassificator\Node.cs" />
     <Compile Include="Src\Classification\BayesClassificator\Predicates.cs" />
+    <Compile Include="Src\Controller\Common\TypeClassificator.cs" />
+    <Compile Include="Src\Controller\Workers\ClassificationBackgroundWorker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Src\Controller\Workers\ClassificationManager.cs" />
+    <Compile Include="Src\Controller\Workers\LearningBackgroundWorker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Src\Controller\Workers\LearningManager.cs" />
     <Compile Include="Src\Dictionaries\WordCountPair.cs" />
     <Compile Include="Src\GUI\FileInput.cs">
       <SubType>UserControl</SubType>
@@ -192,6 +201,11 @@
       <ProductName>.NET Framework 3.5</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="References\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="References\nunit.framework.dll" />
+    <Content Include="References\Preprocessing\stopwords.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

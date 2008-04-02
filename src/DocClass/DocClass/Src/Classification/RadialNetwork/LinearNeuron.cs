@@ -13,7 +13,7 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         #region private members
 
-        List<double> weigths;
+        double[] weigths;
 
         #endregion
 
@@ -21,24 +21,39 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         public double Process(double[] vector)
         {
-            throw new Exception("The method or operation is not implemented.");
+            if (weigths == null)
+                CreateWeigths(vector.Length);
+            double result = 0;
+            for (int i = 0; i < weigths.Length; i++)
+            {
+                result += weigths[i] * vector[i];
+            }
+            return result;
+        }
+
+        private void CreateWeigths(int p)
+        {
+            this.weigths = new double[p];
         }
 
         public double SetInput(double[] input)
         {
-            throw new Exception("The method or operation is not implemented.");
+            this.weigths = new double[input.Length];
+            return 0;
         }
 
         #endregion
 
-        #region constructors
+        #region setters
 
-        public LinearNeuron()
+        public double[] Weights
         {
-            weigths = new List<double>();
+            set
+            {
+                this.weigths = value;
+            }
         }
 
         #endregion
-
     }
 }

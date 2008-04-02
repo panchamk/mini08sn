@@ -3,15 +3,13 @@ using System.Text;
 using NUnit.Framework;
 using System.Collections.Generic;
 using DocClass.Src.Learning.MathOperations;
-using MatrixBuild = dnAnalytics.LinearAlgebra.MatrixBuilder;
-using MatrixDN =  dnAnalytics.LinearAlgebra.Matrix;
 
 namespace DocClass.Src.Tests
 {
     [TestFixture]
     public class SVDTest
     {
-        [Test]
+        /*[Test]
         public static void Test()
         {
             double[,] a, u = null, vt = null;
@@ -57,10 +55,10 @@ namespace DocClass.Src.Tests
 
             Console.WriteLine(Matrix.ToString(Pseudoinverse.Solve(a)));
 
-        }
+        }*/
 
         [Test]
-        private static void SVDtest()
+        public static void SVDtest()
         {
             double[,] a = StartMatrix();
             double[,] svdA = Pseudoinverse.Solve(a);
@@ -74,23 +72,24 @@ namespace DocClass.Src.Tests
         private static double[,] StartMatrix()
         {
             int m = 4, n = 5, i, j;
-            double[,] a = new double[m + 1, n + 1];
-            for (i = 1; i <= m; i++)
+            double[,] a = new double[m, n];
+            for (i = 1; i < a.GetLength(0); i++)
             {
-                for (j = 1; j <= n; j++)
+                for (j = 1; j < a.GetLength(1); j++)
                 {
                     a[i, j] = 0;// i + j;
                 }
             }
-            a[1, 1] = 1; a[1, 5] = 2;
-            a[2, 3] = 3;
-            a[4, 2] = 4;
+            a[0, 0] = 1; a[0, 4] = 2;
+            a[1, 2] = 3;
+            a[3, 1] = 4;
+            Console.WriteLine();
             Console.WriteLine("Macierz poddana rozkladowi SVD");
             Console.WriteLine(Matrix.ToString(a));
             return a;
         }
 
-        public static void TestPseudoInverse()
+        /*public static void TestPseudoInverse()
         {
             double[,] a = new double[5, 6];
             a[1, 1] = 1; a[1, 5] = 2; a[2, 3] = 3; a[4, 2] = 4;
@@ -152,6 +151,6 @@ namespace DocClass.Src.Tests
                         matrix[i, j] = 1 / matrix[i, j];
                 }
             return matrix;
-        }
+        }*/
     }
 }

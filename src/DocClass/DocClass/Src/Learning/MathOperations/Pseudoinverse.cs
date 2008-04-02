@@ -1,6 +1,4 @@
 ﻿using System;
-using MatrixBuild = dnAnalytics.LinearAlgebra.MatrixBuilder;
-using MatrixDN = dnAnalytics.LinearAlgebra.Matrix;
 
 namespace DocClass.Src.Learning.MathOperations
 {

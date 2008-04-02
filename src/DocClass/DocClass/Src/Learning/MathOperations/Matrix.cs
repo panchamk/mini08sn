@@ -185,6 +185,36 @@ namespace DocClass.Src.Learning.MathOperations
             return ToString(matrix, false, false);
         }
 
+        /// <summary>
+        /// Zwieksza liczbe kolumn oraz wierszy o 1.
+        /// Pierwsza kolumna oraz wiersz sa wyzerowane.
+        /// </summary>
+        /// <param name="matrix">Macierz poddana peracji</param>
+        /// <returns>Nowa macierz z dadatkowa kolumna oraz wierszem.</returns>
+        public static double[,] ZeroComplete(double[,] matrix)
+        {
+            double[,] compMatrix = new double[matrix.GetLength(0) + 1, matrix.GetLength(1) + 1];
+            for (int i = 1; i < compMatrix.GetLength(0); i++)
+                for (int j = 1; j < compMatrix.GetLength(1); j++)
+                    compMatrix[i, j] = matrix[i - 1, j - 1];
+            return compMatrix;
+        }
+
+        /// <summary>
+        /// Metoda usuwa pierwsza kolumne i pierwszy wiersz z macierzy.
+        /// Wymiar macierzy wynikowej jest mniejszy o 1.
+        /// </summary>
+        /// <param name="matrix">Macierz poddana operacji.</param>
+        /// <returns>Macierz wynikowa.</returns>
+        public static double[,] RemoveFirstColumnAndFirstRow(double[,] matrix)
+        {
+            double[,] remMatrix = new double[matrix.GetLength(0) - 1, matrix.GetLength(1) - 1];
+            for (int i = 0; i < remMatrix.GetLength(0); i++)
+                for (int j = 0; j < remMatrix.GetLength(1); j++)
+                    remMatrix[i, j] = matrix[i + 1, j + 1];
+            return remMatrix;
+        }
+
         #endregion
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using dnAnalytics.LinearAlgebra;
+using dnAnalytics.LinearAlgebra.Decomposition;
 
 namespace DocClass.Src.Learning.MathOperations
 {
@@ -340,6 +342,28 @@ namespace DocClass.Src.Learning.MathOperations
                 return Decomposition(a, a.GetLength(0) - 1, a.GetLength(1) - 1, 2, 2, 2, ref w, ref u, ref vt);
             }
             catch
+            {
+                return false;
+            }
+        }
+
+        public static bool DecompositionByAnalitycs(double[,] a, ref double[,] w, ref double[,] u, ref double[,] vt)
+        {
+            try
+            {
+                dnAnalytics.LinearAlgebra.Matrix m = MatrixBuilder.CreateMatrix(a.GetLength(0), a.GetLength(1));
+                for (int i = 0; i < a.GetLength(0); i++)
+                    for (int j = 0; j < a.GetLength(1); j++)
+                        m[i, j] = a[i, j];
+                Console.WriteLine(m.ToString());
+                Svd svd = new Svd(m, true);
+                svd.Compute();
+                w = svd.W().ToArray();
+                u = svd.U().ToArray();
+                vt = svd.VT().ToArray();
+                return true;
+            }
+            catch(Exception exc)
             {
                 return false;
             }

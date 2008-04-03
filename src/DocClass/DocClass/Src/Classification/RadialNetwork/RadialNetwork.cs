@@ -128,9 +128,13 @@ namespace DocClass.Src.Classification.RadialNetwork
         private void OutputLayerLearning(List<double[]> outputDesirableData)
         {
             double[,] greenMatrix = CreateGreenMatrix();
-            Console.WriteLine(Matrix.ToString(greenMatrix));
             double[,] invertedGreenmatrix = Pseudoinverse.Solve(greenMatrix);
+#if DEBUG
+            Console.WriteLine(Matrix.ToString(greenMatrix));
+            
+
             Console.WriteLine(Matrix.ToString(invertedGreenmatrix));
+#endif
             for (int i = 0; i < neuronOutputLayer.Count ; i++)
             {
                 double[] weight = Matrix.Multiply(invertedGreenmatrix, outputDesirableData[i]);
@@ -151,8 +155,15 @@ namespace DocClass.Src.Classification.RadialNetwork
             this.learningData = dict;
 
             //TODO: to ma byc w petli
+
             OutputLayerLearning(learningData.OutputVectors);
             HiddenLayerLearning();
+            HiddenLayerLearning();
+            HiddenLayerLearning();
+            HiddenLayerLearning();
+            HiddenLayerLearning();
+            HiddenLayerLearning();
+
             //koniec petli z warunkiem
             return true;
         }
@@ -318,7 +329,25 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         public override int Classificate(double[] vector)
         {
-            throw new NotImplementedException();
+            double[] result = new double[neuronHiddenLayer.Count];
+            for (int i = 1; i < neuronHiddenLayer.Count; i++)
+            {
+                result[i] = neuronHiddenLayer[i].Process(vector);
+            }
+            double[] output = new double[neuronOutputLayer.Count];
+            int max = 0;
+            double vMax = -Double.MinValue;
+            for (int i = 0; i < neuronOutputLayer.Count; i++ )
+            {
+                output[i] = neuronOutputLayer[i].Process(result);
+                if (output[i] > vMax)
+                {
+                    max = i;
+                    vMax = output[i];
+                }
+            }
+            return max;
+
         }
 
         #endregion

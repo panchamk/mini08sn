@@ -7,11 +7,14 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using DocClass.Src.Dictionaries;
+using DocClass.Src.DocumentRepresentation;
+using DocClass.Src.Classification;
 
 namespace DocClass.Src.Preprocessing
 {
     public partial class PreprocessingTestForm : Form
     {
+        private FrequentDictionary dictionary;
         public PreprocessingTestForm()
         {
             InitializeComponent();
@@ -27,7 +30,7 @@ namespace DocClass.Src.Preprocessing
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Dictionary<int, String> stopWords = PreprocessingUtility.LoadStopWords("PreprocessingTest\\stopwords\\stopwords.txt");
+            Dictionary<int, String> stopWords = PreprocessingUtility.LoadStopWords("Preprocessing\\stopwords.txt");
             DateTime startTime = DateTime.Now;
             /*
             DirectoryInfo sourceDir = new DirectoryInfo(folderTextBox.Text);
@@ -55,20 +58,20 @@ namespace DocClass.Src.Preprocessing
         private void button4_Click(object sender, EventArgs e)
         {
             DateTime startTime = DateTime.Now;
-            PreprocessingUtility.SumWords(folderTextBox.Text,folderTextBox.Text + "\\summary.sum");
+            PreprocessingUtility.SumWords(folderTextBox.Text,folderTextBox.Text + "\\summary.all");
             MessageBox.Show("All done in:" + (DateTime.Now.Subtract(startTime)).ToString());
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Dictionary<int, String> stopWords = PreprocessingUtility.LoadStopWords("PreprocessingTest\\stopwords\\stopwords.txt");
+            Dictionary<int, String> stopWords = PreprocessingUtility.LoadStopWords("Preprocessing\\stopwords.txt");
 
             DirectoryInfo rootDirInfo = new DirectoryInfo(folderTextBox.Text);
             DateTime startTime = DateTime.Now;
             foreach (DirectoryInfo sourceDirInfo in rootDirInfo.GetDirectories())
             {
                 PreprocessingUtility.StemDir(sourceDirInfo.FullName, stopWords);
-                PreprocessingUtility.SumWords(sourceDirInfo.FullName + "\\stem\\", rootDirInfo + "\\" + sourceDirInfo.Name + ".sum");
+                PreprocessingUtility.SumWords(sourceDirInfo.FullName + "\\stem\\", rootDirInfo + "\\" + sourceDirInfo.Name + ".cat");
             }
             
             MessageBox.Show("All done in:" + (DateTime.Now.Subtract(startTime)).ToString());
@@ -78,10 +81,25 @@ namespace DocClass.Src.Preprocessing
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                FrequentDictionary dictionary = new FrequentDictionary(openFileDialog1.FileName, 10);
+                dictionary = new FrequentDictionary(openFileDialog1.FileName, 10);
                 Console.WriteLine("Dictionary:");
                 Console.WriteLine(dictionary.ToString());
             }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            DirectoryInfo dirInfo = new DirectoryInfo(folderTextBox.Text);
+            for (int i = 0; i < 3; i++)
+                Console.WriteLine(new OwnDocument(dirInfo.GetFiles()[i].FullName, dictionary, null));
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            DocumentClass.LoadFromFiles(folderTextBox.Text,PreprocessingConsts.CategoryFilePattern);
+            Console.Write(DocumentClass.ToString());
+            CategoryList categoryList = new CategoryList(folderTextBox.Text, PreprocessingConsts.CategoryFilePattern);
+            MessageBox.Show("Koniec");
         }
     }
 }

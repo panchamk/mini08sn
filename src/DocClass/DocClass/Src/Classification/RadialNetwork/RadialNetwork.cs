@@ -190,7 +190,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         private void CorrectErrorsInHiddenLayer(/*double[] errorFactorVector*/)
         {
             //dla kazdej kalsy wyjsciowej
-            for (int i = 0; i < DocumentClass.CathegoriesCount; i++)
+            for (int i = 0; i < DocumentClass.CategoriesCount; i++)
             {
                 // kazdego neuronu warstwy ukrytej
                 for (int j = 0; j < neuronHiddenLayer.Count; j++)

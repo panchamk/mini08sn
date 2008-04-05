@@ -30,7 +30,7 @@ namespace DocClass.Src.Learning
         {
             get
             {
-                double[] output = new double[DocumentClass.CathegoriesCount];
+                double[] output = new double[DocumentClass.CategoriesCount];
                 output[this.output] = 1;
                 return output;
             }

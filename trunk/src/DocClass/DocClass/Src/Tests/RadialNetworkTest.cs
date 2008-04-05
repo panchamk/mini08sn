@@ -26,8 +26,8 @@ namespace DocClass.Src.Tests
             dictionary.Init(null);
             Console.WriteLine("Instance crated");
             Assert.IsNotNull(testedClassificator);
-            DocumentClass.addClass("zero");
-            DocumentClass.addClass("jeden");
+            DocumentClass.AddClass("zero");
+            DocumentClass.AddClass("jeden");
             testedClassificator.Learn(dictionary);
             int counter = 0;
             int total = 100;

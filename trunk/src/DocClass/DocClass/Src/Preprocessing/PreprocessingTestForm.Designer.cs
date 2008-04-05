@@ -37,6 +37,8 @@ namespace DocClass.Src.Preprocessing
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -112,11 +114,33 @@ namespace DocClass.Src.Preprocessing
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(0, 229);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(291, 23);
+            this.button7.TabIndex = 7;
+            this.button7.Text = "Test IDocument";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(0, 258);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(291, 23);
+            this.button8.TabIndex = 8;
+            this.button8.Text = "Check CategoryList";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
             // PreprocessingTestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 273);
+            this.ClientSize = new System.Drawing.Size(292, 293);
+            this.Controls.Add(this.button8);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -142,5 +166,7 @@ namespace DocClass.Src.Preprocessing
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button8;
     }
 }

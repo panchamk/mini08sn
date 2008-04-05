@@ -46,7 +46,9 @@ namespace DocClass.Src.Preprocessing
             sr.Close();
             String text = sb.ToString();
             //dzielenie na wyrazy
-            String[] wordList = Regex.Split(text, @"[\W\s0-9]+"); //dziele w miejscu, gdzie s¹ znaki specjalne, spacje, lub cyfry
+            //dziele w miejscu, gdzie s¹ znaki specjalne, spacje, lub cyfry
+            //uwaga: znak _ nie jest zaliczany do znaków specjalnych
+            String[] wordList = Regex.Split(text, @"[\W\s0-9_]+"); 
             //obróbka s³ów
             Dictionary<String, int> wordsInFile = new Dictionary<String, int>();
             for (int i=0; i<wordList.Length;i++)

@@ -45,7 +45,11 @@ namespace DocClass.Src.Dictionaries
                 return outputData;
             }
         }
-         
+
+        public int Size
+        {
+            get { return wordList.Count; }
+        }
         //TODO: sprawdzic
         /// <summary>
         /// Tworzenie listy par uczacych
@@ -82,7 +86,7 @@ namespace DocClass.Src.Dictionaries
 
                 //tworzenie wektorow wyjsciowych w celu uzycia ich w macierzy greena
                 outputData = new List<double[]>();
-                for (int i = 0; i < DocumentClass.CathegoriesCount; i++)
+                for (int i = 0; i < DocumentClass.CategoriesCount; i++)
                 {
                     double[] vector = new double[learningData.Count];
                     outputData.Add(vector);
@@ -113,6 +117,11 @@ namespace DocClass.Src.Dictionaries
                 sb.Append(' ');
             }
             return sb.ToString();
+        }
+
+        public int GetWordIndex(String word)
+        {
+            return wordList.IndexOf(word);
         }
     }
 }

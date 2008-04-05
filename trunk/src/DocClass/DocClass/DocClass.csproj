@@ -29,7 +29,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <StartupObject>DocClass.Program</StartupObject>
+    <StartupObject>DocClass.Src.Preprocessing.PreprocessingTest</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -168,6 +168,8 @@
     <Compile Include="Src\Learning\MathOperations\Rotations.cs" />
     <Compile Include="Src\Learning\MathOperations\SVD.cs" />
     <Compile Include="Src\Learning\MathOperations\Vector.cs" />
+    <Compile Include="Src\Preprocessing\CategoryList.cs" />
+    <Compile Include="Src\Preprocessing\PreprocessingConsts.cs" />
     <Compile Include="Src\Preprocessing\PreprocessingUtility.cs" />
     <Compile Include="Src\Preprocessing\PortersStemmer.cs" />
     <Compile Include="Src\Preprocessing\PreprocessingTestForm.cs">
@@ -182,7 +184,6 @@
     <Compile Include="Src\Preprocessing\ZIP\ZipManager.cs" />
     <Compile Include="Src\Tests\BayesClassificationTest.cs" />
     <Compile Include="Src\Tests\DictionaryFake.cs" />
-    <Compile Include="Src\Tests\PseudoinverseTest.cs" />
     <Compile Include="Src\Tests\RadialNetworkTest.cs" />
   </ItemGroup>
   <ItemGroup>

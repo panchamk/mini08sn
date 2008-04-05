@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="Src\Controller\Workers\LearningManager.cs" />
     <Compile Include="Src\Dictionaries\WordCountPair.cs" />
+    <Compile Include="Src\DocumentRepresentation\PlainDocument.cs" />
     <Compile Include="Src\GUI\FileInput.cs">
       <SubType>UserControl</SubType>
     </Compile>

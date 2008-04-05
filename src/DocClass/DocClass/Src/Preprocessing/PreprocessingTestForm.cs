@@ -101,5 +101,15 @@ namespace DocClass.Src.Preprocessing
             CategoryList categoryList = new CategoryList(folderTextBox.Text, PreprocessingConsts.CategoryFilePattern);
             MessageBox.Show("Koniec");
         }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                PlainDocument pd = new PlainDocument(openFileDialog1.FileName);
+                Console.WriteLine(pd.GetAllWordsCount());
+                Console.WriteLine(pd.GetUniqueWordsCount());
+            }
+        }
     }
 }

@@ -111,5 +111,26 @@ namespace DocClass.Src.Preprocessing
                 Console.WriteLine(pd.GetUniqueWordsCount());
             }
         }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Dictionary<int, String> stopWords = PreprocessingUtility.LoadStopWords("Preprocessing\\stopwords.txt");
+
+                DirectoryInfo rootDirInfo = new DirectoryInfo(folderBrowserDialog1.SelectedPath);
+                DateTime startTime = DateTime.Now;
+                foreach (DirectoryInfo sourceDirInfo in rootDirInfo.GetDirectories())
+                {
+                    PreprocessingUtility.StemDir(sourceDirInfo.FullName, stopWords);
+                    PreprocessingUtility.SumWords(sourceDirInfo.FullName + "\\stem\\", rootDirInfo + "\\" + sourceDirInfo.Name + PreprocessingConsts.CategoryFileExtension);
+                }
+                //sumowanie kategorii
+                PreprocessingUtility.SumWords(folderBrowserDialog1.SelectedPath, rootDirInfo + "\\" + PreprocessingConsts.SummaryFileName);                
+
+                MessageBox.Show("All done in:" + (DateTime.Now.Subtract(startTime)).ToString());
+
+            }
+        }
     }
 }

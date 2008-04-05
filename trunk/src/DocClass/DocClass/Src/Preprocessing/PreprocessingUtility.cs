@@ -114,7 +114,7 @@ namespace DocClass.Src.Preprocessing
                 StreamReader sr = new StreamReader(sourceFile.FullName);
                 String tmpLine;
                 String[] splitedLine;
-                while ((tmpLine = sr.ReadLine()) != null)
+                while ((tmpLine = sr.ReadLine()) != null && tmpLine.Length > 0)
                 {
                     splitedLine = tmpLine.Split(' ');
                     String word = splitedLine[0];

@@ -93,7 +93,7 @@ namespace DocClass.Src.Preprocessing
             foreach (FileInfo sourceFile in sourceDirInfo.GetFiles())
             {
                 Console.WriteLine("Processing file: " + sourceFile);
-                destFile = sourceFile.Name + ".stm";
+                destFile = sourceFile.Name + PreprocessingConsts.StemmedFileExtension;//".stm";
                 PreprocessingUtility.StemFile(sourceFile.FullName, destDirInfo.FullName + "\\" + destFile, stopWords);
             }
         }

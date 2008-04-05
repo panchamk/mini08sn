@@ -13,5 +13,6 @@ namespace DocClass.Src.Preprocessing
         public const String CategoryFileExtension = ".cat";
         public const String StopWordsPath = "Preprocessing\\stopwords.txt";
         public const String SummaryFileName = "summary.all";
+        public const String StemmedFileExtension = ".stm";
     }
 }

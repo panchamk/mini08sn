@@ -58,5 +58,12 @@ namespace DocClass.Src.Preprocessing
         {
             get { return categoryList[DocumentClass.GetClassIndex(categoryName)]; }
         }
+        /// <summary>
+        /// Zwraca iloœæ kategorii, dla której przechowywane s¹ listy.
+        /// </summary>
+        public int CategoryCount
+        {
+            get { return categoryList.Count; }
+        }
     }
 }

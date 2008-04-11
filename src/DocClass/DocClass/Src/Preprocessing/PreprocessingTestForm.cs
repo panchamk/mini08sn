@@ -14,7 +14,6 @@ namespace DocClass.Src.Preprocessing
 {
     public partial class PreprocessingTestForm : Form
     {
-        private FrequentDictionary dictionary;
         public PreprocessingTestForm()
         {
             InitializeComponent();
@@ -58,12 +57,13 @@ namespace DocClass.Src.Preprocessing
         private void button4_Click(object sender, EventArgs e)
         {
             DateTime startTime = DateTime.Now;
-            PreprocessingUtility.SumWords(folderTextBox.Text,folderTextBox.Text + "\\summary.all");
+            PreprocessingUtility.SumWords(folderTextBox.Text,PreprocessingConsts.CategoryFilePattern,folderTextBox.Text + "\\summary.all");
             MessageBox.Show("All done in:" + (DateTime.Now.Subtract(startTime)).ToString());
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
+            /*
             Dictionary<int, String> stopWords = PreprocessingUtility.LoadStopWords("Preprocessing\\stopwords.txt");
 
             DirectoryInfo rootDirInfo = new DirectoryInfo(folderTextBox.Text);
@@ -75,13 +75,14 @@ namespace DocClass.Src.Preprocessing
             }
             
             MessageBox.Show("All done in:" + (DateTime.Now.Subtract(startTime)).ToString());
+             * */
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                dictionary = new FrequentDictionary(openFileDialog1.FileName, 10);
+                Dictionary dictionary = new FrequentDictionary(openFileDialog1.FileName, 100);
                 Console.WriteLine("Dictionary:");
                 Console.WriteLine(dictionary.ToString());
             }
@@ -89,9 +90,10 @@ namespace DocClass.Src.Preprocessing
 
         private void button7_Click(object sender, EventArgs e)
         {
+            Dictionary dictionary = new FrequentDictionary("Preprocessing\\" + PreprocessingConsts.SummaryFileName, 100);
             DirectoryInfo dirInfo = new DirectoryInfo(folderTextBox.Text);
-            for (int i = 0; i < 3; i++)
-                Console.WriteLine(new OwnDocument(dirInfo.GetFiles()[i].FullName, dictionary, null));
+            foreach (FileInfo fileInfo in dirInfo.GetFiles())
+                Console.WriteLine(new OwnDocument(fileInfo.FullName, dictionary, null));
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -114,8 +116,10 @@ namespace DocClass.Src.Preprocessing
 
         private void button10_Click(object sender, EventArgs e)
         {
+            folderBrowserDialog1.SelectedPath = Application.StartupPath;
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
+
                 Dictionary<int, String> stopWords = PreprocessingUtility.LoadStopWords("Preprocessing\\stopwords.txt");
 
                 DirectoryInfo rootDirInfo = new DirectoryInfo(folderBrowserDialog1.SelectedPath);
@@ -123,14 +127,19 @@ namespace DocClass.Src.Preprocessing
                 foreach (DirectoryInfo sourceDirInfo in rootDirInfo.GetDirectories())
                 {
                     PreprocessingUtility.StemDir(sourceDirInfo.FullName, stopWords);
-                    PreprocessingUtility.SumWords(sourceDirInfo.FullName + "\\stem\\", rootDirInfo + "\\" + sourceDirInfo.Name + PreprocessingConsts.CategoryFileExtension);
+                    PreprocessingUtility.SumWords(sourceDirInfo.FullName + "\\stem\\",PreprocessingConsts.StemmedFilePattern, rootDirInfo + "\\" + sourceDirInfo.Name + PreprocessingConsts.CategoryFileExtension);
                 }
                 //sumowanie kategorii
-                PreprocessingUtility.SumWords(folderBrowserDialog1.SelectedPath, rootDirInfo + "\\" + PreprocessingConsts.SummaryFileName);                
+                PreprocessingUtility.SumWords(folderBrowserDialog1.SelectedPath,PreprocessingConsts.CategoryFilePattern, rootDirInfo + "\\" + PreprocessingConsts.SummaryFileName);                
 
                 MessageBox.Show("All done in:" + (DateTime.Now.Subtract(startTime)).ToString());
 
             }
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

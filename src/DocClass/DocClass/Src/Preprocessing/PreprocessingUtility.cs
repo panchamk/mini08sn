@@ -69,7 +69,7 @@ namespace DocClass.Src.Preprocessing
                 //sw.Write(stemmer.ToString() + ' ');
             }
             //utworzenie pliku wynikowego
-            FileStream fs = new FileStream(destFileName, FileMode.CreateNew);
+            FileStream fs = new FileStream(destFileName, FileMode.Create);
             StreamWriter sw = new StreamWriter(fs);
             foreach (String word in wordsInFile.Keys)
                 sw.WriteLine(word + ' ' + wordsInFile[word]);
@@ -102,13 +102,14 @@ namespace DocClass.Src.Preprocessing
         /// Tworzy plik dla danego katalogu z posumowanymi wsystkimi wyst¹pieniami s³ów.
         /// Zostaje przeszukany tylko ten katalog - podkatalogi nie s¹ uwzglêdniane.
         /// </summary>
-        /// <param name="sourceDir">Katalog, w którym znajduj¹ siê pliki z danymi</param>
+        /// <param name="sourceDir">Katalog, w którym znajduj¹ siê pliki z danymi.</param>
+        /// <param name="pattern">Wzorzec plików, dla których ma byæ sumowanie np. ".cat".</param>
         /// <param name="resultFileName">Œcie¿ka do pliku z wynikami.</param>
-        public static void SumWords(String sourceDir, String resultFileName)
+        public static void SumWords(String sourceDir, String pattern, String resultFileName)
         {
             Dictionary<String, int> wordsInFiles = new Dictionary<String, int>();
             DirectoryInfo sourceDirInfo = new DirectoryInfo(sourceDir);
-            foreach (FileInfo sourceFile in sourceDirInfo.GetFiles()) //przechodzê przez wszystkie pliki
+            foreach (FileInfo sourceFile in sourceDirInfo.GetFiles(pattern)) //przechodzê przez wszystkie pliki
             {
                 Console.WriteLine("Processing file: " + sourceFile);
                 StreamReader sr = new StreamReader(sourceFile.FullName);
@@ -128,7 +129,7 @@ namespace DocClass.Src.Preprocessing
                 sr.Close();
             }
             //utworzenie pliku wynikowego
-            FileStream fs = new FileStream(resultFileName, FileMode.CreateNew);
+            FileStream fs = new FileStream(resultFileName, FileMode.Create);
             StreamWriter sw = new StreamWriter(fs);
             foreach (String word in wordsInFiles.Keys)
                 sw.WriteLine(word + ' ' + wordsInFiles[word]);

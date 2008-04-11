@@ -7,11 +7,11 @@ using DocClass.Src.Classification;
 
 namespace DocClass.Src.Dictionaries
 {
-    abstract class Dictionary
+    abstract class Dictionary:IEnumerable<String>
     {
 
         //int GetDesiredOutput();
-        abstract public bool Init(ICollection<IDocument> docs);
+        abstract public bool Init(ICollection<Document> docs);
         
         protected List<LearningPair> learningData;
         protected List<String> wordList;
@@ -100,7 +100,7 @@ namespace DocClass.Src.Dictionaries
             }
         }
 
-        public double[] FitDocumentToVector(IDocument doc)
+        public double[] FitDocumentToVector(Document doc)
         {
             throw new NotImplementedException("a szkoda ;p");
         }
@@ -123,5 +123,32 @@ namespace DocClass.Src.Dictionaries
         {
             return wordList.IndexOf(word);
         }
+
+        public String this[int index]
+        {
+            get
+            {
+                return wordList[index];
+            }
+        }
+
+        #region IEnumerable<string> Members
+
+        public IEnumerator<string> GetEnumerator()
+        {
+            for (int i = 0; i < wordList.Count; i++)
+                yield return wordList[i];
+        }
+
+        #endregion
+
+        #region IEnumerable Members
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<string>)this).GetEnumerator();
+        }
+
+        #endregion
     }
 }

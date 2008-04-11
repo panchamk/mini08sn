@@ -93,7 +93,7 @@ namespace DocClass.Src.Preprocessing
             Dictionary dictionary = new FrequentDictionary("Preprocessing\\" + PreprocessingConsts.SummaryFileName, 100);
             DirectoryInfo dirInfo = new DirectoryInfo(folderTextBox.Text);
             foreach (FileInfo fileInfo in dirInfo.GetFiles())
-                Console.WriteLine(new OwnDocument(fileInfo.FullName, dictionary, null));
+                Console.WriteLine(new BinaryDocument(fileInfo.FullName, dictionary, null));
         }
 
         private void button8_Click(object sender, EventArgs e)

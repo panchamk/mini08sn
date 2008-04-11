@@ -10,8 +10,7 @@ namespace DocClass.Src.DocumentRepresentation
 {
     class OwnDocument : Document
     {
-        private int ClassNo = -1;
-        private WordCountList wordCountList;
+        
 
         /// <summary>
         /// Tworzy dokument na podstawie wcześniej przygotowanego pliku.
@@ -33,13 +32,6 @@ namespace DocClass.Src.DocumentRepresentation
                     wordCountList.Add(new WordCountPair(word, 0));
         }
 
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (WordCountPair wordCountPair in wordCountList)
-                sb.AppendFormat("{0} {1}\n", wordCountPair.Word, wordCountPair.Count);
-
-            return sb.ToString();
-        }
+       
     }
 }

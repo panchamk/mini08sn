@@ -14,7 +14,7 @@ namespace DocClass.Src.Tests
             numOfData = num;
             this.learningData = new List<DocClass.Src.Learning.LearningPair>();
         }
-        public override bool Init(ICollection<DocClass.Src.DocumentRepresentation.IDocument> docs)
+        public override bool Init(ICollection<DocClass.Src.DocumentRepresentation.Document> docs)
         {
             Random r = new Random();
             double r1, r2;

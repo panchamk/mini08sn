@@ -77,7 +77,10 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Src\Controller\Workers\LearningManager.cs" />
-    <Compile Include="Src\Dictionaries\WordCountPair.cs" />
+    <Compile Include="Src\DocumentRepresentation\Document.cs" />
+    <Compile Include="Src\Preprocessing\Category.cs" />
+    <Compile Include="Src\Preprocessing\WordCountList.cs" />
+    <Compile Include="Src\Preprocessing\WordCountPair.cs" />
     <Compile Include="Src\DocumentRepresentation\PlainDocument.cs" />
     <Compile Include="Src\GUI\FileInput.cs">
       <SubType>UserControl</SubType>
@@ -152,7 +155,6 @@
     <Compile Include="Src\DocumentRepresentation\BinaryDocument.cs" />
     <Compile Include="Src\DocumentRepresentation\DocumentRepresentationType\DocumentRepresentationType.cs" />
     <Compile Include="Src\DocumentRepresentation\DocumentRepresentationType\DocumentRepresentationTypeUtil.cs" />
-    <Compile Include="Src\DocumentRepresentation\IDocument.cs" />
     <Compile Include="Src\DocumentRepresentation\OwnDocument.cs" />
     <Compile Include="Src\DocumentRepresentation\TfIdfDocument.cs" />
     <Compile Include="Src\Exceptions\IncompatibleArrayLength.cs" />

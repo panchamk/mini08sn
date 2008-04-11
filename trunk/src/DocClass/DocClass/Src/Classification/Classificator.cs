@@ -30,7 +30,7 @@ namespace DocClass.Src.Classification
         /// </summary>
         /// <param name="doc"></param>
         /// <returns></returns>
-        public abstract int Classificate(IDocument doc);
+        public abstract int Classificate(Document doc);
 
         /// <summary>
         /// Klasyfikacja wektora

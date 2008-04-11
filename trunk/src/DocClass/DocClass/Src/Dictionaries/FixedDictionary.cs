@@ -8,7 +8,7 @@ namespace DocClass.Src.Dictionaries
 {
     class FixedDictionary : Dictionary
     {
-        public override bool Init(ICollection<DocClass.Src.DocumentRepresentation.IDocument> docs)
+        public override bool Init(ICollection<DocClass.Src.DocumentRepresentation.Document> docs)
         {
             throw new Exception("The method or operation is not implemented.");
         }

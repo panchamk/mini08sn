@@ -93,7 +93,7 @@ namespace DocClass.Src.Classification.BayesClassificator
         /// </summary>
         /// <param name="doc"></param>
         /// <returns></returns>
-        public override int Classificate(IDocument doc)
+        public override int Classificate(Document doc)
         {
             return 0;
         }

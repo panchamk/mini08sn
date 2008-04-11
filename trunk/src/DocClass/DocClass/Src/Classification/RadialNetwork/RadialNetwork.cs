@@ -289,7 +289,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// </summary>
         /// <param name="doc"></param>
         /// <returns></returns>
-        public override int Classificate(DocClass.Src.DocumentRepresentation.IDocument doc)
+        public override int Classificate(DocClass.Src.DocumentRepresentation.Document doc)
         {
             return this.Classificate(this.learningData.FitDocumentToVector(doc));
         }

@@ -4,37 +4,15 @@ using System.Text;
 using DocClass.Src.Dictionaries;
 using System.IO;
 using DocClass.Src.Classification;
+using DocClass.Src.Preprocessing;
 
 namespace DocClass.Src.DocumentRepresentation
 {
-    class OwnDocument : IDocument
+    class OwnDocument : Document
     {
         private int ClassNo = -1;
-        private List<WordCountPair> wordCountList;
+        private WordCountList wordCountList;
 
-        #region IDocument Members
-
-        public int GetSpaceDimensionNumber()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        public Dictionary<string, double> ToMap()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        public bool AddWord(string word)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        public int DesiredOutput
-        {
-            get { throw new Exception("The method or operation is not implemented."); }
-        }
-
-        #endregion
         /// <summary>
         /// Tworzy dokument na podstawie wcześniej przygotowanego pliku.
         /// </summary>
@@ -43,34 +21,23 @@ namespace DocClass.Src.DocumentRepresentation
         /// <param name="className">Nazwa klasy, do której należy dany dokument lub null, jeśli klasa jest nieznana.</param>
         public OwnDocument(String fileName, Dictionary dictionary, String className)
         {
-            int allWords = 0;
-            wordCountList = new List<WordCountPair>(dictionary.Size);
+            wordCountList = new WordCountList();
             if (className != null)
                 ClassNo = DocumentClass.CategoriesCount;
 
-            StreamReader sr = new StreamReader(fileName);
-            //dodanie odpowiednich słów i ilości wystąpień do listy 
-            String tmpLine;
-            while ((tmpLine = sr.ReadLine()) != null)
-            {
-                WordCountPair wordCountPair = WordCountPair.Parse(tmpLine);
-                allWords += (int)wordCountPair.Count;
-                int wordIndex = dictionary.GetWordIndex(wordCountPair.Word);
-                if (wordIndex != -1)
-                    wordCountList.Add(wordCountPair);
-            }
-            sr.Close();
-            //podzielenie każdej wartości przez liczbę słów w dokumencie
-            foreach (WordCountPair wordCountPair in wordCountList)
-                wordCountPair.Count /= allWords;
-            
+            WordCountList listFromFile = new WordCountList(fileName);
+            foreach (String word in dictionary)
+                if (listFromFile[word] != -1)
+                    wordCountList.Add(new WordCountPair(word,listFromFile[word]/listFromFile.GetAllWordsCount()));
+                else
+                    wordCountList.Add(new WordCountPair(word, 0));
         }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
             foreach (WordCountPair wordCountPair in wordCountList)
-                sb.AppendFormat("{0} {1:#.##}\n", wordCountPair.Word, wordCountPair.Count);
+                sb.AppendFormat("{0} {1}\n", wordCountPair.Word, wordCountPair.Count);
 
             return sb.ToString();
         }

@@ -17,7 +17,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <summary>
         /// Wspolczynnik uczenia sieci
         /// </summary>
-        public const double eta = 0.3;
+        public const double eta = 0.03;
 
         //sigma dla funkcji gaussa
 
@@ -99,8 +99,8 @@ namespace DocClass.Src.Classification.RadialNetwork
         {
             for (int i = 0; i < c.Length; i++)
             {
-                c[i] -= RadialNeuron.eta * c[i];
-                sigma[i] -= RadialNeuron.eta * sigma[i];
+                cellCenter[i] -= RadialNeuron.eta * c[i];
+                this.sigma[i] -= RadialNeuron.eta * sigma[i];
             }
             
         }
@@ -120,7 +120,7 @@ namespace DocClass.Src.Classification.RadialNetwork
             double result = 0;
             for (int ii = 0; ii < x.Length; ii++)
             {
-                result += (x[ii] - cellCenter[ii]) * (x[ii] - cellCenter[ii]) / sigma[ii] / sigma[ii];
+                result += (x[ii] - CellCenter[ii]) * (x[ii] - CellCenter[ii]) / sigma[ii] / sigma[ii];
             }
 
             return result;
@@ -139,7 +139,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <returns></returns>
         public double u3(double[] x, int t)
         {
-            return (x[t] - cellCenter[t]) * (x[t] - cellCenter[t]) / sigma[t] / sigma[t];
+            return (x[t] - cellCenter[t]) * (x[t] - cellCenter[t]) / sigma[t] / sigma[t] / sigma[t];
         }
 
         //TODO: do sprawdzenia
@@ -193,5 +193,16 @@ namespace DocClass.Src.Classification.RadialNetwork
 
 
         #endregion
+
+        public override string ToString()
+        {
+            String result = String.Empty;
+            for (int i = 0; i < CellCenter.Length; i++)
+            {
+                result += "Center[" + i + "]=" + cellCenter[i];
+                result += "\nSigma[" + i + "]=" + this.sigma[i] + "\n";
+            }
+            return result;
+        }
     }
 }

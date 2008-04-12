@@ -22,16 +22,21 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         #endregion
 
+
         #region private variables
 
         //neurony liniowe warstwy wyjciowej
         private Collection<INeuron> neuronOutputLayer;
+
+        /// <summary>
+        /// Aktualna macierz greena
+        /// </summary>
+        double[,] greenMatrix;
         
         //neurony radialne warstwy ukrytej
         private Collection<INeuron> neuronHiddenLayer;
 
-        //centra funkcji gaussa
-        private List<double[]> cellCenters;
+
 
         //wagi poszczegolnych neuronow wyjsciowych;
         private List<double[]> outputLayerNeutonWeights;
@@ -54,7 +59,6 @@ namespace DocClass.Src.Classification.RadialNetwork
         {
             neuronHiddenLayer = new Collection<INeuron>();
             neuronOutputLayer = new Collection<INeuron>();
-            cellCenters = new List<double[]>();
             outputLayerNeutonWeights = new List<double[]>();
             for (int i = 0; i < hiddenLayerInitNeuronCount; i++)
             {
@@ -78,7 +82,23 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         #region private methods
 
-        
+        /// <summary>
+        /// Y liczone zgodnie ze wzorami na siec, jako iloczyn aktualnej macierzy greena i wektora wag dla danej klasy.
+        /// W tym przypadku jest to wektor wejsciowy
+        /// </summary>
+        /// <param name="w"></param>
+        /// <returns></returns>
+        private double[] y(double[] w)
+        {
+            double[] result;
+            if (greenMatrix != null)
+            {
+                result = Matrix.Multiply(greenMatrix, w);
+            }
+            else
+                throw new NullReferenceException();
+            return result;
+        }
 
 
         //TODO: Sprawdzic
@@ -89,10 +109,10 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <returns></returns>
         private double[,] CreateGreenMatrix()
         {
-            double[,] result = new double[learningData.DataVectors.Count, neuronHiddenLayer.Count];
+            double[,] result = new double[learningData.DataVectors.Count, neuronHiddenLayer.Count+1];
             for (int y = 0; y < learningData.DataVectors.Count; y++)
             {
-                for (int x = 0; x < neuronHiddenLayer.Count; x++)
+                for (int x = 0; x < neuronHiddenLayer.Count+1; x++)
                 {
                     if (x == 0)
                         result[y, x] = 1;
@@ -102,10 +122,10 @@ namespace DocClass.Src.Classification.RadialNetwork
                     }
                 }
             }
-#if DEBUG
-            Console.WriteLine("CreateGreenMatrix");
-            Console.WriteLine(Matrix.ToString(result));
-#endif
+//#if DEBUG
+//            Console.WriteLine("CreateGreenMatrix");
+//            Console.WriteLine(Matrix.ToString(result));
+//#endif
             return result;
         }
 
@@ -127,14 +147,14 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <param name="outputDesirableData"></param>
         private void OutputLayerLearning(List<double[]> outputDesirableData)
         {
-            double[,] greenMatrix = CreateGreenMatrix();
+            greenMatrix = CreateGreenMatrix();
             double[,] invertedGreenmatrix = Pseudoinverse.Solve(greenMatrix);
-#if DEBUG
-            Console.WriteLine(Matrix.ToString(greenMatrix));
+//#if DEBUG
+//            Console.WriteLine(Matrix.ToString(greenMatrix));
             
 
-            Console.WriteLine(Matrix.ToString(invertedGreenmatrix));
-#endif
+//            Console.WriteLine(Matrix.ToString(invertedGreenmatrix));
+//#endif
             for (int i = 0; i < neuronOutputLayer.Count ; i++)
             {
                 double[] weight = Matrix.Multiply(invertedGreenmatrix, outputDesirableData[i]);
@@ -146,99 +166,113 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         #region overriden methods
         /// <summary>
-        /// Procedura uczenia
+        /// Glowna procedura uczenia
         /// </summary>
-        /// <param name="docs"></param>
+        /// <param name="docs">dane uczace</param>
         /// <returns></returns>
         public override bool Learn(Dictionary dict)
         {
             this.learningData = dict;
-
-            //TODO: to ma byc w petli
-
-            OutputLayerLearning(learningData.OutputVectors);
-            HiddenLayerLearning();
-            HiddenLayerLearning();
-            HiddenLayerLearning();
-            HiddenLayerLearning();
-            HiddenLayerLearning();
-            HiddenLayerLearning();
-
-            //koniec petli z warunkiem
+            for (int i = 0; i < 30; i++)
+            {
+                OutputLayerLearning(learningData.OutputVectors);
+                PrintNetworkData(neuronOutputLayer);
+                HiddenLayerLearning();
+                //PrintNetworkData(neuronHiddenLayer);
+                HiddenLayerLearning();
+                //PrintNetworkData(neuronHiddenLayer);
+                HiddenLayerLearning();
+                //PrintNetworkData(neuronHiddenLayer);
+                HiddenLayerLearning();
+                //PrintNetworkData(neuronHiddenLayer);
+                HiddenLayerLearning();
+                //PrintNetworkData(neuronHiddenLayer);
+                HiddenLayerLearning();
+                PrintNetworkData(neuronHiddenLayer);
+            }
             return true;
+        }
+
+        private void PrintNetworkData(Collection<INeuron> ine)
+        {
+            for (int ij = 0; ij < ine.Count; ij++)
+                PrintNeuronData(ine, ij);
+            //PrintNeuronData(ine, 0);
+        }
+
+        private void PrintNeuronData(Collection<INeuron> ine, int ij)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Neuron nr: " + ij);
+            Console.WriteLine(ine[ij].ToString());
         }
         /// <summary>
         /// Uczenie warstwy ukrytej neuronow radialnych
         /// </summary>
         private void HiddenLayerLearning()
         {
-            for (int i = 0; i < learningData.DataVectors.Count; i++)
-            {
-                //double[] hiddenOutput = HiddenLayerForward(learningData.InputVectors[i]);
-                //double[] outputLayer = OutputLayerForward(hiddenOutput);
-                //double[] errorFactorVector = ComputeErrors(outputLayer, learningData.DataVectors[i].OutputVector);
-                CorrectErrorsInHiddenLayer(/*errorFactorVector*/);
-            }
-        }
-
-        #region hidden layer error correction
-
-        /// <summary>
-        /// Poprawa wspolczynnikow neuronow warstwy ukrytej
-        /// </summary>
-        /// <param name="errorFactorVector"></param>
-        private void CorrectErrorsInHiddenLayer(/*double[] errorFactorVector*/)
-        {
-            //dla kazdej kalsy wyjsciowej
-            for (int i = 0; i < DocumentClass.CategoriesCount; i++)
+            //dla kazdej klasy wyjsciowej
+            for (int k = 0; k < DocumentClass.CategoriesCount; k++)
             {
                 // kazdego neuronu warstwy ukrytej
-                for (int j = 0; j < neuronHiddenLayer.Count; j++)
+                for (int j = 0; j < neuronOutputLayer.Count; j++)
                 {
-                    double[] dif_c = new double[cellCenters.Count], 
-                        dif_sigma = new double[cellCenters.Count];
-                    for (int k = 0; k < cellCenters.Count; k++)
-                    {
-                        dif_c[k] = dE_dc(i, j, k);
-                        dif_sigma[k] = dE_dSigma(i, j, k);
-                      
-                    }
+                    double[] dif_c = new double[neuronHiddenLayer.Count],
+                        dif_sigma = new double[neuronHiddenLayer.Count];
+                    //for (int k = 0; k < neuronHiddenLayer.Count; k++)
+                    //{
+                        dif_c = dE_dc(k, j);
+                        dif_sigma = dE_dSigma(k, j);
+
+                    //}
                     ((RadialNeuron)neuronHiddenLayer[j]).CorrectFactors(dif_c, dif_sigma);
                 }
             }
         }
 
-        /// <summary>
-        /// Funkcja y z definicji uzywana do modyfikacji wag neuronow radialnych
-        /// </summary>
-        /// <param name="fi"></param>
-        /// <returns></returns>
-        private double y(double[] xk)
-        {
-            double result = 0;
-            foreach( RadialNeuron neu in neuronHiddenLayer)
-            {
-                result += neu.fi(neu.u2(xk));
-            }
-            return result;
-        }
+        #region hidden layer error correction
+
+        ///// <summary>
+        ///// Funkcja y z definicji uzywana do modyfikacji wag neuronow radialnych
+        ///// </summary>
+        ///// <param name="fi"></param>
+        ///// <returns></returns>
+        //private double y(double[] xk)
+        //{
+        //    double result = 0;
+        //    foreach( RadialNeuron neu in neuronHiddenLayer)
+        //    {
+        //        result += neu.fi(neu.u2(xk));
+        //    }
+        //    return result;
+        //}
 
         /// <summary>
         /// Gradient funkcji gaussa wzgledem c
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        private double dE_dc(int nth_Output, int nth_Neuron, int k)
+        private double[] dE_dc(int nth_Output, int nth_Neuron)
         {
-            double result = 0;
+            double[] result = new double[learningData.InputVectors[0].Length];
             RadialNeuron radialNeuron = (RadialNeuron)neuronHiddenLayer[nth_Neuron];
+            LinearNeuron linerarNeuron = (LinearNeuron)neuronOutputLayer[nth_Output];
             double[] inputVector;
             double exp;
-            for (int i = 0; i < learningData.DataVectors.Count; i++)
+            double maxValue;
+            for (int wsp = 0; wsp < result.Length; wsp++)
             {
-                inputVector = learningData.InputVectors[i];
-                exp = Math.Pow(Math.E, radialNeuron.u2(inputVector) * radialNeuron.u(inputVector, k));
-                result += ((y(learningData.InputVectors[i]) - (learningData.OutputVectors[nth_Output])[i]) * exp);
+                for (int i = 0; i < learningData.DataVectors.Count; i++)
+                {
+                    inputVector = learningData.InputVectors[i];
+                    exp = Math.Pow(Math.E, -radialNeuron.u2(inputVector)/2 );
+                    result[wsp] += (y(linerarNeuron.Weights)[i] - 
+                        (learningData.OutputVectors[nth_Output])[i]) * linerarNeuron.Weights[nth_Neuron] * 
+                        exp * radialNeuron.u(inputVector, wsp);
+                   // Console.WriteLine(y(linerarNeuron.Weights)[i] + " - " +
+                   //     (learningData.OutputVectors[nth_Output])[i]+ " = " + (y(linerarNeuron.Weights)[i] -
+                   //     (learningData.OutputVectors[nth_Output])[i]));
+                }
             }
             return result;
         }
@@ -248,19 +282,40 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        private double dE_dSigma(int nth_Output, int nth_Neuron, int k)
+        private double[] dE_dSigma(int nth_Output, int nth_Neuron)
         {
-            double result = 0;
+            double[] result = new double[learningData.InputVectors[0].Length];
             RadialNeuron radialNeuron = (RadialNeuron)neuronHiddenLayer[nth_Neuron];
+            LinearNeuron linerarNeuron = (LinearNeuron)neuronOutputLayer[nth_Output];
             double[] inputVector;
             double exp;
-            for (int i = 0; i < learningData.DataVectors.Count; i++)
+            double maxValue;
+            for (int wsp = 0; wsp < result.Length; wsp++)
             {
-                inputVector = learningData.InputVectors[i];
-                exp = Math.Pow(Math.E, radialNeuron.u2(inputVector) * radialNeuron.u3(inputVector, k));
-                result += ((y(learningData.InputVectors[i]) - (learningData.OutputVectors[nth_Output])[i]) * exp);
+                for (int i = 0; i < learningData.DataVectors.Count; i++)
+                {
+                    inputVector = learningData.InputVectors[i];
+                    exp = Math.Pow(Math.E, -radialNeuron.u2(inputVector) / 2);
+                    result[wsp] += (y(linerarNeuron.Weights)[i] -
+                        (learningData.OutputVectors[nth_Output])[i]) * linerarNeuron.Weights[nth_Neuron] *
+                        exp * radialNeuron.u3(inputVector, wsp);
+                    //Console.WriteLine(y(linerarNeuron.Weights)[i] + " - " +
+                    //    (learningData.OutputVectors[nth_Output])[i] + " = " + (y(linerarNeuron.Weights)[i] -
+                    //    (learningData.OutputVectors[nth_Output])[i]));
+                }
             }
             return result;
+            //double[] result;
+            //RadialNeuron radialNeuron = (RadialNeuron)neuronHiddenLayer[nth_Neuron];
+            //double[] inputVector;
+            //double exp;
+            //for (int i = 0; i < learningData.DataVectors.Count; i++)
+            //{
+            //    inputVector = learningData.InputVectors[i];
+            //    exp = Math.Pow(Math.E, radialNeuron.u2(inputVector) * radialNeuron.u3(inputVector, nth_Neuron));
+            //    result += ((learningData.OutputVectors[nth_Output][i] - (learningData.OutputVectors[nth_Output])[i]) * exp);
+            //}
+            //return result;
         }
 
         #endregion
@@ -329,25 +384,40 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         public override int Classificate(double[] vector)
         {
-            double[] result = new double[neuronHiddenLayer.Count];
-            for (int i = 1; i < neuronHiddenLayer.Count; i++)
-            {
-                result[i] = neuronHiddenLayer[i].Process(vector);
-            }
-            double[] output = new double[neuronOutputLayer.Count];
+            double vMax = Double.MinValue;
+            double[] output = NetworkOutputVector(vector);
+
             int max = 0;
-            double vMax = -Double.MinValue;
-            for (int i = 0; i < neuronOutputLayer.Count; i++ )
+            for (int i = 0; i < output.Length; i++)
             {
-                output[i] = neuronOutputLayer[i].Process(result);
                 if (output[i] > vMax)
                 {
                     max = i;
                     vMax = output[i];
                 }
             }
+            Console.Write("                ");
+            for (int i = 0; i < output.Length; i++)
+                Console.Write("   " + output[i].ToString());
+            Console.WriteLine();
             return max;
 
+        }
+
+        private double[] NetworkOutputVector(double[] vector)
+        {
+            double[] result = new double[neuronHiddenLayer.Count];
+            for (int i = 0; i < neuronHiddenLayer.Count; i++)
+            {
+                result[i] = neuronHiddenLayer[i].Process(vector);
+            }
+            double[] output = new double[neuronOutputLayer.Count];
+
+            for (int i = 0; i < neuronOutputLayer.Count; i++)
+            {
+                output[i] = neuronOutputLayer[i].Process(result);
+            }
+            return output;
         }
 
         #endregion

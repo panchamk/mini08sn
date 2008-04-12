@@ -14,15 +14,15 @@ namespace DocClass.Src.Tests
     {
         Classificator testedClassificator;
         Dictionary dictionary;
-
+        Random r = new Random();
 
         [Test]
         public void Tests()
         {
-            testedClassificator = new RadialNetwork(5, 2);
+            testedClassificator = new RadialNetwork(12, 2);
             Console.WriteLine("Instance crated");
             Assert.IsNotNull(testedClassificator);
-            dictionary = new DictionaryFake(1000);
+            dictionary = new DictionaryFake(100);
             dictionary.Init(null);
             Console.WriteLine("Instance crated");
             Assert.IsNotNull(testedClassificator);
@@ -53,12 +53,12 @@ namespace DocClass.Src.Tests
 
         private int desiredOutput(double[] dict)
         {
-            return  (dict[0] < 0.5 && dict[1] < 0.5 || dict[0] > 0.5 && dict[1] > 0.5) ? 1 : 0;
+            return  (dict[0] < 0.5 && dict[1] > 0.5 || dict[0] > 0.5 && dict[1] < 0.5) ? 1 : 0;
         }
 
         private double[] GenTestVector()
         {
-            Random r = new Random();
+            
             double r1, r2;
 
             double[] dict = new double[2];

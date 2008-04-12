@@ -26,20 +26,21 @@ namespace DocClass.Src.Classification.RadialNetwork
             double result = 0;
             for (int i = 0; i < weigths.Length; i++)
             {
-                result += weigths[i] * vector[i];
+                if (i == 0)
+                    result += weigths[i];
+                else
+                    result += weigths[i] * vector[i-1];
             }
             return result;
         }
 
+        /// <summary>
+        /// Tworzenie wektora wag dla neuronow wyjsciowych
+        /// </summary>
+        /// <param name="p">Liczba neuronow w wartwie ukrytej</param>
         private void CreateWeigths(int p)
         {
             this.weigths = new double[p];
-        }
-
-        public double SetInput(double[] input)
-        {
-            this.weigths = new double[input.Length];
-            return 0;
         }
 
         #endregion
@@ -52,8 +53,22 @@ namespace DocClass.Src.Classification.RadialNetwork
             {
                 this.weigths = value;
             }
+            get
+            {
+                return this.weigths;
+            }
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            String result = String.Empty;
+            for (int i = 0; i < weigths.Length; i++)
+            {
+                result += "Wagi[" + i + "]=" + this.weigths[i]+ "\n";
+            }
+            return result;
+        }
     }
 }

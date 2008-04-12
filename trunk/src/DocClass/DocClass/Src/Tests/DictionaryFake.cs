@@ -25,7 +25,7 @@ namespace DocClass.Src.Tests
                 dict["0"] = r1 = r.NextDouble();
                 dict["1"] = r2 = r.NextDouble();
 
-                LearningPair lp = new LearningPair(dict, (r1 < 0.5 && r2 < 0.5 || r1 > 0.5 && r2 > 0.5) ? 1 : 0);
+                LearningPair lp = new LearningPair(dict, (r1 < 0.5 && r2 > 0.5 || r1 > 0.5 && r2 < 0.5) ? 1 : 0);
                 this.learningData.Add(lp);
             }
             return true;

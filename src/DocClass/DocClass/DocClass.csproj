@@ -69,6 +69,7 @@
     <Compile Include="Src\Classification\BayesClassificator\Node.cs" />
     <Compile Include="Src\Classification\BayesClassificator\Predicates.cs" />
     <Compile Include="Src\Controller\Common\TypeClassificator.cs" />
+    <Compile Include="Src\Controller\Controler.cs" />
     <Compile Include="Src\Controller\Workers\ClassificationBackgroundWorker.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -79,6 +80,7 @@
     <Compile Include="Src\Controller\Workers\LearningManager.cs" />
     <Compile Include="Src\DocumentRepresentation\Document.cs" />
     <Compile Include="Src\Preprocessing\Category.cs" />
+    <Compile Include="Src\Preprocessing\LearningDocInfo.cs" />
     <Compile Include="Src\Preprocessing\WordCountList.cs" />
     <Compile Include="Src\Preprocessing\WordCountPair.cs" />
     <Compile Include="Src\DocumentRepresentation\PlainDocument.cs" />
@@ -174,7 +176,6 @@
     <Compile Include="Src\Preprocessing\CategoryList.cs" />
     <Compile Include="Src\Preprocessing\PreprocessingConsts.cs" />
     <Compile Include="Src\Preprocessing\PreprocessingUtility.cs" />
-    <Compile Include="Src\Preprocessing\PortersStemmer.cs" />
     <Compile Include="Src\Preprocessing\PreprocessingTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,7 +184,7 @@
     </Compile>
     <Compile Include="Src\Preprocessing\Stemmer.cs" />
     <Compile Include="Src\Preprocessing\PreprocessingTest.cs" />
-    <Compile Include="Src\Preprocessing\StopWordsRemover.cs" />
+    <Compile Include="Src\Preprocessing\WordInfo.cs" />
     <Compile Include="Src\Preprocessing\ZIP\ZipManager.cs" />
     <Compile Include="Src\Tests\BayesClassificationTest.cs" />
     <Compile Include="Src\Tests\DictionaryFake.cs" />

@@ -19,7 +19,7 @@ namespace DocClass.Src.DocumentRepresentation
         {
             wordCountList = new WordCountList();
             if (className != null)
-                ClassNo = DocumentClass.CategoriesCount;
+                ClassNo = DocumentClass.GetClassIndex(className);
 
             WordCountList listFromFile = new WordCountList(fileName);
             foreach (String word in dictionary)

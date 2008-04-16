@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 namespace DocClass.Src.Preprocessing
 {
@@ -107,24 +108,30 @@ namespace DocClass.Src.Preprocessing
         /// <param name="resultFileName">Œcie¿ka do pliku z wynikami.</param>
         public static void SumWords(String sourceDir, String pattern, String resultFileName)
         {
-            Dictionary<String, int> wordsInFiles = new Dictionary<String, int>();
+            //Dictionary<String, int> wordsInFiles = new Dictionary<String, int>();
+            Dictionary<String, WordInfo> wordsInFiles = new Dictionary<String, WordInfo>();
             DirectoryInfo sourceDirInfo = new DirectoryInfo(sourceDir);
             foreach (FileInfo sourceFile in sourceDirInfo.GetFiles(pattern)) //przechodzê przez wszystkie pliki
             {
                 Console.WriteLine("Processing file: " + sourceFile);
                 StreamReader sr = new StreamReader(sourceFile.FullName);
                 String tmpLine;
-                String[] splitedLine;
+                //String[] splittedLine;
                 while ((tmpLine = sr.ReadLine()) != null && tmpLine.Length > 0)
                 {
-                    splitedLine = tmpLine.Split(' ');
-                    String word = splitedLine[0];
-                    int count = int.Parse(splitedLine[1]);
+                    //splittedLine = tmpLine.Split(' ');
+                    //String word = splitedLine[0];
+                    //int count = int.Parse(splitedLine[1]);
+                    WordInfo newWordInfo = WordInfo.Parse(tmpLine);
                     //dodanie s³owa do s³ownika lub zwiêkszenie jego wartoœci
-                    if (wordsInFiles.ContainsKey(word))
-                        wordsInFiles[word] += count;
+                    if (wordsInFiles.ContainsKey(newWordInfo.Word))
+                    {
+                        WordInfo storedWordInfo = wordsInFiles[newWordInfo.Word];
+                        storedWordInfo.Count += newWordInfo.Count;
+                        storedWordInfo.InclDocCount += newWordInfo.InclDocCount;
+                    }
                     else
-                        wordsInFiles.Add(word, count);
+                        wordsInFiles.Add(newWordInfo.Word, newWordInfo);
                 }
                 sr.Close();
             }
@@ -132,11 +139,22 @@ namespace DocClass.Src.Preprocessing
             FileStream fs = new FileStream(resultFileName, FileMode.Create);
             StreamWriter sw = new StreamWriter(fs);
             foreach (String word in wordsInFiles.Keys)
-                sw.WriteLine(word + ' ' + wordsInFiles[word]);
+                sw.WriteLine(wordsInFiles[word]);
             sw.Close();
             fs.Close();
 
         }
-        
+        /// <summary>
+        /// Onlicza wartoœæ Tf-Idf.
+        /// </summary>
+        /// <param name="wordCount">Iloœæ wyst¹pieñ danego s³owa w dokumencie.</param>
+        /// <param name="wordsInDocCount">Iloœæ wszystkich s³ów w dokumencie.</param>
+        /// <param name="allDocCount">Iloœæ wszystkich dokumentów.</param>
+        /// <param name="inclDocCount">Iloœæ dokumentów zawieraj¹cych dane s³owo.</param>
+        /// <returns></returns>
+        public static double ComputeTfIdf(double wordCount, double wordsInDocCount, double allDocCount, double inclDocCount)
+        {
+            return (wordCount / wordsInDocCount) * Math.Log10(allDocCount / inclDocCount);
+        }
     }
 }

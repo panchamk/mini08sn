@@ -22,14 +22,15 @@ namespace DocClass.Src.DocumentRepresentation
         {
             wordCountList = new WordCountList();
             if (className != null)
-                ClassNo = DocumentClass.CategoriesCount;
-
+                ClassNo = DocumentClass.GetClassIndex(className);
             WordCountList listFromFile = new WordCountList(fileName);
+            int wordsInDoc = listFromFile.GetAllWordsCount();
             foreach (String word in dictionary)
                 if (listFromFile[word] != -1)
-                    wordCountList.Add(new WordCountPair(word,listFromFile[word]/listFromFile.GetAllWordsCount()));
+                    wordCountList.Add(new WordCountPair(word,listFromFile[word]/wordsInDoc));
                 else
                     wordCountList.Add(new WordCountPair(word, 0));
+
         }
 
        

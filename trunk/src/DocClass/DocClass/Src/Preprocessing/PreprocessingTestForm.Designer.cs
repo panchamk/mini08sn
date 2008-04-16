@@ -42,6 +42,7 @@ namespace DocClass.Src.Preprocessing
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -164,15 +165,26 @@ namespace DocClass.Src.Preprocessing
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(291, 23);
             this.button11.TabIndex = 11;
-            this.button11.Text = "button11";
+            this.button11.Text = "Test TfIdf Document";
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(0, 374);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(291, 23);
+            this.button12.TabIndex = 12;
+            this.button12.Text = "Test Ctf-Idf Diciotnary";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // PreprocessingTestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 368);
+            this.ClientSize = new System.Drawing.Size(292, 409);
+            this.Controls.Add(this.button12);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.button9);
@@ -208,5 +220,6 @@ namespace DocClass.Src.Preprocessing
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button button12;
     }
 }

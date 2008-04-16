@@ -22,8 +22,8 @@ namespace DocClass.Src.Preprocessing
         private void button1_Click(object sender, EventArgs e)
         {
             FileInfo fi = new FileInfo("proba1.stm");
-            
-            MessageBox.Show(fi.FullName.Substring(0,fi.FullName.LastIndexOf('.')));
+
+            MessageBox.Show(fi.FullName.Substring(0, fi.FullName.LastIndexOf('.')));
 
         }
 
@@ -44,7 +44,7 @@ namespace DocClass.Src.Preprocessing
             }
               */
             PreprocessingUtility.StemDir(folderTextBox.Text, stopWords);
-            MessageBox.Show("All done in:" + (DateTime.Now.Subtract(startTime)).ToString() );
+            MessageBox.Show("All done in:" + (DateTime.Now.Subtract(startTime)).ToString());
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -57,7 +57,7 @@ namespace DocClass.Src.Preprocessing
         private void button4_Click(object sender, EventArgs e)
         {
             DateTime startTime = DateTime.Now;
-            PreprocessingUtility.SumWords(folderTextBox.Text,PreprocessingConsts.CategoryFilePattern,folderTextBox.Text + "\\summary.all");
+            PreprocessingUtility.SumWords(folderTextBox.Text, PreprocessingConsts.CategoryFilePattern, folderTextBox.Text + "\\summary.all");
             MessageBox.Show("All done in:" + (DateTime.Now.Subtract(startTime)).ToString());
         }
 
@@ -98,7 +98,7 @@ namespace DocClass.Src.Preprocessing
 
         private void button8_Click(object sender, EventArgs e)
         {
-            DocumentClass.LoadFromFiles(folderTextBox.Text,PreprocessingConsts.CategoryFilePattern);
+            DocumentClass.LoadFromFiles(folderTextBox.Text, PreprocessingConsts.CategoryFilePattern);
             Console.Write(DocumentClass.ToString());
             CategoryList categoryList = new CategoryList(folderTextBox.Text, PreprocessingConsts.CategoryFilePattern);
             MessageBox.Show("Koniec");
@@ -127,10 +127,10 @@ namespace DocClass.Src.Preprocessing
                 foreach (DirectoryInfo sourceDirInfo in rootDirInfo.GetDirectories())
                 {
                     PreprocessingUtility.StemDir(sourceDirInfo.FullName, stopWords);
-                    PreprocessingUtility.SumWords(sourceDirInfo.FullName + "\\stem\\",PreprocessingConsts.StemmedFilePattern, rootDirInfo + "\\" + sourceDirInfo.Name + PreprocessingConsts.CategoryFileExtension);
+                    PreprocessingUtility.SumWords(sourceDirInfo.FullName + "\\stem\\", PreprocessingConsts.StemmedFilePattern, rootDirInfo + "\\" + sourceDirInfo.Name + PreprocessingConsts.CategoryFileExtension);
                 }
                 //sumowanie kategorii
-                PreprocessingUtility.SumWords(folderBrowserDialog1.SelectedPath,PreprocessingConsts.CategoryFilePattern, rootDirInfo + "\\" + PreprocessingConsts.SummaryFileName);                
+                PreprocessingUtility.SumWords(folderBrowserDialog1.SelectedPath, PreprocessingConsts.CategoryFilePattern, rootDirInfo + "\\" + PreprocessingConsts.SummaryFileName);
 
                 MessageBox.Show("All done in:" + (DateTime.Now.Subtract(startTime)).ToString());
 
@@ -139,7 +139,19 @@ namespace DocClass.Src.Preprocessing
 
         private void button11_Click(object sender, EventArgs e)
         {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                String summaryFilePath = Application.StartupPath + "\\Preprocessing\\" + PreprocessingConsts.SummaryFileName;
+                Dictionary dictionary = new FrequentDictionary(summaryFilePath, 100);
+                TfIdfDocument doc = new TfIdfDocument(openFileDialog1.FileName, dictionary, null, new LearningDocInfo(folderTextBox.Text,summaryFilePath));
+                Console.WriteLine(doc);
+            }
+        }
 
+        private void button12_Click(object sender, EventArgs e)
+        {
+            CtfIdfDictionary dictionary = new CtfIdfDictionary(folderTextBox.Text, folderTextBox.Text + "\\" + PreprocessingConsts.SummaryFileName,10);
+            Console.WriteLine(dictionary);
         }
     }
 }

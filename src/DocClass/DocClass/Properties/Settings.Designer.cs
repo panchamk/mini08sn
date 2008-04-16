@@ -25,7 +25,7 @@ namespace DocClass.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int clasificatorType {
             get {
                 return ((int)(this["clasificatorType"]));
@@ -56,6 +56,66 @@ namespace DocClass.Properties {
             }
             set {
                 this["dictionaryType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\Documents and Settings\\\\Tomi\\\\Pulpit\\\\rzeczy")]
+        public string pathDir {
+            get {
+                return ((string)(this["pathDir"]));
+            }
+            set {
+                this["pathDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string pathFile {
+            get {
+                return ((string)(this["pathFile"]));
+            }
+            set {
+                this["pathFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int hiddenLayerInitNeuronCount {
+            get {
+                return ((int)(this["hiddenLayerInitNeuronCount"]));
+            }
+            set {
+                this["hiddenLayerInitNeuronCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public int outputLayerNeuronCount {
+            get {
+                return ((int)(this["outputLayerNeuronCount"]));
+            }
+            set {
+                this["outputLayerNeuronCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".\\\\Preprocessing\\\\stopwords.txt")]
+        public string pathStopWords {
+            get {
+                return ((string)(this["pathStopWords"]));
+            }
+            set {
+                this["pathStopWords"] = value;
             }
         }
     }

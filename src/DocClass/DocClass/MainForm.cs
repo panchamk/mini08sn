@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using DocClass.Src.Dictionaries;
 using DocClass.Src.Classification;
 using DocClass.Src.DocumentRepresentation;
+using DocClass.Src.Controller;
 using System.Diagnostics;
 
 
@@ -18,6 +19,8 @@ namespace DocClass
     /// </summary>
     public partial class MainForm : Form
     {
+        private Controller controller = new Controller();
+
         public MainForm()
         {
             InitializeComponent();
@@ -80,6 +83,7 @@ namespace DocClass
         {
             this.buttonClassificationStop.Visible = true;
             this.buttonClassificationStart.Visible = false;
+            this.controller.Classificate(null);
         }
 
         private void buttonLearningStop1_Click(object sender, EventArgs e)
@@ -92,6 +96,8 @@ namespace DocClass
         {
             this.buttonLearningStop1.Visible = true;
             this.buttonLearningStart1.Visible = false;
+
+            this.controller.Learn();
         }
 
         #endregion

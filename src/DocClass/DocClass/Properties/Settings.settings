@@ -3,13 +3,28 @@
   <Profiles />
   <Settings>
     <Setting Name="clasificatorType" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="documentRepresentationType" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="dictionaryType" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="pathDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\\Documents and Settings\\Tomi\\Pulpit\\rzeczy</Value>
+    </Setting>
+    <Setting Name="pathFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="hiddenLayerInitNeuronCount" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="outputLayerNeuronCount" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="pathStopWords" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.\\Preprocessing\\stopwords.txt</Value>
     </Setting>
   </Settings>
 </SettingsFile>

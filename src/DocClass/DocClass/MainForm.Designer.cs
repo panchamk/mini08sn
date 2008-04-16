@@ -43,7 +43,13 @@ namespace DocClass
             this.folderBrowserDialogDateLoad = new System.Windows.Forms.FolderBrowserDialog();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.groupBoxDictionary = new System.Windows.Forms.GroupBox();
+            this.radioButtonDictionaryFrequance = new DocClass.RadioButtonDictionary();
+            this.radioButtonDictionaryFixed = new DocClass.RadioButtonDictionary();
+            this.radioButtonDictionaryCtfIdf = new DocClass.RadioButtonDictionary();
             this.groupBoxDocumentRepresentation = new System.Windows.Forms.GroupBox();
+            this.radioButtonDocumentRepresentationBinary = new DocClass.RadioButtonDocumentRepresentation();
+            this.radioButtonDocumentRepresentationOwn = new DocClass.RadioButtonDocumentRepresentation();
+            this.radioButtonDocumentRepresentationTfIdf = new DocClass.RadioButtonDocumentRepresentation();
             this.tabControlUse = new System.Windows.Forms.TabControl();
             this.tabPageClasyfication = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -79,12 +85,6 @@ namespace DocClass
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonLearningStart = new System.Windows.Forms.Button();
             this.buttonLearningStop = new System.Windows.Forms.Button();
-            this.radioButtonDictionaryFrequance = new DocClass.RadioButtonDictionary();
-            this.radioButtonDictionaryFixed = new DocClass.RadioButtonDictionary();
-            this.radioButtonDictionaryCtfIdf = new DocClass.RadioButtonDictionary();
-            this.radioButtonDocumentRepresentationBinary = new DocClass.RadioButtonDocumentRepresentation();
-            this.radioButtonDocumentRepresentationOwn = new DocClass.RadioButtonDocumentRepresentation();
-            this.radioButtonDocumentRepresentationTfIdf = new DocClass.RadioButtonDocumentRepresentation();
             this.fileInput2 = new DocClass.FileInput();
             this.menuStripMain.SuspendLayout();
             this.splitContainerMain.Panel1.SuspendLayout();
@@ -227,27 +227,39 @@ namespace DocClass
             this.splitContainerMain.SplitterDistance = 145;
             this.splitContainerMain.TabIndex = 2;
             // 
+            // groupBoxDictionary
+            // 
+            this.groupBoxDictionary.Controls.Add(this.radioButtonDictionaryFrequance);
+            this.groupBoxDictionary.Controls.Add(this.radioButtonDictionaryFixed);
+            this.groupBoxDictionary.Controls.Add(this.radioButtonDictionaryCtfIdf);
+            this.groupBoxDictionary.Location = new System.Drawing.Point(232, 15);
+            this.groupBoxDictionary.Name = "groupBoxDictionary";
+            this.groupBoxDictionary.Size = new System.Drawing.Size(232, 100);
+            this.groupBoxDictionary.TabIndex = 1;
+            this.groupBoxDictionary.TabStop = false;
+            this.groupBoxDictionary.Text = "Dobieranie s³ów do s³ownika";
+            // 
             // radioButtonDictionaryFrequance
             // 
             this.radioButtonDictionaryFrequance.AutoSize = true;
+            this.radioButtonDictionaryFrequance.Checked = true;
             this.radioButtonDictionaryFrequance.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.Frequent;
             this.radioButtonDictionaryFrequance.Location = new System.Drawing.Point(25, 67);
             this.radioButtonDictionaryFrequance.Name = "radioButtonDictionaryFrequance";
             this.radioButtonDictionaryFrequance.Size = new System.Drawing.Size(67, 17);
             this.radioButtonDictionaryFrequance.TabIndex = 3;
+            this.radioButtonDictionaryFrequance.TabStop = true;
             this.radioButtonDictionaryFrequance.Text = "Frequent";
             this.radioButtonDictionaryFrequance.UseVisualStyleBackColor = true;
             // 
             // radioButtonDictionaryFixed
             // 
             this.radioButtonDictionaryFixed.AutoSize = true;
-            this.radioButtonDictionaryFixed.Checked = true;
             this.radioButtonDictionaryFixed.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.CtfIdf;
             this.radioButtonDictionaryFixed.Location = new System.Drawing.Point(25, 21);
             this.radioButtonDictionaryFixed.Name = "radioButtonDictionaryFixed";
             this.radioButtonDictionaryFixed.Size = new System.Drawing.Size(50, 17);
             this.radioButtonDictionaryFixed.TabIndex = 1;
-            this.radioButtonDictionaryFixed.TabStop = true;
             this.radioButtonDictionaryFixed.Text = "CtfIdf";
             this.radioButtonDictionaryFixed.UseVisualStyleBackColor = true;
             // 
@@ -261,6 +273,18 @@ namespace DocClass
             this.radioButtonDictionaryCtfIdf.TabIndex = 2;
             this.radioButtonDictionaryCtfIdf.Text = "Fixed";
             this.radioButtonDictionaryCtfIdf.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxDocumentRepresentation
+            // 
+            this.groupBoxDocumentRepresentation.Controls.Add(this.radioButtonDocumentRepresentationBinary);
+            this.groupBoxDocumentRepresentation.Controls.Add(this.radioButtonDocumentRepresentationOwn);
+            this.groupBoxDocumentRepresentation.Controls.Add(this.radioButtonDocumentRepresentationTfIdf);
+            this.groupBoxDocumentRepresentation.Location = new System.Drawing.Point(12, 15);
+            this.groupBoxDocumentRepresentation.Name = "groupBoxDocumentRepresentation";
+            this.groupBoxDocumentRepresentation.Size = new System.Drawing.Size(200, 100);
+            this.groupBoxDocumentRepresentation.TabIndex = 0;
+            this.groupBoxDocumentRepresentation.TabStop = false;
+            this.groupBoxDocumentRepresentation.Text = "Reprezentacja dokumentu";
             // 
             // radioButtonDocumentRepresentationBinary
             // 
@@ -295,31 +319,7 @@ namespace DocClass
             this.radioButtonDocumentRepresentationTfIdf.TabIndex = 0;
             this.radioButtonDocumentRepresentationTfIdf.TabStop = true;
             this.radioButtonDocumentRepresentationTfIdf.Text = "TfIdf";
-            this.radioButtonDocumentRepresentationTfIdf.UseVisualStyleBackColor = true;  
-            // 
-            // groupBoxDictionary
-            // 
-            this.groupBoxDictionary.Controls.Add(this.radioButtonDictionaryFrequance);
-            this.groupBoxDictionary.Controls.Add(this.radioButtonDictionaryFixed);
-            this.groupBoxDictionary.Controls.Add(this.radioButtonDictionaryCtfIdf);
-            this.groupBoxDictionary.Location = new System.Drawing.Point(232, 15);
-            this.groupBoxDictionary.Name = "groupBoxDictionary";
-            this.groupBoxDictionary.Size = new System.Drawing.Size(232, 100);
-            this.groupBoxDictionary.TabIndex = 1;
-            this.groupBoxDictionary.TabStop = false;
-            this.groupBoxDictionary.Text = "Dobieranie s³ów do s³ownika";
-            // 
-            // groupBoxDocumentRepresentation
-            // 
-            this.groupBoxDocumentRepresentation.Controls.Add(this.radioButtonDocumentRepresentationBinary);
-            this.groupBoxDocumentRepresentation.Controls.Add(this.radioButtonDocumentRepresentationOwn);
-            this.groupBoxDocumentRepresentation.Controls.Add(this.radioButtonDocumentRepresentationTfIdf);
-            this.groupBoxDocumentRepresentation.Location = new System.Drawing.Point(12, 15);
-            this.groupBoxDocumentRepresentation.Name = "groupBoxDocumentRepresentation";
-            this.groupBoxDocumentRepresentation.Size = new System.Drawing.Size(200, 100);
-            this.groupBoxDocumentRepresentation.TabIndex = 0;
-            this.groupBoxDocumentRepresentation.TabStop = false;
-            this.groupBoxDocumentRepresentation.Text = "Reprezentacja dokumentu";
+            this.radioButtonDocumentRepresentationTfIdf.UseVisualStyleBackColor = true;
             // 
             // tabControlUse
             // 
@@ -635,7 +635,7 @@ namespace DocClass
             this.buttonLearningStop1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonLearningStop1.Location = new System.Drawing.Point(110, 3);
+            this.buttonLearningStop1.Location = new System.Drawing.Point(102, 3);
             this.buttonLearningStop1.Name = "buttonLearningStop1";
             this.buttonLearningStop1.Size = new System.Drawing.Size(75, 31);
             this.buttonLearningStop1.TabIndex = 0;
@@ -649,7 +649,7 @@ namespace DocClass
             this.buttonLearningStart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonLearningStart1.Location = new System.Drawing.Point(8, 3);
+            this.buttonLearningStart1.Location = new System.Drawing.Point(3, 3);
             this.buttonLearningStart1.Name = "buttonLearningStart1";
             this.buttonLearningStart1.Size = new System.Drawing.Size(93, 31);
             this.buttonLearningStart1.TabIndex = 1;

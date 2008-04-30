@@ -21,6 +21,7 @@ namespace DocClass.Src.DocumentRepresentation
         /// <param name="className">Nazwa klasy, do której należy dany dokument lub null, jeśli klasa jest nieznana.</param>
         /// <param name="learningDocInfo">Obiekt zawierający informacje o wszystkich dokumentach uczących.</param>
         public TfIdfDocument(String fileName, Dictionary dictionary, String className, LearningDocInfo learningDocInfo)
+            : base(dictionary)
         {
             wordCountList = new WordCountList();
             if (className != null)

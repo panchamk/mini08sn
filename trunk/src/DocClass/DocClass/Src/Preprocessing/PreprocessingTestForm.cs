@@ -153,5 +153,14 @@ namespace DocClass.Src.Preprocessing
             CtfIdfDictionary dictionary = new CtfIdfDictionary(folderTextBox.Text, folderTextBox.Text + "\\" + PreprocessingConsts.SummaryFileName,10);
             Console.WriteLine(dictionary);
         }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            String summaryFilePath = Application.StartupPath + "\\Preprocessing\\" + PreprocessingConsts.SummaryFileName;
+            Dictionary dictionary = new FrequentDictionary(summaryFilePath, 100);
+            DocumentList dl = new DocumentList(folderTextBox.Text, dictionary, DocumentRepresentationType.Own, null, null);
+            foreach (Document doc in dl.GetDocumentList())
+                Console.WriteLine(doc);
+        }
     }
 }

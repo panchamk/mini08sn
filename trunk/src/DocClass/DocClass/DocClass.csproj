@@ -79,6 +79,7 @@
     </Compile>
     <Compile Include="Src\Controller\Workers\LearningManager.cs" />
     <Compile Include="Src\DocumentRepresentation\Document.cs" />
+    <Compile Include="Src\DocumentRepresentation\DocumentList.cs" />
     <Compile Include="Src\Preprocessing\Category.cs" />
     <Compile Include="Src\Preprocessing\LearningDocInfo.cs" />
     <Compile Include="Src\Preprocessing\WordCountList.cs" />

@@ -50,6 +50,18 @@ namespace DocClass.Src.Dictionaries
         {
             get { return wordList.Count; }
         }
+
+        public DictionaryType GetDictionaryType()
+        {
+            Type myType = GetType();
+            if (myType == typeof(CtfIdfDictionary))
+                return DictionaryType.CtfIdf;
+            if (myType == typeof(FixedDictionary))
+                return DictionaryType.Fixed;
+            if (myType == typeof(FrequentDictionary))
+                return DictionaryType.Frequent;
+            throw new Exception("Unknown type: " + myType);
+        }
         //TODO: sprawdzic
         /// <summary>
         /// Tworzenie listy par uczacych

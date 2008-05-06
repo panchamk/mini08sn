@@ -70,6 +70,7 @@
     <Compile Include="Src\Classification\BayesClassificator\Predicates.cs" />
     <Compile Include="Src\Controller\Common\TypeClassificator.cs" />
     <Compile Include="Src\Controller\Controler.cs" />
+    <Compile Include="Src\Controller\OperationType.cs" />
     <Compile Include="Src\Controller\Workers\ClassificationBackgroundWorker.cs">
       <SubType>Component</SubType>
     </Compile>

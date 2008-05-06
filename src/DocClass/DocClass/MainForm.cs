@@ -9,7 +9,10 @@ using DocClass.Src.Dictionaries;
 using DocClass.Src.Classification;
 using DocClass.Src.DocumentRepresentation;
 using DocClass.Src.Controller;
+using DocClass.Src.Preprocessing;
 using System.Diagnostics;
+using System.IO;
+
 
 
 namespace DocClass
@@ -32,7 +35,10 @@ namespace DocClass
         private void MainForm_Load(object sender, EventArgs e)
         {
             splitContainerMain.Panel1Collapsed = true;
-            AddItemsToClassificationResults(new string[] { "testName", "testKategoria", "C:\\kapitanie.txt" });
+            
+            labelValuePathLearningDir.Text = Properties.Settings.Default.pathLearningDir;
+            labelValueNumbersHiddenNerons.Text = Properties.Settings.Default.hiddenLayerInitNeuronCount.ToString();
+            labelValueNumbersOutNerons.Text = Properties.Settings.Default.outputLayerNeuronCount.ToString();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -61,14 +67,50 @@ namespace DocClass
 
         private void directoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowFolderBrowserDialogDateLoad();
+            String pathTemp = ShowFolderBrowserDialogDateLoad();
+
+            OperationType operationType =  (OperationType)Properties.Settings.Default.operationType;
+            switch (operationType)
+            {
+                case OperationType.Learning:
+                    String pathSummaryTemp = pathTemp + "\\" + PreprocessingConsts.SummaryFileName;
+                    if (!System.IO.File.Exists(pathSummaryTemp))
+                    {
+                        MessageBox.Show("Dokonaj preprocessing'u dla danych ucz¹cych.");
+                        return;
+                    }
+
+                    Properties.Settings.Default.pathLearningDir = pathTemp;
+                    Properties.Settings.Default.pathSummaryFile = pathSummaryTemp;
+                    Properties.Settings.Default.numberAllWordsInDictionary = new WordCountList(pathSummaryTemp).GetUniqueWordsCount();
+
+                    labelValuePathLearningDir.Text = Properties.Settings.Default.pathLearningDir;
+                    labelValueWordNumber.Text = Properties.Settings.Default.numberAllWordsInDictionary.ToString();
+                    break;
+                case OperationType.Classification:
+                    Properties.Settings.Default.pathLearningDir = pathTemp;
+                    AddItemsToClassificationResultFtomDir(Properties.Settings.Default.pathLearningDir);
+                    break;
+                default:
+                    break;
+            }
+
+
+
+            
+
+
+
+            /*
+
+        */
         }
 
         private void dataGridViewClassificationResults_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 2)
             {
-                String path = dataGridViewClassificationResults.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                String path = (String)dataGridViewClassificationResults.Rows[e.RowIndex].Tag;
                 ShowFile(path);
             }
         }
@@ -94,10 +136,26 @@ namespace DocClass
 
         private void buttonLearningStart1_Click(object sender, EventArgs e)
         {
+            if (!System.IO.File.Exists(Properties.Settings.Default.pathLearningDir))
+            {
+                MessageBox.Show("Nie mo¿na odnaleœæ katalogu z danymi ucz¹cymi.");
+                return;
+            }
+
             this.buttonLearningStop1.Visible = true;
             this.buttonLearningStart1.Visible = false;
-
             this.controller.Learn();
+        }
+
+        /// <summary>
+        /// Zdarzenie wywo³ywane na zmiane zak³adki.
+        /// Ustawia ustawia zmienn¹ OperationType z Settingsów w zale¿noœci od tego co jest wybrane.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnTabControlUse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.operationType = this.tabControlUse.SelectedIndex;
         }
 
         #endregion
@@ -108,11 +166,21 @@ namespace DocClass
         /// Dodaje elementy do tabelki z wynikami klasyfikacji.
         /// </summary>
         /// <param name="tab"></param>
-        public void AddItemsToClassificationResults(String[] tab)
+        public void AddItemsToClassificationResults(String[] tab,String path)
         {
             DataGridViewRow dgv = new DataGridViewRow();
             dgv.CreateCells(dataGridViewClassificationResults, tab);
+            dgv.Tag = path;
             dataGridViewClassificationResults.Rows.Add(dgv);
+        }
+
+        private void AddItemsToClassificationResultFtomDir(String pathDir)
+        {
+            DirectoryInfo sourceDirInfo = new DirectoryInfo(pathDir);
+            foreach (FileInfo sourceFile in sourceDirInfo.GetFiles())
+            {
+                AddItemsToClassificationResults(new string[] { sourceFile.Name, "", "Podgl¹d"},sourceFile.FullName);
+            }
         }
 
         /// <summary>
@@ -179,6 +247,8 @@ namespace DocClass
         }
 
         #endregion
+
+
 
     }
 }

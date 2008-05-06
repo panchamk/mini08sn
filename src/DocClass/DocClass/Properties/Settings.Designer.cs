@@ -118,5 +118,65 @@ namespace DocClass.Properties {
                 this["pathStopWords"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("....")]
+        public string pathLearningDir {
+            get {
+                return ((string)(this["pathLearningDir"]));
+            }
+            set {
+                this["pathLearningDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("....")]
+        public string pathSummaryFile {
+            get {
+                return ((string)(this["pathSummaryFile"]));
+            }
+            set {
+                this["pathSummaryFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int numberAllWordsInDictionary {
+            get {
+                return ((int)(this["numberAllWordsInDictionary"]));
+            }
+            set {
+                this["numberAllWordsInDictionary"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("...")]
+        public string pathClassificationDir {
+            get {
+                return ((string)(this["pathClassificationDir"]));
+            }
+            set {
+                this["pathClassificationDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int operationType {
+            get {
+                return ((int)(this["operationType"]));
+            }
+            set {
+                this["operationType"] = value;
+            }
+        }
     }
 }

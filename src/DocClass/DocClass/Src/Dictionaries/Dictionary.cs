@@ -12,8 +12,14 @@ namespace DocClass.Src.Dictionaries
 
         //int GetDesiredOutput();
         abstract public bool Init(ICollection<Document> docs);
-        
-        protected List<LearningPair> learningData;
+
+        private List<LearningPair> learningData;
+
+        public List<LearningPair> LearningData
+        {
+            get { return learningData; }
+            set { learningData = value; }
+        }
         protected List<String> wordList;
         //private List<IDocument> documents;
         private bool dataPrepared = false;

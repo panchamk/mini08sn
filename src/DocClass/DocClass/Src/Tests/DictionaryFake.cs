@@ -12,7 +12,7 @@ namespace DocClass.Src.Tests
         public DictionaryFake(int num)
         {
             numOfData = num;
-            this.learningData = new List<DocClass.Src.Learning.LearningPair>();
+            this.LearningData = new List<DocClass.Src.Learning.LearningPair>();
         }
         public override bool Init(ICollection<DocClass.Src.DocumentRepresentation.Document> docs)
         {
@@ -26,7 +26,7 @@ namespace DocClass.Src.Tests
                 dict["1"] = r2 = r.NextDouble();
 
                 LearningPair lp = new LearningPair(dict, (r1 < 0.5 && r2 > 0.5 || r1 > 0.5 && r2 < 0.5) ? 1 : 0);
-                this.learningData.Add(lp);
+                this.LearningData.Add(lp);
             }
             return true;
         }

@@ -21,6 +21,7 @@ namespace DocClass.Src.Controller
         private BayesClassificator bayesClassificator;
         private Dictionary dictionary;
         private Dictionary<int, String> stopWords;
+        private LearningDocInfo learningDocInfo;
 
         public Controller()
         {
@@ -34,17 +35,19 @@ namespace DocClass.Src.Controller
             //preprocesing
             //TODO: dodać preprocessing
 
-            //stworzenie słownika
-            dictionary = dictionaryFactory(@"C:\Documents and Settings\Tomi\Moje dokumenty\SIECI\SVN COPY\res\Dane uczące\train\summary.all");
-            dictionary.Init(null);//TODO: jak bedzie zaimplementowana metoda init ti dodać
+            //ładuje listę kategorii
+            DocumentClass.LoadFromFiles(Properties.Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
 
+            //stworzenie słownika
+            dictionary = dictionaryFactory(Properties.Settings.Default.pathSummaryFile);
+            //dictionary.LearningData = new List<DocClass.Src.Learning.LearningPair>();
+            
             //stworzenie sieci
             radialNetwork = new RadialNetwork(Properties.Settings.Default.hiddenLayerInitNeuronCount,
                                                Properties.Settings.Default.outputLayerNeuronCount);
             //nauka
-            radialNetwork.Learn(dictionary);
+            //radialNetwork.Learn(dictionary);TODO:DLA PAWŁA learningData rzuca null
             Console.Out.WriteLine("Koniec nauki");
-
         }
 
 
@@ -75,11 +78,10 @@ namespace DocClass.Src.Controller
             switch ((DictionaryType)Properties.Settings.Default.dictionaryType)
             {
                 case DictionaryType.CtfIdf:
-                    Console.Out.WriteLine("Do zaimplementowania");//TODO: jak bedzie zaimplementowany konstruktor to dodać
-                    return null;
+                    return new CtfIdfDictionary(Properties.Settings.Default.pathLearningDir, pathSummary, wordCountList.GetUniqueWordsCount());
                 case DictionaryType.Fixed:
-                    Console.Out.WriteLine("Do zaimplementowania");//TODO: jak bedzie zaimplementowany konstruktor to dodać
-                    return null;
+                    //TODO: dodać jak bedzie zrobione
+                    throw new Exception("Not implemented konstruktor");
                 case DictionaryType.Frequent:
                     return new FrequentDictionary(pathSummary, wordCountList.GetUniqueWordsCount());
                 default:
@@ -92,12 +94,16 @@ namespace DocClass.Src.Controller
             switch ((DocumentRepresentationType)Properties.Settings.Default.documentRepresentationType)
             {
                 case DocumentRepresentationType.Binary:
-                    return new BinaryDocument(pathFile, dictionary, null);//TODO: nazwa kategorii??
+                    return new BinaryDocument(pathFile, dictionary, null);
                 case DocumentRepresentationType.Own:
-                    return new OwnDocument(pathFile,dictionary,null);//TODO: nazwa kategorii??
+                    return new OwnDocument(pathFile,dictionary,null);
                 case DocumentRepresentationType.TfIdf:
-                    Console.Out.WriteLine("Do zaimplementowania");//TODO: jak bedzie zaimplementowany konstruktor to dodać
-                    return null;
+                    if (learningDocInfo == null)
+                    {
+                        learningDocInfo = new LearningDocInfo(Properties.Settings.Default.pathLearningDir,
+                                                            Properties.Settings.Default.pathSummaryFile);
+                    }
+                    return new TfIdfDocument(pathFile,dictionary, null, learningDocInfo);
                 default:
                     throw new NotImplementedException("Nieznany typ dokumentu.");
             }

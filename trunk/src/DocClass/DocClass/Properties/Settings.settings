@@ -11,12 +11,6 @@
     <Setting Name="dictionaryType" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="pathDir" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\\Documents and Settings\\Tomi\\Pulpit\\rzeczy</Value>
-    </Setting>
-    <Setting Name="pathFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="hiddenLayerInitNeuronCount" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
@@ -27,19 +21,25 @@
       <Value Profile="(Default)">.\\Preprocessing\\stopwords.txt</Value>
     </Setting>
     <Setting Name="pathLearningDir" Type="System.String" Scope="User">
-      <Value Profile="(Default)">....</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="pathSummaryFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)">....</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="numberAllWordsInDictionary" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">-1</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="pathClassificationDir" Type="System.String" Scope="User">
       <Value Profile="(Default)">...</Value>
     </Setting>
     <Setting Name="operationType" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="numberAllCategories" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="numberLearningCategories" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

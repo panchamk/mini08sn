@@ -61,30 +61,6 @@ namespace DocClass.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\Documents and Settings\\\\Tomi\\\\Pulpit\\\\rzeczy")]
-        public string pathDir {
-            get {
-                return ((string)(this["pathDir"]));
-            }
-            set {
-                this["pathDir"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string pathFile {
-            get {
-                return ((string)(this["pathFile"]));
-            }
-            set {
-                this["pathFile"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int hiddenLayerInitNeuronCount {
             get {
@@ -121,7 +97,7 @@ namespace DocClass.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("....")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string pathLearningDir {
             get {
                 return ((string)(this["pathLearningDir"]));
@@ -133,7 +109,7 @@ namespace DocClass.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("....")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string pathSummaryFile {
             get {
                 return ((string)(this["pathSummaryFile"]));
@@ -145,7 +121,6 @@ namespace DocClass.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
         public int numberAllWordsInDictionary {
             get {
                 return ((int)(this["numberAllWordsInDictionary"]));
@@ -176,6 +151,29 @@ namespace DocClass.Properties {
             }
             set {
                 this["operationType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public int numberAllCategories {
+            get {
+                return ((int)(this["numberAllCategories"]));
+            }
+            set {
+                this["numberAllCategories"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public int numberLearningCategories {
+            get {
+                return ((int)(this["numberLearningCategories"]));
+            }
+            set {
+                this["numberLearningCategories"] = value;
             }
         }
     }

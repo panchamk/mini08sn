@@ -36,9 +36,10 @@ namespace DocClass
         {
             splitContainerMain.Panel1Collapsed = true;
             
-            labelValuePathLearningDir.Text = Properties.Settings.Default.pathLearningDir;
-            labelValueNumbersHiddenNerons.Text = Properties.Settings.Default.hiddenLayerInitNeuronCount.ToString();
-            labelValueNumbersOutNerons.Text = Properties.Settings.Default.outputLayerNeuronCount.ToString();
+            labelLearningValuePathDir.Text = Properties.Settings.Default.pathLearningDir;
+            labelLearningValueNumbersHiddenNerons.Text = Properties.Settings.Default.hiddenLayerInitNeuronCount.ToString();
+            labelLearningValueNumberOutNerons.Text = Properties.Settings.Default.outputLayerNeuronCount.ToString();
+            labelLearningValueNumbersCategoriesAll.Text = Properties.Settings.Default.numberAllCategories.ToString();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -83,13 +84,16 @@ namespace DocClass
                     Properties.Settings.Default.pathLearningDir = pathTemp;
                     Properties.Settings.Default.pathSummaryFile = pathSummaryTemp;
                     Properties.Settings.Default.numberAllWordsInDictionary = new WordCountList(pathSummaryTemp).GetUniqueWordsCount();
+                    Properties.Settings.Default.numberLearningCategories = new DirectoryInfo(pathTemp).GetDirectories().Length;
 
-                    labelValuePathLearningDir.Text = Properties.Settings.Default.pathLearningDir;
-                    labelValueWordNumber.Text = Properties.Settings.Default.numberAllWordsInDictionary.ToString();
+                    labelLearningValueNumbersCategoriesInLearning.Text = Properties.Settings.Default.numberLearningCategories.ToString();
+                    labelLearningValuePathDir.Text = Properties.Settings.Default.pathLearningDir;
+                    labelLearningValueNumberAllWords.Text = Properties.Settings.Default.numberAllWordsInDictionary.ToString();
+                    buttonLearningStart1.Enabled = true;
                     break;
                 case OperationType.Classification:
-                    Properties.Settings.Default.pathLearningDir = pathTemp;
-                    AddItemsToClassificationResultFtomDir(Properties.Settings.Default.pathLearningDir);
+                    Properties.Settings.Default.pathClassificationDir = pathTemp;
+                    AddItemsToClassificationResultFtomDir(Properties.Settings.Default.pathClassificationDir);
                     break;
                 default:
                     break;
@@ -136,7 +140,8 @@ namespace DocClass
 
         private void buttonLearningStart1_Click(object sender, EventArgs e)
         {
-            if (!System.IO.File.Exists(Properties.Settings.Default.pathLearningDir))
+            String s = Properties.Settings.Default.pathLearningDir;
+            if (!System.IO.Directory.Exists(Properties.Settings.Default.pathLearningDir))
             {
                 MessageBox.Show("Nie mo¿na odnaleœæ katalogu z danymi ucz¹cymi.");
                 return;
@@ -202,14 +207,14 @@ namespace DocClass
         /// </summary>
         public void SetLearningParameters()
         {
-            labelValueAllNumbersCategories.Text = "3";
+            labelLearningValueNumbersCategoriesAll.Text = "3";
             labelValueAllNumbersParameters.Text = "3";
 
-            labelValueTestNumbersCategories.Text = "3";
-            labelValueTestNumbersDocuments.Text = "3";
+            labelLearningValueNumbersCategoriesInLearning.Text = "3";
+            labelLearningValueNumbersDocumentsInLearning.Text = "3";
             
-            labelValueNumbersHiddenNerons.Text = "3";
-            labelValueWordNumber.Text = "3";
+            labelLearningValueNumbersHiddenNerons.Text = "3";
+            labelLearningValueNumberAllWords.Text = "3";
         }
 
         /// <summary>
@@ -247,6 +252,16 @@ namespace DocClass
         }
 
         #endregion
+
+        private void groupBoxLearningParameters_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelLearningNameNumbersDocumentsInLearning_Click(object sender, EventArgs e)
+        {
+
+        }
 
 
 

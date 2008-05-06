@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using DocClass.Src.Exceptions;
 using DocClass.Src.Dictionaries;
 using DocClass.Src.Learning.MathOperations;
+using DocClass.Src.DocumentRepresentation;
 
 namespace DocClass.Src.Classification.RadialNetwork
 {
@@ -27,6 +28,12 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         //neurony liniowe warstwy wyjciowej
         private Collection<INeuron> neuronOutputLayer;
+
+        //lista wszystkich dokumentow
+        private List<Document> documentList;
+
+        //dane wyjsciowe przetworzone
+        private List<double[]> outputData;
 
         /// <summary>
         /// Aktualna macierz greena
@@ -101,7 +108,6 @@ namespace DocClass.Src.Classification.RadialNetwork
         }
 
 
-        //TODO: Sprawdzic
         /// <summary>
         /// Tworzy macierz greena na podstawie wektorw uczacych i wyznaczonych wektorow
         /// centralnych komorek
@@ -109,8 +115,13 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <returns></returns>
         private double[,] CreateGreenMatrix()
         {
-            double[,] result = new double[learningData.DataVectors.Count, neuronHiddenLayer.Count+1];
-            for (int y = 0; y < learningData.DataVectors.Count; y++)
+            if(learningData == null)
+                throw new NullReferenceException("Puste learningData");
+            List<Document> documentCollection = learningData.GetDocumentList();
+            if(documentCollection == null || documentCollection.Count == 0)
+                throw new NullReferenceException("documentCollecion puste");
+            double[,] result = new double[documentCollection.Count, neuronHiddenLayer.Count+1];
+            for (int y = 0; y < documentCollection.Count; y++)
             {
                 for (int x = 0; x < neuronHiddenLayer.Count+1; x++)
                 {
@@ -118,7 +129,7 @@ namespace DocClass.Src.Classification.RadialNetwork
                         result[y, x] = 1;
                     else
                     {
-                        result[y, x] = ((RadialNeuron)neuronHiddenLayer[x-1]).GaussianFunction(learningData.InputVectors[y]);
+                        result[y, x] = ((RadialNeuron)neuronHiddenLayer[x-1]).GaussianFunction(documentCollection[y].GetValues().ToArray());
                     }
                 }
             }
@@ -149,12 +160,6 @@ namespace DocClass.Src.Classification.RadialNetwork
         {
             greenMatrix = CreateGreenMatrix();
             double[,] invertedGreenmatrix = Pseudoinverse.Solve(greenMatrix);
-//#if DEBUG
-//            Console.WriteLine(Matrix.ToString(greenMatrix));
-            
-
-//            Console.WriteLine(Matrix.ToString(invertedGreenmatrix));
-//#endif
             for (int i = 0; i < neuronOutputLayer.Count ; i++)
             {
                 double[] weight = Matrix.Multiply(invertedGreenmatrix, outputDesirableData[i]);
@@ -170,12 +175,18 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// </summary>
         /// <param name="docs">dane uczace</param>
         /// <returns></returns>
-        public override bool Learn(Dictionary dict)
+        public override bool Learn(DocumentList docList)
         {
-            this.learningData = dict;
+            if (docList == null)
+                throw new NullReferenceException("docList puste");
+            this.learningData = docList;
+            documentList = docList.GetDocumentList();
+            if (documentList == null || documentList.Count == 0)
+                throw new NullReferenceException("DocumentList pusty");
+            List<double[]> desiredOutputData = PrepareOutputData(documentList);
             for (int i = 0; i < 30; i++)
             {
-                OutputLayerLearning(learningData.OutputVectors);
+                OutputLayerLearning(desiredOutputData);
                 PrintNetworkData(neuronOutputLayer);
                 HiddenLayerLearning();
                 //PrintNetworkData(neuronHiddenLayer);
@@ -191,6 +202,21 @@ namespace DocClass.Src.Classification.RadialNetwork
                 PrintNetworkData(neuronHiddenLayer);
             }
             return true;
+        }
+
+        private List<double[]> PrepareOutputData(List<Document> docList)
+        {
+            outputData = new List<double[]>();
+            for (int i = 0; i < DocumentClass.CategoriesCount; i++)
+            {
+                double[] vector = new double[docList.Count];
+                outputData.Add(vector);
+            }
+            for (int i = 0; i < docList.Count; i++)
+            {
+                outputData[docList[i].ClassNo][i] = 1;
+            }
+            return outputData;
         }
 
         private void PrintNetworkData(Collection<INeuron> ine)
@@ -254,7 +280,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <returns></returns>
         private double[] dE_dc(int nth_Output, int nth_Neuron)
         {
-            double[] result = new double[learningData.InputVectors[0].Length];
+            double[] result = new double[documentList[0].GetValues().Count];
             RadialNeuron radialNeuron = (RadialNeuron)neuronHiddenLayer[nth_Neuron];
             LinearNeuron linerarNeuron = (LinearNeuron)neuronOutputLayer[nth_Output];
             double[] inputVector;
@@ -262,12 +288,12 @@ namespace DocClass.Src.Classification.RadialNetwork
             double maxValue;
             for (int wsp = 0; wsp < result.Length; wsp++)
             {
-                for (int i = 0; i < learningData.DataVectors.Count; i++)
+                for (int i = 0; i < documentList.Count; i++) //learningData.DataVectors.Count
                 {
-                    inputVector = learningData.InputVectors[i];
+                    inputVector = documentList[i].GetValues().ToArray();// learningData.InputVectors[i];
                     exp = Math.Pow(Math.E, -radialNeuron.u2(inputVector)/2 );
                     result[wsp] += (y(linerarNeuron.Weights)[i] - 
-                        (learningData.OutputVectors[nth_Output])[i]) * linerarNeuron.Weights[nth_Neuron] * 
+                        (outputData[nth_Output])[i]) * linerarNeuron.Weights[nth_Neuron] * 
                         exp * radialNeuron.u(inputVector, wsp);
                    // Console.WriteLine(y(linerarNeuron.Weights)[i] + " - " +
                    //     (learningData.OutputVectors[nth_Output])[i]+ " = " + (y(linerarNeuron.Weights)[i] -
@@ -284,20 +310,20 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <returns></returns>
         private double[] dE_dSigma(int nth_Output, int nth_Neuron)
         {
-            double[] result = new double[learningData.InputVectors[0].Length];
+            double[] result = new double[documentList.Count];
             RadialNeuron radialNeuron = (RadialNeuron)neuronHiddenLayer[nth_Neuron];
             LinearNeuron linerarNeuron = (LinearNeuron)neuronOutputLayer[nth_Output];
             double[] inputVector;
             double exp;
-            double maxValue;
+            //double maxValue;
             for (int wsp = 0; wsp < result.Length; wsp++)
             {
-                for (int i = 0; i < learningData.DataVectors.Count; i++)
+                for (int i = 0; i < documentList.Count; i++)
                 {
-                    inputVector = learningData.InputVectors[i];
+                    inputVector = documentList[i].GetValues().ToArray();
                     exp = Math.Pow(Math.E, -radialNeuron.u2(inputVector) / 2);
                     result[wsp] += (y(linerarNeuron.Weights)[i] -
-                        (learningData.OutputVectors[nth_Output])[i]) * linerarNeuron.Weights[nth_Neuron] *
+                        (outputData[nth_Output])[i]) * linerarNeuron.Weights[nth_Neuron] *
                         exp * radialNeuron.u3(inputVector, wsp);
                     //Console.WriteLine(y(linerarNeuron.Weights)[i] + " - " +
                     //    (learningData.OutputVectors[nth_Output])[i] + " = " + (y(linerarNeuron.Weights)[i] -
@@ -346,7 +372,9 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <returns></returns>
         public override int Classificate(DocClass.Src.DocumentRepresentation.Document doc)
         {
-            return this.Classificate(this.learningData.FitDocumentToVector(doc));
+            //TODO: PR: klasyfikacja
+            //return this.Classificate(doc.this.learningData.FitDocumentToVector(doc));
+            return 0;
         }
 
         /// <summary>

@@ -73,8 +73,10 @@ namespace DocClass.Src.Classification.BayesClassificator
         /// <param name="dict">Parametr lest lista plikow danej kategorii. Jedna kategoria
         /// moze zawierac wiele plikow.</param>
         /// <returns>Zwraca true, jesli dane sa poprawne.</returns>
-        public override bool Learn(Dictionary dict)
+        public override bool Learn(DocumentList docList ) //Dictionary dict)
         {
+            //TODO: MZ - przystosuj do danych czerpanych z DocumentList
+            /*
             if (dict == null || dict.DataVectors == null || dict.DataVectors.Count == 0)
                 return false;
 
@@ -85,6 +87,7 @@ namespace DocClass.Src.Classification.BayesClassificator
             }
             this.categories.Add(this.mKey, category);
             this.mKey++;
+             * */
             return true;
         }
 

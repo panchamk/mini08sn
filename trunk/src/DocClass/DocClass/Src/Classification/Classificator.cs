@@ -13,7 +13,7 @@ namespace DocClass.Src.Classification
         #endregion
 
         #region protected members
-        protected Dictionary learningData;
+        protected DocumentList learningData;
         #endregion
 
         #region abstaract methods
@@ -22,7 +22,7 @@ namespace DocClass.Src.Classification
         /// </summary>
         /// <param name="docs"></param>
         /// <returns></returns>
-        public abstract bool Learn(Dictionary dict);
+        public abstract bool Learn(DocumentList list);
 
         //TODO: Czy rzeczywicie IDocument, a nie IDictionary?
         /// <summary>

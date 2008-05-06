@@ -25,7 +25,7 @@ namespace DocClass.Src.DocumentRepresentation
         {
             wordCountList = new WordCountList();
             if (className != null)
-                ClassNo = DocumentClass.GetClassIndex(className);
+                classNo = DocumentClass.GetClassIndex(className);
             //tworze liste wszystkich słów ze wszystkuch dokumentów
             Dictionary<String, WordInfo> allWordsInfo = learningDocInfo.AllWordsInfo;
             double allDocNumber = learningDocInfo.AllDocCount;

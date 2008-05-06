@@ -22,7 +22,7 @@ namespace DocClass.Src.DocumentRepresentation
         {
             wordCountList = new WordCountList();
             if (className != null)
-                ClassNo = DocumentClass.GetClassIndex(className);
+                classNo = DocumentClass.GetClassIndex(className);
             WordCountList listFromFile = new WordCountList(fileName);
             int wordsInDoc = listFromFile.GetAllWordsCount();
             foreach (String word in dictionary)

@@ -8,13 +8,19 @@ namespace DocClass.Src.DocumentRepresentation
 {
     abstract class Document
     {
-        protected int ClassNo = -1;
+        protected int classNo = -1;
         protected WordCountList wordCountList;
         protected DictionaryType dictionaryType;
+
+        
 
         protected Document(Dictionary dictionary)
         {
             dictionaryType = dictionary.GetDictionaryType();
+        }
+        public int ClassNo
+        {
+            get { return classNo; }
         }
         public DictionaryType DictionaryType
         {

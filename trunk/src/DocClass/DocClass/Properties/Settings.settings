@@ -26,5 +26,20 @@
     <Setting Name="pathStopWords" Type="System.String" Scope="User">
       <Value Profile="(Default)">.\\Preprocessing\\stopwords.txt</Value>
     </Setting>
+    <Setting Name="pathLearningDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)">....</Value>
+    </Setting>
+    <Setting Name="pathSummaryFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">....</Value>
+    </Setting>
+    <Setting Name="numberAllWordsInDictionary" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
+    <Setting Name="pathClassificationDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)">...</Value>
+    </Setting>
+    <Setting Name="operationType" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

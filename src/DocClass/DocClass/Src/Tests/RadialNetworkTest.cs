@@ -28,7 +28,7 @@ namespace DocClass.Src.Tests
             Assert.IsNotNull(testedClassificator);
             DocumentClass.AddClass("zero");
             DocumentClass.AddClass("jeden");
-            testedClassificator.Learn(dictionary);
+            //testedClassificator.Learn(dictionary);
             int counter = 0;
             int total = 100;
             for(int i=0; i<total; i++)

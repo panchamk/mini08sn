@@ -13,49 +13,7 @@ namespace DocClass.Src.Dictionaries
         //int GetDesiredOutput();
         abstract public bool Init(ICollection<Document> docs);
 
-        private List<LearningPair> learningData;
-
-        public List<LearningPair> LearningData
-        {
-            get { return learningData; }
-            set { learningData = value; }
-        }
         protected List<String> wordList;
-        //private List<IDocument> documents;
-        private bool dataPrepared = false;
-        private List<double[]> outputData;
-        private List<double[]> inputData;
-
-        public List<double[]> InputVectors
-        {
-            get
-            {
-                CreateVectorsData();
-                return inputData;
-            }
-        }
-
-        public List<LearningPair> DataVectors
-        {
-            get
-            {
-                CreateVectorsData();
-                return learningData;
-            }
-        }
-
-        public List<double[]> OutputVectors
-        {
-            get{
-                CreateVectorsData();
-                return outputData;
-            }
-        }
-
-        public int Size
-        {
-            get { return wordList.Count; }
-        }
 
         public DictionaryType GetDictionaryType()
         {
@@ -67,60 +25,6 @@ namespace DocClass.Src.Dictionaries
             if (myType == typeof(FrequentDictionary))
                 return DictionaryType.Frequent;
             throw new Exception("Unknown type: " + myType);
-        }
-        //TODO: sprawdzic
-        /// <summary>
-        /// Tworzenie listy par uczacych
-        /// </summary>
-        /// <returns></returns>
-        private void CreateVectorsData()
-        {
-            if (dataPrepared == false)
-            {
-                //budowanie listy slow
-                List<string> contener = new List<string>();
-                foreach(LearningPair d in learningData)
-                {
-                    foreach(string word in d.Map.Keys)
-                    {
-                        if (!contener.Contains(word))
-                        {
-                            contener.Add(word);
-                        }
-                    }
-                }
-
-                //tworzenie wekrotow wedluw stworzonej wlasnie definicji przestrzeni
-                inputData = new List<double[]>();
-                foreach (LearningPair d in learningData)
-                {
-                    double[] vector = new double[contener.Count];
-                    foreach (string word in d.Map.Keys)
-                    {
-                        vector[contener.IndexOf(word)] = d.Map[word];
-                    }
-                    inputData.Add(vector);
-                }
-
-                //tworzenie wektorow wyjsciowych w celu uzycia ich w macierzy greena
-                outputData = new List<double[]>();
-                for (int i = 0; i < DocumentClass.CategoriesCount; i++)
-                {
-                    double[] vector = new double[learningData.Count];
-                    outputData.Add(vector);
-                }
-                for(int i =0; i<learningData.Count; i++)
-                {
-                    outputData[learningData[i].Output][i] = 1;
-                }
-
-                dataPrepared = true;
-            }
-        }
-
-        public double[] FitDocumentToVector(Document doc)
-        {
-            throw new NotImplementedException("a szkoda ;p");
         }
         /// <summary>
         /// Zwraca listę słów należących do słownika oddzieloną spacjami.

@@ -45,6 +45,29 @@ namespace DocClass
             this.groupBoxDictionary = new System.Windows.Forms.GroupBox();
             this.groupBoxDocumentRepresentation = new System.Windows.Forms.GroupBox();
             this.tabControlUse = new System.Windows.Forms.TabControl();
+            this.tabPageLearning = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBoxLearningParameters = new System.Windows.Forms.GroupBox();
+            this.labelLearningValueNumberOutNerons = new System.Windows.Forms.Label();
+            this.labelLearningNameNumberOutNerons = new System.Windows.Forms.Label();
+            this.labelLearningValuePathDir = new System.Windows.Forms.Label();
+            this.labelLearningNamePathDir = new System.Windows.Forms.Label();
+            this.labelLearningValueNumberAllWords = new System.Windows.Forms.Label();
+            this.labelLearningValueNumbersHiddenNerons = new System.Windows.Forms.Label();
+            this.labelLearningValueNumbersDocumentsInLearning = new System.Windows.Forms.Label();
+            this.labelLearningValueNumbersCategoriesInLearning = new System.Windows.Forms.Label();
+            this.labelValueAllNumbersParameters = new System.Windows.Forms.Label();
+            this.labelLearningValueNumbersCategoriesAll = new System.Windows.Forms.Label();
+            this.labelLearningNameNumbersHiddenNerons = new System.Windows.Forms.Label();
+            this.labelLearningNameNumberAllWords = new System.Windows.Forms.Label();
+            this.labelLearningNameNumbersCategoriesInLearning = new System.Windows.Forms.Label();
+            this.labelLearningNameNumbersCategoriesAll = new System.Windows.Forms.Label();
+            this.labelLearningNameNumbersDocumentsInLearning = new System.Windows.Forms.Label();
+            this.labelNameAllNumbersParameters = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonLearningStart1 = new System.Windows.Forms.Button();
+            this.buttonLearningStop1 = new System.Windows.Forms.Button();
             this.tabPageClasyfication = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -56,29 +79,6 @@ namespace DocClass
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonClassificationStop = new System.Windows.Forms.Button();
             this.buttonClassificationStart = new System.Windows.Forms.Button();
-            this.tabPageLearning = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBoxLearningParameters = new System.Windows.Forms.GroupBox();
-            this.labelValueNumbersOutNerons = new System.Windows.Forms.Label();
-            this.labelNameNumberOutNerons = new System.Windows.Forms.Label();
-            this.labelValuePathLearningDir = new System.Windows.Forms.Label();
-            this.labelNamePathLearningDir = new System.Windows.Forms.Label();
-            this.labelValueWordNumber = new System.Windows.Forms.Label();
-            this.labelValueNumbersHiddenNerons = new System.Windows.Forms.Label();
-            this.labelValueTestNumbersDocuments = new System.Windows.Forms.Label();
-            this.labelValueTestNumbersCategories = new System.Windows.Forms.Label();
-            this.labelValueAllNumbersParameters = new System.Windows.Forms.Label();
-            this.labelValueAllNumbersCategories = new System.Windows.Forms.Label();
-            this.labelNameNumbersHiddenNerons = new System.Windows.Forms.Label();
-            this.labelNameWordNumber = new System.Windows.Forms.Label();
-            this.labelNameTestNumbersCategories = new System.Windows.Forms.Label();
-            this.labelNameAllNumbersCategories = new System.Windows.Forms.Label();
-            this.labelNameTestNumbersDocuments = new System.Windows.Forms.Label();
-            this.labelNameAllNumbersParameters = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonLearningStop1 = new System.Windows.Forms.Button();
-            this.buttonLearningStart1 = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonLearningStart = new System.Windows.Forms.Button();
@@ -97,17 +97,17 @@ namespace DocClass
             this.groupBoxDictionary.SuspendLayout();
             this.groupBoxDocumentRepresentation.SuspendLayout();
             this.tabControlUse.SuspendLayout();
+            this.tabPageLearning.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.groupBoxLearningParameters.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             this.tabPageClasyfication.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClassificationResults)).BeginInit();
             this.panel3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.tabPageLearning.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.groupBoxLearningParameters.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -267,6 +267,242 @@ namespace DocClass
             this.tabControlUse.TabIndex = 0;
             this.tabControlUse.SelectedIndexChanged += new System.EventHandler(this.OnTabControlUse_SelectedIndexChanged);
             // 
+            // tabPageLearning
+            // 
+            this.tabPageLearning.Controls.Add(this.tableLayoutPanel1);
+            this.tabPageLearning.Location = new System.Drawing.Point(4, 22);
+            this.tabPageLearning.Name = "tabPageLearning";
+            this.tabPageLearning.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageLearning.Size = new System.Drawing.Size(954, 369);
+            this.tabPageLearning.TabIndex = 0;
+            this.tabPageLearning.Text = "Nauka";
+            this.tabPageLearning.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 79.11F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.89F));
+            this.tableLayoutPanel1.Controls.Add(this.groupBoxLearningParameters, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(948, 363);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // groupBoxLearningParameters
+            // 
+            this.groupBoxLearningParameters.Controls.Add(this.labelLearningValueNumberOutNerons);
+            this.groupBoxLearningParameters.Controls.Add(this.labelLearningNameNumberOutNerons);
+            this.groupBoxLearningParameters.Controls.Add(this.labelLearningValuePathDir);
+            this.groupBoxLearningParameters.Controls.Add(this.labelLearningNamePathDir);
+            this.groupBoxLearningParameters.Controls.Add(this.labelLearningValueNumberAllWords);
+            this.groupBoxLearningParameters.Controls.Add(this.labelLearningValueNumbersHiddenNerons);
+            this.groupBoxLearningParameters.Controls.Add(this.labelLearningValueNumbersDocumentsInLearning);
+            this.groupBoxLearningParameters.Controls.Add(this.labelLearningValueNumbersCategoriesInLearning);
+            this.groupBoxLearningParameters.Controls.Add(this.labelValueAllNumbersParameters);
+            this.groupBoxLearningParameters.Controls.Add(this.labelLearningValueNumbersCategoriesAll);
+            this.groupBoxLearningParameters.Controls.Add(this.labelLearningNameNumbersHiddenNerons);
+            this.groupBoxLearningParameters.Controls.Add(this.labelLearningNameNumberAllWords);
+            this.groupBoxLearningParameters.Controls.Add(this.labelLearningNameNumbersCategoriesInLearning);
+            this.groupBoxLearningParameters.Controls.Add(this.labelLearningNameNumbersCategoriesAll);
+            this.groupBoxLearningParameters.Controls.Add(this.labelLearningNameNumbersDocumentsInLearning);
+            this.groupBoxLearningParameters.Controls.Add(this.labelNameAllNumbersParameters);
+            this.groupBoxLearningParameters.Location = new System.Drawing.Point(3, 3);
+            this.groupBoxLearningParameters.Name = "groupBoxLearningParameters";
+            this.groupBoxLearningParameters.Size = new System.Drawing.Size(743, 285);
+            this.groupBoxLearningParameters.TabIndex = 2;
+            this.groupBoxLearningParameters.TabStop = false;
+            this.groupBoxLearningParameters.Text = "Parametry";
+            this.groupBoxLearningParameters.Enter += new System.EventHandler(this.groupBoxLearningParameters_Enter);
+            // 
+            // labelLearningValueNumberOutNerons
+            // 
+            this.labelLearningValueNumberOutNerons.AutoSize = true;
+            this.labelLearningValueNumberOutNerons.Location = new System.Drawing.Point(222, 220);
+            this.labelLearningValueNumberOutNerons.Name = "labelLearningValueNumberOutNerons";
+            this.labelLearningValueNumberOutNerons.Size = new System.Drawing.Size(0, 13);
+            this.labelLearningValueNumberOutNerons.TabIndex = 15;
+            // 
+            // labelLearningNameNumberOutNerons
+            // 
+            this.labelLearningNameNumberOutNerons.AutoSize = true;
+            this.labelLearningNameNumberOutNerons.Location = new System.Drawing.Point(17, 220);
+            this.labelLearningNameNumberOutNerons.Name = "labelLearningNameNumberOutNerons";
+            this.labelLearningNameNumberOutNerons.Size = new System.Drawing.Size(153, 13);
+            this.labelLearningNameNumberOutNerons.TabIndex = 14;
+            this.labelLearningNameNumberOutNerons.Text = "Liczba neuronów wyjœciowych:";
+            // 
+            // labelLearningValuePathDir
+            // 
+            this.labelLearningValuePathDir.AutoSize = true;
+            this.labelLearningValuePathDir.Location = new System.Drawing.Point(222, 253);
+            this.labelLearningValuePathDir.Name = "labelLearningValuePathDir";
+            this.labelLearningValuePathDir.Size = new System.Drawing.Size(0, 13);
+            this.labelLearningValuePathDir.TabIndex = 13;
+            // 
+            // labelLearningNamePathDir
+            // 
+            this.labelLearningNamePathDir.AutoSize = true;
+            this.labelLearningNamePathDir.Location = new System.Drawing.Point(17, 253);
+            this.labelLearningNamePathDir.Name = "labelLearningNamePathDir";
+            this.labelLearningNamePathDir.Size = new System.Drawing.Size(130, 13);
+            this.labelLearningNamePathDir.TabIndex = 12;
+            this.labelLearningNamePathDir.Text = "Folder z danymi ucz¹cymi:";
+            // 
+            // labelLearningValueNumberAllWords
+            // 
+            this.labelLearningValueNumberAllWords.AutoSize = true;
+            this.labelLearningValueNumberAllWords.Location = new System.Drawing.Point(222, 152);
+            this.labelLearningValueNumberAllWords.Name = "labelLearningValueNumberAllWords";
+            this.labelLearningValueNumberAllWords.Size = new System.Drawing.Size(0, 13);
+            this.labelLearningValueNumberAllWords.TabIndex = 11;
+            // 
+            // labelLearningValueNumbersHiddenNerons
+            // 
+            this.labelLearningValueNumbersHiddenNerons.AutoSize = true;
+            this.labelLearningValueNumbersHiddenNerons.Location = new System.Drawing.Point(222, 184);
+            this.labelLearningValueNumbersHiddenNerons.Name = "labelLearningValueNumbersHiddenNerons";
+            this.labelLearningValueNumbersHiddenNerons.Size = new System.Drawing.Size(0, 13);
+            this.labelLearningValueNumbersHiddenNerons.TabIndex = 10;
+            // 
+            // labelLearningValueNumbersDocumentsInLearning
+            // 
+            this.labelLearningValueNumbersDocumentsInLearning.AutoSize = true;
+            this.labelLearningValueNumbersDocumentsInLearning.Location = new System.Drawing.Point(219, 61);
+            this.labelLearningValueNumbersDocumentsInLearning.Name = "labelLearningValueNumbersDocumentsInLearning";
+            this.labelLearningValueNumbersDocumentsInLearning.Size = new System.Drawing.Size(0, 13);
+            this.labelLearningValueNumbersDocumentsInLearning.TabIndex = 9;
+            // 
+            // labelLearningValueNumbersCategoriesInLearning
+            // 
+            this.labelLearningValueNumbersCategoriesInLearning.AutoSize = true;
+            this.labelLearningValueNumbersCategoriesInLearning.Location = new System.Drawing.Point(219, 118);
+            this.labelLearningValueNumbersCategoriesInLearning.Name = "labelLearningValueNumbersCategoriesInLearning";
+            this.labelLearningValueNumbersCategoriesInLearning.Size = new System.Drawing.Size(0, 13);
+            this.labelLearningValueNumbersCategoriesInLearning.TabIndex = 8;
+            // 
+            // labelValueAllNumbersParameters
+            // 
+            this.labelValueAllNumbersParameters.AutoSize = true;
+            this.labelValueAllNumbersParameters.Location = new System.Drawing.Point(219, 37);
+            this.labelValueAllNumbersParameters.Name = "labelValueAllNumbersParameters";
+            this.labelValueAllNumbersParameters.Size = new System.Drawing.Size(0, 13);
+            this.labelValueAllNumbersParameters.TabIndex = 7;
+            // 
+            // labelLearningValueNumbersCategoriesAll
+            // 
+            this.labelLearningValueNumbersCategoriesAll.AutoSize = true;
+            this.labelLearningValueNumbersCategoriesAll.Location = new System.Drawing.Point(219, 89);
+            this.labelLearningValueNumbersCategoriesAll.Name = "labelLearningValueNumbersCategoriesAll";
+            this.labelLearningValueNumbersCategoriesAll.Size = new System.Drawing.Size(0, 13);
+            this.labelLearningValueNumbersCategoriesAll.TabIndex = 6;
+            // 
+            // labelLearningNameNumbersHiddenNerons
+            // 
+            this.labelLearningNameNumbersHiddenNerons.AutoSize = true;
+            this.labelLearningNameNumbersHiddenNerons.Location = new System.Drawing.Point(17, 184);
+            this.labelLearningNameNumbersHiddenNerons.Name = "labelLearningNameNumbersHiddenNerons";
+            this.labelLearningNameNumbersHiddenNerons.Size = new System.Drawing.Size(185, 13);
+            this.labelLearningNameNumbersHiddenNerons.TabIndex = 5;
+            this.labelLearningNameNumbersHiddenNerons.Text = "Liczba neuronów warstwy wyjœciowej:";
+            // 
+            // labelLearningNameNumberAllWords
+            // 
+            this.labelLearningNameNumberAllWords.AutoSize = true;
+            this.labelLearningNameNumberAllWords.Location = new System.Drawing.Point(17, 152);
+            this.labelLearningNameNumberAllWords.Name = "labelLearningNameNumberAllWords";
+            this.labelLearningNameNumberAllWords.Size = new System.Drawing.Size(121, 13);
+            this.labelLearningNameNumberAllWords.TabIndex = 4;
+            this.labelLearningNameNumberAllWords.Text = "Liczba wszystkich s³ów:";
+            // 
+            // labelLearningNameNumbersCategoriesInLearning
+            // 
+            this.labelLearningNameNumbersCategoriesInLearning.AutoSize = true;
+            this.labelLearningNameNumbersCategoriesInLearning.Location = new System.Drawing.Point(17, 118);
+            this.labelLearningNameNumbersCategoriesInLearning.Name = "labelLearningNameNumbersCategoriesInLearning";
+            this.labelLearningNameNumbersCategoriesInLearning.Size = new System.Drawing.Size(153, 13);
+            this.labelLearningNameNumbersCategoriesInLearning.TabIndex = 3;
+            this.labelLearningNameNumbersCategoriesInLearning.Text = "Liczba przekazanych kategorii:";
+            // 
+            // labelLearningNameNumbersCategoriesAll
+            // 
+            this.labelLearningNameNumbersCategoriesAll.AutoSize = true;
+            this.labelLearningNameNumbersCategoriesAll.Location = new System.Drawing.Point(17, 89);
+            this.labelLearningNameNumbersCategoriesAll.Name = "labelLearningNameNumbersCategoriesAll";
+            this.labelLearningNameNumbersCategoriesAll.Size = new System.Drawing.Size(138, 13);
+            this.labelLearningNameNumbersCategoriesAll.TabIndex = 2;
+            this.labelLearningNameNumbersCategoriesAll.Text = "Liczba wszystkich kategorii:";
+            // 
+            // labelLearningNameNumbersDocumentsInLearning
+            // 
+            this.labelLearningNameNumbersDocumentsInLearning.AutoSize = true;
+            this.labelLearningNameNumbersDocumentsInLearning.Location = new System.Drawing.Point(17, 61);
+            this.labelLearningNameNumbersDocumentsInLearning.Name = "labelLearningNameNumbersDocumentsInLearning";
+            this.labelLearningNameNumbersDocumentsInLearning.Size = new System.Drawing.Size(174, 13);
+            this.labelLearningNameNumbersDocumentsInLearning.TabIndex = 1;
+            this.labelLearningNameNumbersDocumentsInLearning.Text = "Liczba przekazanych dokumentów:";
+            this.labelLearningNameNumbersDocumentsInLearning.Click += new System.EventHandler(this.labelLearningNameNumbersDocumentsInLearning_Click);
+            // 
+            // labelNameAllNumbersParameters
+            // 
+            this.labelNameAllNumbersParameters.AutoSize = true;
+            this.labelNameAllNumbersParameters.Location = new System.Drawing.Point(17, 37);
+            this.labelNameAllNumbersParameters.Name = "labelNameAllNumbersParameters";
+            this.labelNameAllNumbersParameters.Size = new System.Drawing.Size(153, 13);
+            this.labelNameAllNumbersParameters.TabIndex = 0;
+            this.labelNameAllNumbersParameters.Text = "Liczba wszystkich parametrów:";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.tableLayoutPanel4);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(752, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(193, 357);
+            this.panel1.TabIndex = 3;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel4.Controls.Add(this.buttonLearningStart1, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.buttonLearningStop1, 0, 0);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 13);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(176, 37);
+            this.tableLayoutPanel4.TabIndex = 0;
+            // 
+            // buttonLearningStart1
+            // 
+            this.buttonLearningStart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonLearningStart1.Enabled = false;
+            this.buttonLearningStart1.Location = new System.Drawing.Point(84, 3);
+            this.buttonLearningStart1.Name = "buttonLearningStart1";
+            this.buttonLearningStart1.Size = new System.Drawing.Size(89, 31);
+            this.buttonLearningStart1.TabIndex = 1;
+            this.buttonLearningStart1.Text = "Start";
+            this.buttonLearningStart1.UseVisualStyleBackColor = true;
+            this.buttonLearningStart1.Click += new System.EventHandler(this.buttonLearningStart1_Click);
+            // 
+            // buttonLearningStop1
+            // 
+            this.buttonLearningStop1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonLearningStop1.Location = new System.Drawing.Point(3, 3);
+            this.buttonLearningStop1.Name = "buttonLearningStop1";
+            this.buttonLearningStop1.Size = new System.Drawing.Size(75, 31);
+            this.buttonLearningStop1.TabIndex = 0;
+            this.buttonLearningStop1.Text = "Stop";
+            this.buttonLearningStop1.UseVisualStyleBackColor = true;
+            this.buttonLearningStop1.Visible = false;
+            this.buttonLearningStop1.Click += new System.EventHandler(this.buttonLearningStop1_Click);
+            // 
             // tabPageClasyfication
             // 
             this.tabPageClasyfication.Controls.Add(this.tableLayoutPanel2);
@@ -311,9 +547,9 @@ namespace DocClass
             this.ColumnName,
             this.ColumnCategory,
             this.Podgl¹d});
-            this.dataGridViewClassificationResults.Location = new System.Drawing.Point(0, 8);
+            this.dataGridViewClassificationResults.Location = new System.Drawing.Point(0, 74);
             this.dataGridViewClassificationResults.Name = "dataGridViewClassificationResults";
-            this.dataGridViewClassificationResults.Size = new System.Drawing.Size(1423, 364);
+            this.dataGridViewClassificationResults.Size = new System.Drawing.Size(1423, 298);
             this.dataGridViewClassificationResults.TabIndex = 5;
             this.dataGridViewClassificationResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewClassificationResults_CellClick);
             // 
@@ -386,243 +622,6 @@ namespace DocClass
             this.buttonClassificationStart.Text = "Start";
             this.buttonClassificationStart.UseVisualStyleBackColor = true;
             this.buttonClassificationStart.Click += new System.EventHandler(this.buttonClassificationStart_Click);
-            // 
-            // tabPageLearning
-            // 
-            this.tabPageLearning.Controls.Add(this.tableLayoutPanel1);
-            this.tabPageLearning.Location = new System.Drawing.Point(4, 22);
-            this.tabPageLearning.Name = "tabPageLearning";
-            this.tabPageLearning.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLearning.Size = new System.Drawing.Size(954, 369);
-            this.tabPageLearning.TabIndex = 0;
-            this.tabPageLearning.Text = "Nauka";
-            this.tabPageLearning.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 79.11F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.89F));
-            this.tableLayoutPanel1.Controls.Add(this.groupBoxLearningParameters, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(948, 363);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // groupBoxLearningParameters
-            // 
-            this.groupBoxLearningParameters.Controls.Add(this.labelValueNumbersOutNerons);
-            this.groupBoxLearningParameters.Controls.Add(this.labelNameNumberOutNerons);
-            this.groupBoxLearningParameters.Controls.Add(this.labelValuePathLearningDir);
-            this.groupBoxLearningParameters.Controls.Add(this.labelNamePathLearningDir);
-            this.groupBoxLearningParameters.Controls.Add(this.labelValueWordNumber);
-            this.groupBoxLearningParameters.Controls.Add(this.labelValueNumbersHiddenNerons);
-            this.groupBoxLearningParameters.Controls.Add(this.labelValueTestNumbersDocuments);
-            this.groupBoxLearningParameters.Controls.Add(this.labelValueTestNumbersCategories);
-            this.groupBoxLearningParameters.Controls.Add(this.labelValueAllNumbersParameters);
-            this.groupBoxLearningParameters.Controls.Add(this.labelValueAllNumbersCategories);
-            this.groupBoxLearningParameters.Controls.Add(this.labelNameNumbersHiddenNerons);
-            this.groupBoxLearningParameters.Controls.Add(this.labelNameWordNumber);
-            this.groupBoxLearningParameters.Controls.Add(this.labelNameTestNumbersCategories);
-            this.groupBoxLearningParameters.Controls.Add(this.labelNameAllNumbersCategories);
-            this.groupBoxLearningParameters.Controls.Add(this.labelNameTestNumbersDocuments);
-            this.groupBoxLearningParameters.Controls.Add(this.labelNameAllNumbersParameters);
-            this.groupBoxLearningParameters.Location = new System.Drawing.Point(3, 3);
-            this.groupBoxLearningParameters.Name = "groupBoxLearningParameters";
-            this.groupBoxLearningParameters.Size = new System.Drawing.Size(743, 285);
-            this.groupBoxLearningParameters.TabIndex = 2;
-            this.groupBoxLearningParameters.TabStop = false;
-            this.groupBoxLearningParameters.Text = "Parametry";
-            // 
-            // labelValueNumbersOutNerons
-            // 
-            this.labelValueNumbersOutNerons.AutoSize = true;
-            this.labelValueNumbersOutNerons.Location = new System.Drawing.Point(222, 220);
-            this.labelValueNumbersOutNerons.Name = "labelValueNumbersOutNerons";
-            this.labelValueNumbersOutNerons.Size = new System.Drawing.Size(0, 13);
-            this.labelValueNumbersOutNerons.TabIndex = 15;
-            // 
-            // labelNameNumberOutNerons
-            // 
-            this.labelNameNumberOutNerons.AutoSize = true;
-            this.labelNameNumberOutNerons.Location = new System.Drawing.Point(17, 220);
-            this.labelNameNumberOutNerons.Name = "labelNameNumberOutNerons";
-            this.labelNameNumberOutNerons.Size = new System.Drawing.Size(153, 13);
-            this.labelNameNumberOutNerons.TabIndex = 14;
-            this.labelNameNumberOutNerons.Text = "Liczba neuronów wyjœciowych:";
-            // 
-            // labelValuePathLearningDir
-            // 
-            this.labelValuePathLearningDir.AutoSize = true;
-            this.labelValuePathLearningDir.Location = new System.Drawing.Point(222, 253);
-            this.labelValuePathLearningDir.Name = "labelValuePathLearningDir";
-            this.labelValuePathLearningDir.Size = new System.Drawing.Size(0, 13);
-            this.labelValuePathLearningDir.TabIndex = 13;
-            // 
-            // labelNamePathLearningDir
-            // 
-            this.labelNamePathLearningDir.AutoSize = true;
-            this.labelNamePathLearningDir.Location = new System.Drawing.Point(17, 253);
-            this.labelNamePathLearningDir.Name = "labelNamePathLearningDir";
-            this.labelNamePathLearningDir.Size = new System.Drawing.Size(130, 13);
-            this.labelNamePathLearningDir.TabIndex = 12;
-            this.labelNamePathLearningDir.Text = "Folder z danymi ucz¹cymi:";
-            // 
-            // labelValueWordNumber
-            // 
-            this.labelValueWordNumber.AutoSize = true;
-            this.labelValueWordNumber.Location = new System.Drawing.Point(222, 152);
-            this.labelValueWordNumber.Name = "labelValueWordNumber";
-            this.labelValueWordNumber.Size = new System.Drawing.Size(0, 13);
-            this.labelValueWordNumber.TabIndex = 11;
-            // 
-            // labelValueNumbersHiddenNerons
-            // 
-            this.labelValueNumbersHiddenNerons.AutoSize = true;
-            this.labelValueNumbersHiddenNerons.Location = new System.Drawing.Point(222, 184);
-            this.labelValueNumbersHiddenNerons.Name = "labelValueNumbersHiddenNerons";
-            this.labelValueNumbersHiddenNerons.Size = new System.Drawing.Size(0, 13);
-            this.labelValueNumbersHiddenNerons.TabIndex = 10;
-            // 
-            // labelValueTestNumbersDocuments
-            // 
-            this.labelValueTestNumbersDocuments.AutoSize = true;
-            this.labelValueTestNumbersDocuments.Location = new System.Drawing.Point(222, 118);
-            this.labelValueTestNumbersDocuments.Name = "labelValueTestNumbersDocuments";
-            this.labelValueTestNumbersDocuments.Size = new System.Drawing.Size(0, 13);
-            this.labelValueTestNumbersDocuments.TabIndex = 9;
-            // 
-            // labelValueTestNumbersCategories
-            // 
-            this.labelValueTestNumbersCategories.AutoSize = true;
-            this.labelValueTestNumbersCategories.Location = new System.Drawing.Point(222, 89);
-            this.labelValueTestNumbersCategories.Name = "labelValueTestNumbersCategories";
-            this.labelValueTestNumbersCategories.Size = new System.Drawing.Size(0, 13);
-            this.labelValueTestNumbersCategories.TabIndex = 8;
-            // 
-            // labelValueAllNumbersParameters
-            // 
-            this.labelValueAllNumbersParameters.AutoSize = true;
-            this.labelValueAllNumbersParameters.Location = new System.Drawing.Point(222, 61);
-            this.labelValueAllNumbersParameters.Name = "labelValueAllNumbersParameters";
-            this.labelValueAllNumbersParameters.Size = new System.Drawing.Size(0, 13);
-            this.labelValueAllNumbersParameters.TabIndex = 7;
-            // 
-            // labelValueAllNumbersCategories
-            // 
-            this.labelValueAllNumbersCategories.AutoSize = true;
-            this.labelValueAllNumbersCategories.Location = new System.Drawing.Point(222, 37);
-            this.labelValueAllNumbersCategories.Name = "labelValueAllNumbersCategories";
-            this.labelValueAllNumbersCategories.Size = new System.Drawing.Size(0, 13);
-            this.labelValueAllNumbersCategories.TabIndex = 6;
-            // 
-            // labelNameNumbersHiddenNerons
-            // 
-            this.labelNameNumbersHiddenNerons.AutoSize = true;
-            this.labelNameNumbersHiddenNerons.Location = new System.Drawing.Point(17, 184);
-            this.labelNameNumbersHiddenNerons.Name = "labelNameNumbersHiddenNerons";
-            this.labelNameNumbersHiddenNerons.Size = new System.Drawing.Size(180, 13);
-            this.labelNameNumbersHiddenNerons.TabIndex = 5;
-            this.labelNameNumbersHiddenNerons.Text = "Liczba neuronów w warstwie ukrytej:";
-            // 
-            // labelNameWordNumber
-            // 
-            this.labelNameWordNumber.AutoSize = true;
-            this.labelNameWordNumber.Location = new System.Drawing.Point(17, 152);
-            this.labelNameWordNumber.Name = "labelNameWordNumber";
-            this.labelNameWordNumber.Size = new System.Drawing.Size(121, 13);
-            this.labelNameWordNumber.TabIndex = 4;
-            this.labelNameWordNumber.Text = "Liczba wszystkich s³ów:";
-            // 
-            // labelNameTestNumbersCategories
-            // 
-            this.labelNameTestNumbersCategories.AutoSize = true;
-            this.labelNameTestNumbersCategories.Location = new System.Drawing.Point(17, 118);
-            this.labelNameTestNumbersCategories.Name = "labelNameTestNumbersCategories";
-            this.labelNameTestNumbersCategories.Size = new System.Drawing.Size(153, 13);
-            this.labelNameTestNumbersCategories.TabIndex = 3;
-            this.labelNameTestNumbersCategories.Text = "Liczba przekazanych kategorii:";
-            // 
-            // labelNameAllNumbersCategories
-            // 
-            this.labelNameAllNumbersCategories.AutoSize = true;
-            this.labelNameAllNumbersCategories.Location = new System.Drawing.Point(17, 89);
-            this.labelNameAllNumbersCategories.Name = "labelNameAllNumbersCategories";
-            this.labelNameAllNumbersCategories.Size = new System.Drawing.Size(138, 13);
-            this.labelNameAllNumbersCategories.TabIndex = 2;
-            this.labelNameAllNumbersCategories.Text = "Liczba wszystkich kategorii:";
-            // 
-            // labelNameTestNumbersDocuments
-            // 
-            this.labelNameTestNumbersDocuments.AutoSize = true;
-            this.labelNameTestNumbersDocuments.Location = new System.Drawing.Point(17, 61);
-            this.labelNameTestNumbersDocuments.Name = "labelNameTestNumbersDocuments";
-            this.labelNameTestNumbersDocuments.Size = new System.Drawing.Size(174, 13);
-            this.labelNameTestNumbersDocuments.TabIndex = 1;
-            this.labelNameTestNumbersDocuments.Text = "Liczba przekazanych dokumentów:";
-            // 
-            // labelNameAllNumbersParameters
-            // 
-            this.labelNameAllNumbersParameters.AutoSize = true;
-            this.labelNameAllNumbersParameters.Location = new System.Drawing.Point(17, 37);
-            this.labelNameAllNumbersParameters.Name = "labelNameAllNumbersParameters";
-            this.labelNameAllNumbersParameters.Size = new System.Drawing.Size(153, 13);
-            this.labelNameAllNumbersParameters.TabIndex = 0;
-            this.labelNameAllNumbersParameters.Text = "Liczba wszystkich parametrów:";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.tableLayoutPanel4);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(752, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(193, 357);
-            this.panel1.TabIndex = 3;
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel4.Controls.Add(this.buttonLearningStop1, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.buttonLearningStart1, 0, 0);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(180, 37);
-            this.tableLayoutPanel4.TabIndex = 0;
-            // 
-            // buttonLearningStop1
-            // 
-            this.buttonLearningStop1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonLearningStop1.Location = new System.Drawing.Point(102, 3);
-            this.buttonLearningStop1.Name = "buttonLearningStop1";
-            this.buttonLearningStop1.Size = new System.Drawing.Size(75, 31);
-            this.buttonLearningStop1.TabIndex = 0;
-            this.buttonLearningStop1.Text = "Stop";
-            this.buttonLearningStop1.UseVisualStyleBackColor = true;
-            this.buttonLearningStop1.Visible = false;
-            this.buttonLearningStop1.Click += new System.EventHandler(this.buttonLearningStop1_Click);
-            // 
-            // buttonLearningStart1
-            // 
-            this.buttonLearningStart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonLearningStart1.Location = new System.Drawing.Point(3, 3);
-            this.buttonLearningStart1.Name = "buttonLearningStart1";
-            this.buttonLearningStart1.Size = new System.Drawing.Size(93, 31);
-            this.buttonLearningStart1.TabIndex = 1;
-            this.buttonLearningStart1.Text = "Start";
-            this.buttonLearningStart1.UseVisualStyleBackColor = true;
-            this.buttonLearningStart1.Click += new System.EventHandler(this.buttonLearningStart1_Click);
             // 
             // statusStrip1
             // 
@@ -764,18 +763,18 @@ namespace DocClass
             this.groupBoxDocumentRepresentation.ResumeLayout(false);
             this.groupBoxDocumentRepresentation.PerformLayout();
             this.tabControlUse.ResumeLayout(false);
-            this.tabPageClasyfication.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClassificationResults)).EndInit();
-            this.panel3.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
             this.tabPageLearning.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBoxLearningParameters.ResumeLayout(false);
             this.groupBoxLearningParameters.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
+            this.tabPageClasyfication.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClassificationResults)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -809,17 +808,17 @@ namespace DocClass
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogDateLoad;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.GroupBox groupBoxLearningParameters;
-        private System.Windows.Forms.Label labelValueWordNumber;
-        private System.Windows.Forms.Label labelValueNumbersHiddenNerons;
-        private System.Windows.Forms.Label labelValueTestNumbersDocuments;
-        private System.Windows.Forms.Label labelValueTestNumbersCategories;
+        private System.Windows.Forms.Label labelLearningValueNumberAllWords;
+        private System.Windows.Forms.Label labelLearningValueNumbersHiddenNerons;
+        private System.Windows.Forms.Label labelLearningValueNumbersDocumentsInLearning;
+        private System.Windows.Forms.Label labelLearningValueNumbersCategoriesInLearning;
         private System.Windows.Forms.Label labelValueAllNumbersParameters;
-        private System.Windows.Forms.Label labelValueAllNumbersCategories;
-        private System.Windows.Forms.Label labelNameNumbersHiddenNerons;
-        private System.Windows.Forms.Label labelNameWordNumber;
-        private System.Windows.Forms.Label labelNameTestNumbersCategories;
-        private System.Windows.Forms.Label labelNameAllNumbersCategories;
-        private System.Windows.Forms.Label labelNameTestNumbersDocuments;
+        private System.Windows.Forms.Label labelLearningValueNumbersCategoriesAll;
+        private System.Windows.Forms.Label labelLearningNameNumbersHiddenNerons;
+        private System.Windows.Forms.Label labelLearningNameNumberAllWords;
+        private System.Windows.Forms.Label labelLearningNameNumbersCategoriesInLearning;
+        private System.Windows.Forms.Label labelLearningNameNumbersCategoriesAll;
+        private System.Windows.Forms.Label labelLearningNameNumbersDocumentsInLearning;
         private System.Windows.Forms.Label labelNameAllNumbersParameters;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Button buttonLearningStart;
@@ -839,10 +838,10 @@ namespace DocClass
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button buttonLearningStop1;
         private System.Windows.Forms.Button buttonLearningStart1;
-        private System.Windows.Forms.Label labelValuePathLearningDir;
-        private System.Windows.Forms.Label labelNamePathLearningDir;
-        private System.Windows.Forms.Label labelValueNumbersOutNerons;
-        private System.Windows.Forms.Label labelNameNumberOutNerons;
+        private System.Windows.Forms.Label labelLearningValuePathDir;
+        private System.Windows.Forms.Label labelLearningNamePathDir;
+        private System.Windows.Forms.Label labelLearningValueNumberOutNerons;
+        private System.Windows.Forms.Label labelLearningNameNumberOutNerons;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCategory;
         private System.Windows.Forms.DataGridViewLinkColumn Podgl¹d;

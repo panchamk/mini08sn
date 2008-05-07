@@ -80,6 +80,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Src\Controller\Workers\LearningManager.cs" />
+    <Compile Include="Src\Controller\Workers\PreprocessingBackgroundWorker.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Src\DocumentRepresentation\Document.cs" />
     <Compile Include="Src\DocumentRepresentation\DocumentList.cs" />
     <Compile Include="Src\GUI\PreprocessingForm.cs">
@@ -225,7 +228,9 @@
   <ItemGroup>
     <Content Include="References\ICSharpCode.SharpZipLib.dll" />
     <Content Include="References\nunit.framework.dll" />
-    <Content Include="References\Preprocessing\stopwords.txt" />
+    <Content Include="stopwords.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

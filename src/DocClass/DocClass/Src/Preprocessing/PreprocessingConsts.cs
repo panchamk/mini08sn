@@ -15,5 +15,6 @@ namespace DocClass.Src.Preprocessing
         public const String SummaryFileName = "summary.all";
         public const String StemmedFileExtension = ".stm";
         public const String StemmedFilePattern = "*.stm";
+        public const String StemmedFolder = "stem";
     }
 }

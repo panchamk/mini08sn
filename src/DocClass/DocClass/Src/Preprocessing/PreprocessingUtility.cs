@@ -4,6 +4,8 @@ using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections;
+using DocClass.Src.DocumentRepresentation;
+using DocClass.Src.Dictionaries;
 
 namespace DocClass.Src.Preprocessing
 {
@@ -155,6 +157,22 @@ namespace DocClass.Src.Preprocessing
         public static double ComputeTfIdf(double wordCount, double wordsInDocCount, double allDocCount, double inclDocCount)
         {
             return (wordCount / wordsInDocCount) * Math.Log10(allDocCount / inclDocCount);
+        }
+        /// <summary>
+        /// Tworzy listê zawieraj¹c¹ wszystkie dokumenty do uczenia.
+        /// </summary>
+        /// <param name="sourceDir">Kataloog zawieraj¹cy katalogi z poszczególnymi kategoriami.</param>
+        /// <param name="dictionary">S³ownik na podstawie którego maj¹ byæ tworzone dokumenty.</param>
+        /// <param name="drt">Rodzaj dokumentów.</param>
+        /// <param name="learningDocInfo">Obiekt klasy learningDocInfo lub null jeœli nie jest potrzebny dla danego s³ownika i typu dokumentu.</param>
+        /// <returns></returns>
+        public static DocumentList CreateLearningDocumentList(String sourceDir, Dictionary dictionary, DocumentRepresentationType drt, LearningDocInfo learningDocInfo)
+        {
+            DocumentList result = new DocumentList();
+            DirectoryInfo sourceDirInfo = new DirectoryInfo(Properties.Settings.Default.pathLearningDir);
+            foreach (DirectoryInfo dirInfo in sourceDirInfo.GetDirectories())
+                result.AddDocumentsFromDir(dirInfo.FullName + "\\" + PreprocessingConsts.StemmedFolder,dictionary,drt,dirInfo.Name,learningDocInfo);
+            return result;
         }
     }
 }

@@ -250,10 +250,11 @@ namespace DocClass.Src.Controller
             int dirNumber = new DirectoryInfo(sourcePath).GetDirectories().Length;
 
             preprocessingForm = new PreprocessingForm(dirNumber);
-            preprocessingForm.ShowDialog();
-
             preprocessingPath = sourcePath;
             preprocessingWorker.RunWorkerAsync();
+            preprocessingForm.ShowDialog();
+
+
         }
 
         /// <summary>

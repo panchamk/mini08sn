@@ -29,7 +29,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <StartupObject>DocClass.Src.Preprocessing.PreprocessingTest</StartupObject>
+    <StartupObject>DocClass.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -228,6 +228,9 @@
   <ItemGroup>
     <Content Include="References\ICSharpCode.SharpZipLib.dll" />
     <Content Include="References\nunit.framework.dll" />
+    <Content Include="stopwords.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\delete.png" />
     <None Include="Resources\Folder_Open.png" />
     <None Include="Resources\Generic_Document.png" />

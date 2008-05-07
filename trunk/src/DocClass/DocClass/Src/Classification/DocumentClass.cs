@@ -59,6 +59,16 @@ namespace DocClass.Src.Classification
             //return documentCategories.IndexOf(className);
         }
 
+        /// <summary>
+        /// Zwraca nazwe kategorii na podstawie indeksu.
+        /// </summary>
+        /// <param name="index">Index kategorii.</param>
+        /// <returns></returns>
+        public static string GetClassName(int index)
+        {
+            return documentCategories[index];
+        }
+
         //TODO: Zrobic dodawanie i pobieranie klas
         public static new String ToString()
         {

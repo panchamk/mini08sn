@@ -374,7 +374,11 @@ namespace DocClass.Src.Controller
         private Dictionary dictionaryFactory(String pathSummary)
         {
             WordCountList wordCountList = new WordCountList(pathSummary);
-
+            if (learningDocInfo == null)
+            {
+                learningDocInfo = new LearningDocInfo(Properties.Settings.Default.pathLearningDir,
+                                                    Properties.Settings.Default.pathSummaryFile);
+            }
             switch ((DictionaryType)Properties.Settings.Default.dictionaryType)
             {
                 case DictionaryType.CtfIdf:

@@ -14,6 +14,11 @@ namespace DocClass.Src.Preprocessing
 {
     public partial class PreprocessingTestForm : Form
     {
+
+        private string pathToSteemWords = @"C:\Documents and Settings\michal\Moje dokumenty\Visual Studio 2008\Projects\SieciNeuronowe\src\DocClass\DocClass\References\Preprocessing\stopwords.txt";
+
+        private FrequentDictionary dictionary;
+
         public PreprocessingTestForm()
         {
             InitializeComponent();
@@ -30,6 +35,7 @@ namespace DocClass.Src.Preprocessing
         private void button2_Click(object sender, EventArgs e)
         {
             Dictionary<int, String> stopWords = PreprocessingUtility.LoadStopWords("Preprocessing\\stopwords.txt");
+
             DateTime startTime = DateTime.Now;
             /*
             DirectoryInfo sourceDir = new DirectoryInfo(folderTextBox.Text);
@@ -65,6 +71,7 @@ namespace DocClass.Src.Preprocessing
         {
             /*
             Dictionary<int, String> stopWords = PreprocessingUtility.LoadStopWords("Preprocessing\\stopwords.txt");
+
 
             DirectoryInfo rootDirInfo = new DirectoryInfo(folderTextBox.Text);
             DateTime startTime = DateTime.Now;

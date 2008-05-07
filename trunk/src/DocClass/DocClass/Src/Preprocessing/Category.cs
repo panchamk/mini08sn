@@ -52,5 +52,13 @@ namespace DocClass.Src.Preprocessing
                 return wordCountList[word];
             }
         }
+
+        /// <summary>
+        /// Zwraca slownik slow oraz ich wystapien.
+        /// </summary>
+        public Dictionary<String, int> WordDictionary
+        {
+            get { return this.wordCountList; }
+        }
     }
 }

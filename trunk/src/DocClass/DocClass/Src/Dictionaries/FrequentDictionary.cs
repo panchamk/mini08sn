@@ -12,6 +12,7 @@ namespace DocClass.Src.Dictionaries
         {
             throw new Exception("The method or operation is not implemented.");
         }
+
         /// <summary>
         /// Tworzy nowy słownik na podstawie pliku podsumowującego wszsytkie kategorie.
         /// </summary>

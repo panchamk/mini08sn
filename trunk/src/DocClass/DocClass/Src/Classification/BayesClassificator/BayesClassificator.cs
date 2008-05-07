@@ -6,6 +6,10 @@ using DocClass.Src.Dictionaries;
 using System.Collections.Generic;
 using DocClass.Src.Classification;
 using DocClass.Src.DocumentRepresentation;
+using System.ComponentModel;
+using DocClass.Src.Preprocessing;
+
+using BayesCategory = DocClass.Src.Classification.BayesClassificator.Category;
 
 namespace DocClass.Src.Classification.BayesClassificator
 {
@@ -28,6 +32,11 @@ namespace DocClass.Src.Classification.BayesClassificator
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int mKey = 0;
 
+        /// <summary>
+        /// Watek wykonujacy klasyfikacje.
+        /// </summary>
+        private BackgroundWorker mOwner;
+
         #endregion
 
         #region Public Constructor
@@ -36,8 +45,17 @@ namespace DocClass.Src.Classification.BayesClassificator
         /// Konstruktor bezargumentowy.
         /// </summary>
         public BayesClassificator()
+            : this(null)
+        { }
+
+        /// <summary>
+        /// Konstruktor jednoparametrowy.
+        /// </summary>
+        /// <param name="owner">Watek wykonujacy.</param>
+        public BayesClassificator(BackgroundWorker owner)
         {
             this.categories = new Dictionary<int, Category>();
+            this.mOwner = owner;
         }
 
         #endregion
@@ -73,21 +91,21 @@ namespace DocClass.Src.Classification.BayesClassificator
         /// <param name="dict">Parametr lest lista plikow danej kategorii. Jedna kategoria
         /// moze zawierac wiele plikow.</param>
         /// <returns>Zwraca true, jesli dane sa poprawne.</returns>
-        public override bool Learn(DocumentList docList ) //Dictionary dict)
+        public override bool Learn(Object obj ) //Dictionary dict)
         {
-            //TODO: MZ - przystosuj do danych czerpanych z DocumentList
-            /*
-            if (dict == null || dict.DataVectors == null || dict.DataVectors.Count == 0)
-                return false;
+            if (obj == null)
+                throw new ArgumentNullException("Argument jest null-em !");
+            if (!(obj is CategoryList))
+                throw new ArgumentException("Argument nie jest typu CategoryList!");
 
-            Category category = new Category();
-            foreach (LearningPair pair in dict.DataVectors)
+            CategoryList catList = obj as CategoryList;
+            for(int i = 0; i < catList.CategoryCount; i++)
             {
-                category.Learn(pair.Map);
+                BayesCategory bayesCategory = new BayesCategory();
+                bayesCategory.Learn(catList[i].WordDictionary);
+                this.categories.Add(catList[i].Name.GetHashCode(), bayesCategory);
             }
-            this.categories.Add(this.mKey, category);
-            this.mKey++;
-             * */
+
             return true;
         }
 
@@ -139,7 +157,7 @@ namespace DocClass.Src.Classification.BayesClassificator
             allWords = AllWordsInCategories;
             foreach (KeyValuePair<int, Category> cat in this.categories)
                 score[cat.Key] += Math.Log((double)cat.Value.TotalWords / (double)allWords);
-
+            
             return GetMaxIndex(score);
         }
 
@@ -154,7 +172,7 @@ namespace DocClass.Src.Classification.BayesClassificator
                 return false;
 
             Category category = new Category();
-            Dictionary<String, double> strDict = new Dictionary<String, double>();
+            Dictionary<String, int> strDict = new Dictionary<String, int>();
             foreach (String word in dict)
                 strDict.Add(word, 0);
             category.Learn(strDict);

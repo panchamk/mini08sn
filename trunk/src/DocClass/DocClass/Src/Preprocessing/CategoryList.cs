@@ -54,12 +54,21 @@ namespace DocClass.Src.Preprocessing
                 return null;
             }
         }
+
         /// <summary>
         /// Zwraca iloœæ kategorii, dla której przechowywane s¹ listy.
         /// </summary>
         public int CategoryCount
         {
             get { return categoryList.Count; }
+        }
+
+        /// <summary>
+        /// Zwraca liste kategorii.
+        /// </summary>
+        public List<Category> Categories
+        {
+            get { return this.categoryList; }
         }
     }
 }

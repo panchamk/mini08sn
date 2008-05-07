@@ -9,6 +9,11 @@ namespace DocClass.Src.Tests
     [TestFixture]
     public class SVDTest
     {
+        public static void Main()
+        {
+            SVDMemoryUse();
+        }
+
         /*[Test]
         public static void Test()
         {
@@ -87,6 +92,22 @@ namespace DocClass.Src.Tests
             Console.WriteLine("Macierz poddana rozkladowi SVD");
             Console.WriteLine(Matrix.ToString(a));
             return a;
+        }
+
+        public static void SVDMemoryUse()
+        {
+            int sizeX = 4000, sizeY = 5000;
+            double[,] matrix = new double[sizeX, sizeY];
+            for (int i = 0; i < sizeX; i++)
+                for (int j = 0; j < sizeY; j++)
+                    matrix[i, j] = i + j;
+            double[,] svdA = Pseudoinverse.Solve(matrix);
+            Console.WriteLine("Macierz wynikowa.");
+            Console.WriteLine(Matrix.ToString(svdA));
+            GC.SuppressFinalize(matrix);
+            GC.SuppressFinalize(svdA);
+            matrix = null;
+            svdA = null;
         }
 
         /*public static void TestPseudoInverse()

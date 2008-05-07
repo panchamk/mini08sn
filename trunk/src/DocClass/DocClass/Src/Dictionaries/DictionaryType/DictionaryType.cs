@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DocClass.Src.Dictionaries
 {
-    enum DictionaryType
+    public enum DictionaryType
     {
-        CtfIdf,Fixed,Frequent
+        CtfIdf,
+        Fixed,
+        Frequent
     }
 }

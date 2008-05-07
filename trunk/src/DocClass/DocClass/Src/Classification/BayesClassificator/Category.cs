@@ -92,17 +92,19 @@ namespace DocClass.Src.Classification.BayesClassificator
         /// Kategoria zapamietuje slowa, nalezace do niej.
         /// </summary>
         /// <param name="words">Slowa definiujace kategorie.</param>
-        public void Learn(Dictionary<String, double> words)
+        public void Learn(Dictionary<String, int> words)
         {
-            foreach (KeyValuePair<String, double> w in words)
+            foreach (KeyValuePair<String, int> w in words)
             {
                 Node node;
                 if (!TryGetValue(w.Key, out node))
                 {
                     node = new Node(w.Key);
+                    node.Count = w.Value;
                     this.mExistsWords.Add(node);
                 }
-                node.Count++;
+                else
+                    node.Count++;
                 this.mTotalWords++;
             }
         }

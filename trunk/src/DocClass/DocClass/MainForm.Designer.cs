@@ -34,6 +34,7 @@ namespace DocClass
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.directoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preproccesingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metodaKlasyfikacjiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BayesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,7 +86,6 @@ namespace DocClass
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonLearningStart = new System.Windows.Forms.Button();
             this.buttonLearningStop = new System.Windows.Forms.Button();
-            this.preproccesingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.radioButtonDictionaryFrequance = new DocClass.RadioButtonDictionary();
             this.radioButtonDictionaryFixed = new DocClass.RadioButtonDictionary();
             this.radioButtonDictionaryCtfIdf = new DocClass.RadioButtonDictionary();
@@ -158,6 +158,13 @@ namespace DocClass
             this.directoryToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.directoryToolStripMenuItem.Text = "Folder";
             this.directoryToolStripMenuItem.Click += new System.EventHandler(this.OnDirectoryToolStripMenuItem_Click);
+            // 
+            // preproccesingToolStripMenuItem
+            // 
+            this.preproccesingToolStripMenuItem.Name = "preproccesingToolStripMenuItem";
+            this.preproccesingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.preproccesingToolStripMenuItem.Text = "Preproccesing";
+            this.preproccesingToolStripMenuItem.Click += new System.EventHandler(this.OnPreproccesingToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -677,13 +684,6 @@ namespace DocClass
             this.buttonLearningStop.TabIndex = 1;
             this.buttonLearningStop.Text = "Stop";
             this.buttonLearningStop.UseVisualStyleBackColor = true;
-            // 
-            // preproccesingToolStripMenuItem
-            // 
-            this.preproccesingToolStripMenuItem.Name = "preproccesingToolStripMenuItem";
-            this.preproccesingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.preproccesingToolStripMenuItem.Text = "Preproccesing";
-            this.preproccesingToolStripMenuItem.Click += new System.EventHandler(this.OnPreproccesingToolStripMenuItem_Click);
             // 
             // radioButtonDictionaryFrequance
             // 

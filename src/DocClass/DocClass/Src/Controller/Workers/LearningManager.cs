@@ -32,6 +32,7 @@ namespace DocClass.Src.Controller.Workers
         /// Konstruktor jednoparametrowy.
         /// </summary>
         /// <param name="classificator">Typ klasyfikatora.</param>
+        /// <param name="directory">Katalog z przeanalizowanymi plikami.</param>
         public LearningManager(TypeClassificator classificator)
         {
             this.mClassificator = classificator;

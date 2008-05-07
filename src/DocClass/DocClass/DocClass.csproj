@@ -29,7 +29,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <StartupObject>DocClass.Program</StartupObject>
+    <StartupObject>DocClass.Src.Preprocessing.PreprocessingTest</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -232,9 +232,6 @@
     <None Include="Resources\Folder_Open.png" />
     <None Include="Resources\Generic_Document.png" />
     <None Include="Resources\openHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Src\Tests\Bayes\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

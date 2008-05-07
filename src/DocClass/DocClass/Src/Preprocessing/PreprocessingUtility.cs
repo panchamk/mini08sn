@@ -169,7 +169,7 @@ namespace DocClass.Src.Preprocessing
         public static DocumentList CreateLearningDocumentList(String sourceDir, Dictionary dictionary, DocumentRepresentationType drt, LearningDocInfo learningDocInfo)
         {
             DocumentList result = new DocumentList();
-            DirectoryInfo sourceDirInfo = new DirectoryInfo(Properties.Settings.Default.pathLearningDir);
+            DirectoryInfo sourceDirInfo = new DirectoryInfo(sourceDir);
             foreach (DirectoryInfo dirInfo in sourceDirInfo.GetDirectories())
                 result.AddDocumentsFromDir(dirInfo.FullName + "\\" + PreprocessingConsts.StemmedFolder,dictionary,drt,dirInfo.Name,learningDocInfo);
             return result;

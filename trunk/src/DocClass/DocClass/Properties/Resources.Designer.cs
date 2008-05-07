@@ -96,12 +96,40 @@ namespace DocClass.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap delete {
+            get {
+                object obj = ResourceManager.GetObject("delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Folder_Open {
+            get {
+                object obj = ResourceManager.GetObject("Folder_Open", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Najczęściej występujące.
         /// </summary>
         internal static string frequence {
             get {
                 return ResourceManager.GetString("frequence", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Generic_Document {
+            get {
+                object obj = ResourceManager.GetObject("Generic_Document", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap openHS {
+            get {
+                object obj = ResourceManager.GetObject("openHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

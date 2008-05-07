@@ -12,10 +12,7 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="hiddenLayerInitNeuronCount" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="outputLayerNeuronCount" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">20</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="pathStopWords" Type="System.String" Scope="User">
       <Value Profile="(Default)">stopwords.txt</Value>

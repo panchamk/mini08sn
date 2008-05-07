@@ -229,9 +229,7 @@ namespace DocClass.Src.Classification.RadialNetwork
                 HiddenLayerLearning();
                 HiddenLayerLearning();
                 HiddenLayerLearning();
-                HiddenLayerLearning();
-                HiddenLayerLearning();
-                HiddenLayerLearning();
+
                 num2 = num1;
                 num1 = LearnCheck();
             } while (num1 > num2);
@@ -318,7 +316,7 @@ namespace DocClass.Src.Classification.RadialNetwork
             for (int k = 0; k < DocumentClass.CategoriesCount; k++)
             {
                 // kazdego neuronu warstwy ukrytej
-                for (int j = 0; j < neuronOutputLayer.Count; j++)
+                for (int j = 0; j < neuronHiddenLayer.Count; j++)
                 {
                     double[] dif_c = new double[neuronHiddenLayer.Count],
                         dif_sigma = new double[neuronHiddenLayer.Count];
@@ -387,7 +385,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <returns></returns>
         private double[] dE_dSigma(int nth_Output, int nth_Neuron)
         {
-            double[] result = new double[documentList.Count];
+            double[] result = new double[documentList[0].GetValues().Count];
             RadialNeuron radialNeuron = (RadialNeuron)neuronHiddenLayer[nth_Neuron];
             LinearNeuron linerarNeuron = (LinearNeuron)neuronOutputLayer[nth_Output];
             double[] inputVector;

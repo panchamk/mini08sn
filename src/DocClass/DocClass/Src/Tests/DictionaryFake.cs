@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using DocClass.Src.Dictionaries;
 using DocClass.Src.Learning;
+using DocClass.Src.DocumentRepresentation;
 
 namespace DocClass.Src.Tests
 {

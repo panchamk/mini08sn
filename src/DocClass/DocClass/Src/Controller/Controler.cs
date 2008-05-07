@@ -189,9 +189,11 @@ namespace DocClass.Src.Controller
             //stworzenie sieci
             radialNetwork = new RadialNetwork(Properties.Settings.Default.hiddenLayerInitNeuronCount,
                                                Properties.Settings.Default.outputLayerNeuronCount);
-            
+
+            //TODO: Emil
+            //DocumentList dl = new DocumentList(Properties.Settings.Default.pathLearningDir, dictionary, Properties.Settings.Default.documentRepresentationType, null, 
             //nauka
-            //radialNetwork.Learn(dictionary);TODO:DLA PAWŁA learningData rzuca null
+            //radialNetwork.Learn(Docu); 
             Console.Out.WriteLine("Koniec nauki.");
         }
 

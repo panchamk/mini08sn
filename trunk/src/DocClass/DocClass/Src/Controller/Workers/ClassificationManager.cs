@@ -10,9 +10,9 @@ namespace DocClass.Src.Controller.Workers
     /// <summary>
     /// Klasa implementujaca klasyfikacje.
     /// </summary>
-    public class ClassificationManager : IDisposable
+    public class ClassificationManager //: IDisposable
     {
-        #region Private Fields
+        /*#region Private Fields
 
         /// <summary>
         /// Typ klasyfikatora do nauki.
@@ -121,5 +121,6 @@ namespace DocClass.Src.Controller.Workers
         }
 
         #endregion
+         */
     }
 }

@@ -11,19 +11,14 @@ namespace DocClass.Src.Controller.Workers
     /// </summary>
     public class ClassificationBackgroundWorker : BackgroundWorker
     {
-        /// <summary>
-        /// Typ klasyfikatora.
-        /// </summary>
-        private TypeClassificator mClassificator = TypeClassificator.None;
+        private Controller controller;
 
-        /// <summary>
-        /// Konstruktor jednoparametrowy.
-        /// </summary>
-        /// <param name="type">Typ wykorzystywanego clasyfikatora.</param>
-        public ClassificationBackgroundWorker(TypeClassificator type)
+        
+
+        public ClassificationBackgroundWorker(Controller controller)
             :base()
         {
-            this.mClassificator = type;
+            this.controller = controller;
         }
 
         /// <summary>
@@ -33,6 +28,7 @@ namespace DocClass.Src.Controller.Workers
         protected override void OnDoWork(DoWorkEventArgs e)
         {
             base.OnDoWork(e);
+            controller.ClassificateProcess();
         }
     }
 }

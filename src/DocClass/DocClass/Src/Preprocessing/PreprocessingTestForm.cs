@@ -17,7 +17,7 @@ namespace DocClass.Src.Preprocessing
 
         private string pathToSteemWords = @"C:\Documents and Settings\michal\Moje dokumenty\Visual Studio 2008\Projects\SieciNeuronowe\src\DocClass\DocClass\References\Preprocessing\stopwords.txt";
 
-        private FrequentDictionary dictionary;
+        //private FrequentDictionary dictionary;
 
         public PreprocessingTestForm()
         {
@@ -173,9 +173,18 @@ namespace DocClass.Src.Preprocessing
         private void button14_Click(object sender, EventArgs e)
         {
             DocumentClass.LoadFromFiles(folderTextBox.Text, PreprocessingConsts.CategoryFilePattern);
-            CtfIdfDictionary dictionary = new CtfIdfDictionary(folderTextBox.Text, folderTextBox.Text + "\\" + PreprocessingConsts.SummaryFileName, 10);
-            PreprocessingUtility.CreateLearningDocumentList(folderTextBox.Text, dictionary, DocumentRepresentationType.Binary, null);
+            CtfIdfDictionary dictionary = new CtfIdfDictionary(folderTextBox.Text, folderTextBox.Text + "\\" + PreprocessingConsts.SummaryFileName, 1000);
+            String summaryFilePath = Application.StartupPath + "\\Preprocessing\\" + PreprocessingConsts.SummaryFileName;
+            LearningDocInfo learningDocInfo = new LearningDocInfo(folderTextBox.Text, summaryFilePath);
+            PreprocessingUtility.CreateLearningDocumentList(folderTextBox.Text, dictionary, DocumentRepresentationType.TfIdf, learningDocInfo);
             MessageBox.Show("Done");
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            FixedDictionary dictionary = new FixedDictionary(folderTextBox.Text, 100);
+            Console.WriteLine(dictionary);
+
         }
     }
 }

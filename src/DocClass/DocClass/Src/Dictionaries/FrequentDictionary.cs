@@ -20,7 +20,6 @@ namespace DocClass.Src.Dictionaries
         /// <param name="size">Rozmiar słownika - ilość słów w słowniku.</param>
         public FrequentDictionary(String summaryFile, int size)
         {
-
             List<WordCountPair> wordList = new List<WordCountPair>();
             StreamReader sr = new StreamReader(summaryFile);
             //wczytywanie wszystkich słów

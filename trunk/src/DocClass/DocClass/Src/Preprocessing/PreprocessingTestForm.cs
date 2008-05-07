@@ -169,5 +169,13 @@ namespace DocClass.Src.Preprocessing
             foreach (Document doc in dl.GetDocumentList())
                 Console.WriteLine(doc);
         }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            DocumentClass.LoadFromFiles(folderTextBox.Text, PreprocessingConsts.CategoryFilePattern);
+            CtfIdfDictionary dictionary = new CtfIdfDictionary(folderTextBox.Text, folderTextBox.Text + "\\" + PreprocessingConsts.SummaryFileName, 10);
+            PreprocessingUtility.CreateLearningDocumentList(folderTextBox.Text, dictionary, DocumentRepresentationType.Binary, null);
+            MessageBox.Show("Done");
+        }
     }
 }

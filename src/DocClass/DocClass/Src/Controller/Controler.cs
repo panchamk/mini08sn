@@ -338,8 +338,8 @@ namespace DocClass.Src.Controller
             ICollection<string> wordsCollection = wordsFromFile(preprocessingPathFile);
 
             //klasyfikacja
-            int i = bayesClassificator.Classificate(wordsCollection);
-            Console.Out.WriteLine(i);
+            string category = bayesClassificator.Classificate(wordsCollection);
+            Console.Out.WriteLine(category);
 
             //usunięcie pliku
             new FileInfo(preprocessingPathFile).Delete();

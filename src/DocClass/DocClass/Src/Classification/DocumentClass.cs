@@ -29,6 +29,7 @@ namespace DocClass.Src.Classification
             if (!documentCategories.Contains(className))
                 documentCategories.Add(className);
         }
+
         /// <summary>
         /// £aduje listê kategorii na podstawie plików podsumowuj¹cyh kategoriê.
         /// </summary>
@@ -42,6 +43,7 @@ namespace DocClass.Src.Classification
             foreach (FileInfo fileInfo in SourceDirInfo.GetFiles(pattern))
                 documentCategories.Add(Path.GetFileNameWithoutExtension(fileInfo.Name));
         }
+
         /// <summary>
         /// Zwraca indeks klasy na podstawie nazwy.
         /// </summary>
@@ -52,8 +54,11 @@ namespace DocClass.Src.Classification
             int index = documentCategories.IndexOf(className);
             if (index == -1)
                 throw new Exception(String.Format("Class: {0} doesn't exist.", className));
-            return documentCategories.IndexOf(className);
+            return index;
+            
+            //return documentCategories.IndexOf(className);
         }
+
         //TODO: Zrobic dodawanie i pobieranie klas
         public static new String ToString()
         {

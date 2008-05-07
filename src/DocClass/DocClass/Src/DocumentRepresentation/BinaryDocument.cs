@@ -24,9 +24,9 @@ namespace DocClass.Src.DocumentRepresentation
             WordCountList listFromFile = new WordCountList(fileName);
             foreach (String word in dictionary)
                 if (listFromFile[word] != -1)
-                    wordCountList.Add(new WordCountPair(word, 1));
+                    wordCountList.Add(new DocClass.Src.Preprocessing.WordCountPair(word, 1));
                 else
-                    wordCountList.Add(new WordCountPair(word, 0));
+                    wordCountList.Add(new DocClass.Src.Preprocessing.WordCountPair(word, 0));
 
         }
     }

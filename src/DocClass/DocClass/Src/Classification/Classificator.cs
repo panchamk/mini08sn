@@ -22,7 +22,7 @@ namespace DocClass.Src.Classification
         /// </summary>
         /// <param name="docs"></param>
         /// <returns></returns>
-        public abstract bool Learn(DocumentList list);
+        public abstract bool Learn(Object list);
 
         /// <summary>
         /// Klasyfikacja dokumentu

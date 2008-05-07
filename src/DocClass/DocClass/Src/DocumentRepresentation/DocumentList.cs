@@ -125,6 +125,7 @@ namespace DocClass.Src.DocumentRepresentation
         {
             return documentList;
         }
+
         /// <summary>
         /// Zwraca listê wartoœci dla wszystkich dokumentów.
         /// </summary>

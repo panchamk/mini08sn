@@ -6,6 +6,8 @@ namespace DocClass.Src.DocumentRepresentation
 {
     enum DocumentRepresentationType
     {
-        TfIdf,Binary, Own
+        TfIdf,
+        Binary, 
+        Own
     }
 }

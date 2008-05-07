@@ -207,11 +207,15 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// </summary>
         /// <param name="docs">dane uczace</param>
         /// <returns></returns>
-        public override bool Learn(DocumentList docList)
+        public override bool Learn(Object obj)
         {
-            double num1 = 0, num2 = 0;
-            if (docList == null)
+            if (obj == null)
                 throw new NullReferenceException("docList puste");
+            if (!(obj is DocumentList))
+                throw new ArgumentException("Argument nie jest typu: DocumentList !");
+
+            double num1 = 0, num2 = 0;
+            DocumentList docList = obj as DocumentList;
             this.learningData = docList;
             documentList = docList.GetDocumentList();
             PreSelect();

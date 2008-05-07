@@ -60,8 +60,12 @@ namespace DocClass.Src.DocumentRepresentation
         {
             CheckCorrectness(drt, dictionary.GetDictionaryType());
 
+            Console.WriteLine("Adding dir: " + sourceDir);
+
             DirectoryInfo sourceDirInfo = new DirectoryInfo(sourceDir);
             foreach (FileInfo fileInfo in sourceDirInfo.GetFiles())
+            {
+                Console.WriteLine("Adding file: " + fileInfo.FullName);
                 switch (drt)
                 {
                     case DocumentRepresentationType.TfIdf:
@@ -76,6 +80,7 @@ namespace DocClass.Src.DocumentRepresentation
                     default:
                         throw new Exception("Unknown DocumentRepresentationType: " + drt);
                 }
+            }
         }
         /// <summary>
         /// Dodaje dokument do listy.

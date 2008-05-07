@@ -25,6 +25,12 @@ namespace DocClass.Src.Classification.BayesClassificator
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int mTotalWords;
 
+        /// <summary>
+        /// Nazwa kategorii.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string mName;
+
         #endregion
 
         #region Public Constructor
@@ -36,6 +42,7 @@ namespace DocClass.Src.Classification.BayesClassificator
         {
             this.mExistsWords = new List<Node>();
             this.mTotalWords = 0;
+            this.mName = String.Empty;
         }
 
         #endregion
@@ -57,6 +64,15 @@ namespace DocClass.Src.Classification.BayesClassificator
         public List<Node> ExistsWords
         {
             get { return this.mExistsWords; }
+        }
+
+        /// <summary>
+        /// Pobiera lub ustawia nazwe kategorii.
+        /// </summary>
+        public string Name
+        {
+            get { return this.mName; }
+            set { this.mName = value; }
         }
 
         #endregion

@@ -10,6 +10,7 @@ using System.ComponentModel;
 using DocClass.Src.Preprocessing;
 
 using BayesCategory = DocClass.Src.Classification.BayesClassificator.Category;
+using System.Collections.Specialized;
 
 namespace DocClass.Src.Classification.BayesClassificator
 {
@@ -102,6 +103,7 @@ namespace DocClass.Src.Classification.BayesClassificator
             for(int i = 0; i < catList.CategoryCount; i++)
             {
                 BayesCategory bayesCategory = new BayesCategory();
+                bayesCategory.Name = catList[i].Name;
                 bayesCategory.Learn(catList[i].WordDictionary);
                 this.categories.Add(catList[i].Name.GetHashCode(), bayesCategory);
             }
@@ -141,24 +143,30 @@ namespace DocClass.Src.Classification.BayesClassificator
         /// <remarks>Uwaga: funkcja zwraca indeks kategorii w porzadku uczenia.
         /// Czyli jesli kategoria "Religia" byla trzecia kategoria uczaca i dany tekst bedzie(wedlug klasyfikatora)
         /// nalezal do kategorii  "Religia", to zwroci wartosc 3.</remarks>
-        public int Classificate(ICollection<String> collection)
+        public string Classificate(ICollection<String> collection)
         {
             double count = 0, allWords;
-            double[] score = new double[this.categories.Count];
+            
+            Dictionary<String, double> score = new Dictionary<String, double>();
+
+            foreach (KeyValuePair<int, Category> cat in this.categories)
+                score.Add(cat.Value.Name, 0);
+
             foreach (String strWord in collection)
                 foreach (KeyValuePair<int, Category> cat in this.categories)
                 {
                     count = cat.Value.GetWordsCount(strWord);
                     if (0 < count)
-                        score[cat.Key] += Math.Log(count / (double)cat.Value.TotalWords);
+                        score[cat.Value.Name] += Math.Log(count / (double)cat.Value.TotalWords);
                     else
-                        score[cat.Key] += Math.Log(0.01 / (double)cat.Value.TotalWords);
+                        score[cat.Value.Name] += Math.Log(0.01 / (double)cat.Value.TotalWords);
                 }
+
             allWords = AllWordsInCategories;
             foreach (KeyValuePair<int, Category> cat in this.categories)
-                score[cat.Key] += Math.Log((double)cat.Value.TotalWords / (double)allWords);
-            
-            return GetMaxIndex(score);
+                score[cat.Value.Name] += Math.Log((double)cat.Value.TotalWords / (double)allWords);
+
+            return GetCategory(score);
         }
 
         /// <summary>
@@ -206,6 +214,25 @@ namespace DocClass.Src.Classification.BayesClassificator
                 }
             }
             return index;
+        }
+
+        /// <summary>
+        /// Znajduje kategorie, ktora w slowniku ma najwieksza wartosc.
+        /// </summary>
+        /// <param name="dictionary">Slownik kategorii.</param>
+        /// <returns>Kategorie o najwiekszej wartosci.</returns>
+        private string GetCategory(Dictionary<String, double> dictionary)
+        {
+            string category = String.Empty;
+            double tmpVal = Double.MinValue;
+            foreach (KeyValuePair<String, double> cat in dictionary)
+                if (cat.Value > tmpVal)
+                {
+                    tmpVal = cat.Value;
+                    category = cat.Key;
+                }
+
+            return category;
         }
 
         #endregion

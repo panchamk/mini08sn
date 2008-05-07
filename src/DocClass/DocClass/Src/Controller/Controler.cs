@@ -316,8 +316,7 @@ namespace DocClass.Src.Controller
             //dictionary.LearningData = new List<DocClass.Src.Learning.LearningPair>();
 
             //stworzenie sieci
-            radialNetwork = new RadialNetwork(Properties.Settings.Default.hiddenLayerInitNeuronCount,
-                                               Properties.Settings.Default.outputLayerNeuronCount);
+            radialNetwork = new RadialNetwork(Properties.Settings.Default.hiddenLayerInitNeuronCount, DocumentClass.CategoriesCount);
 
             DocumentList dl = PreprocessingUtility.CreateLearningDocumentList(Properties.Settings.Default.pathLearningDir, dictionary, (DocumentRepresentationType)Properties.Settings.Default.documentRepresentationType, learningDocInfo);
             radialNetwork.Learn(dl); 
@@ -401,7 +400,7 @@ namespace DocClass.Src.Controller
             switch ((DictionaryType)Properties.Settings.Default.dictionaryType)
             {
                 case DictionaryType.CtfIdf:
-                    return new CtfIdfDictionary(Properties.Settings.Default.pathLearningDir, pathSummary, wordCountList.GetUniqueWordsCount());
+                    return new CtfIdfDictionary(Properties.Settings.Default.pathLearningDir, pathSummary, 1000/*wordCountList.GetUniqueWordsCount()*/);
                 case DictionaryType.Fixed:
                     //TODO: dodać jak bedzie zrobione
                     throw new Exception("Not implemented konstruktor");

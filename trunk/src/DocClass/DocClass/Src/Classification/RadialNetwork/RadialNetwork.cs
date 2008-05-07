@@ -19,6 +19,8 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         public const int HIDDEN_LAYER_MAX_NEURON_COUNT = 40;
 
+        private const int TH_DOCUMENT_TO_CHECK = 4;
+
 
 
         #endregion
@@ -29,11 +31,16 @@ namespace DocClass.Src.Classification.RadialNetwork
         //neurony liniowe warstwy wyjciowej
         private Collection<INeuron> neuronOutputLayer;
 
-        //lista wszystkich dokumentow
+        //lista wszystkich dokumentow do uczenia
         private List<Document> documentList;
+
+        //lista wszystkich dokumentow do testowania uczenia
+        private List<Document> checkList;
 
         //dane wyjsciowe przetworzone
         private List<double[]> outputData;
+
+
 
         /// <summary>
         /// Aktualna macierz greena
@@ -89,6 +96,35 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         #region private methods
 
+        ///// <summary>
+        ///// Pokrywa rownomiernie przestrzen neuronami
+        ///// </summary>
+        ///// <param name="minValues">Tablica minimalnych wartosci w danym wymiarze</param>
+        ///// <param name="maxValues">Tablica maksymalnych wartosci w danym wymiarze</param>
+        ///// <param name="neuronList">Lista neuronow do ustawienia</param>
+        ///// <returns></returns>
+        //private bool CoverSpaceByNeuronCells(double[] minValues, double[] maxValues, Collection<INeuron> neuronList)
+        //{
+        //    double mult = 0;
+        //    if(minValues.Length != maxValues.Length)
+        //        throw new Exception("Niezgodne dlugosci tablic");
+        //    for (int i = 0; i < minValues.Length; i++)
+        //    {
+        //        mult *= maxValues[i] - minValues[i];
+        //    }
+        //    Pierwiastek p = new Pierwiastek();
+            
+        //    double per = mult / neuronList.Count;
+        //    p.Liczba = per;
+        //    p.LiczbaIteracji = 3;
+        //    p.PunbktStartowy = 1;
+        //    p.Stopien = minValues.Length;
+        //    List<Iteracja> wynik = p.obliczenia();
+        //    double w = wynik[wynik.Count - 1].F3;
+
+        //    return true;
+        //}
+
         /// <summary>
         /// Y liczone zgodnie ze wzorami na siec, jako iloczyn aktualnej macierzy greena i wektora wag dla danej klasy.
         /// W tym przypadku jest to wektor wejsciowy
@@ -133,10 +169,6 @@ namespace DocClass.Src.Classification.RadialNetwork
                     }
                 }
             }
-//#if DEBUG
-//            Console.WriteLine("CreateGreenMatrix");
-//            Console.WriteLine(Matrix.ToString(result));
-//#endif
             return result;
         }
 
@@ -177,31 +209,72 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <returns></returns>
         public override bool Learn(DocumentList docList)
         {
+            double num1 = 0, num2 = 0;
             if (docList == null)
                 throw new NullReferenceException("docList puste");
             this.learningData = docList;
             documentList = docList.GetDocumentList();
+            PreSelect();
             if (documentList == null || documentList.Count == 0)
                 throw new NullReferenceException("DocumentList pusty");
             List<double[]> desiredOutputData = PrepareOutputData(documentList);
-            for (int i = 0; i < 30; i++)
+            //CoverSpaceByNeuronCells(docList.GetMinValues().ToArray(), docList.GetMaxValues().ToArray(), this.neuronOutputLayer);
+            do
             {
                 OutputLayerLearning(desiredOutputData);
-                PrintNetworkData(neuronOutputLayer);
                 HiddenLayerLearning();
-                //PrintNetworkData(neuronHiddenLayer);
                 HiddenLayerLearning();
-                //PrintNetworkData(neuronHiddenLayer);
                 HiddenLayerLearning();
-                //PrintNetworkData(neuronHiddenLayer);
                 HiddenLayerLearning();
-                //PrintNetworkData(neuronHiddenLayer);
                 HiddenLayerLearning();
-                //PrintNetworkData(neuronHiddenLayer);
                 HiddenLayerLearning();
-                PrintNetworkData(neuronHiddenLayer);
-            }
+                num2 = num1;
+                num1 = LearnCheck();
+            } while (num1 > num2);
             return true;
+        }
+
+        /// <summary>
+        /// Czesc dokumentow z documentList przenoci do checkList
+        /// </summary>
+        /// <returns></returns>
+        private void PreSelect()
+        {
+            int counter = 1;
+            checkList = new List<Document>();
+            for (int i = 0; i < documentList.Count; i++, counter++)
+            {
+                if (counter % TH_DOCUMENT_TO_CHECK == 0)
+                {
+                    Document d = documentList[i];
+                    documentList.Remove(d);
+                    checkList.Add(d);
+                    i--;
+                }
+
+            }            
+        }
+
+        /// <summary>
+        /// Sprawdzanie wspojczynnika poprawnych roziwazan
+        /// </summary>
+        /// <returns></returns>
+        private double LearnCheck()
+        {
+            int counter = 0;
+            for (int i = 0; i < documentList.Count; i++)
+            {
+                if (this.Classificate(documentList[i]) == documentList[i].ClassNo)
+                    counter++;
+            }
+            for (int i = 0; i < checkList.Count; i++)
+            {
+                if (this.Classificate(checkList[i]) == checkList[i].ClassNo)
+                    counter++;
+            }
+            double result = ((double)counter) / documentList.Count / checkList.Count;
+            Console.WriteLine("Skutecznosc: " + result.ToString());
+            return result;
         }
 
         private List<double[]> PrepareOutputData(List<Document> docList)
@@ -285,7 +358,7 @@ namespace DocClass.Src.Classification.RadialNetwork
             LinearNeuron linerarNeuron = (LinearNeuron)neuronOutputLayer[nth_Output];
             double[] inputVector;
             double exp;
-            double maxValue;
+            //double maxValue;
             for (int wsp = 0; wsp < result.Length; wsp++)
             {
                 for (int i = 0; i < documentList.Count; i++) //learningData.DataVectors.Count
@@ -372,9 +445,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <returns></returns>
         public override int Classificate(DocClass.Src.DocumentRepresentation.Document doc)
         {
-            //TODO: PR: klasyfikacja
-            //return this.Classificate(doc.this.learningData.FitDocumentToVector(doc));
-            return 0;
+            return this.Classificate(doc.GetValues().ToArray());
         }
 
         /// <summary>

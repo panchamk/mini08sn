@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Settings.cs" />
     <Compile Include="Src\Classification\BayesClassificator\Category.cs" />
     <Compile Include="Src\Classification\BayesClassificator\Node.cs" />
     <Compile Include="Src\Classification\BayesClassificator\Predicates.cs" />
@@ -81,6 +82,14 @@
     <Compile Include="Src\Controller\Workers\LearningManager.cs" />
     <Compile Include="Src\DocumentRepresentation\Document.cs" />
     <Compile Include="Src\DocumentRepresentation\DocumentList.cs" />
+    <Compile Include="Src\GUI\PreprocessingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Src\GUI\PreprocessingForm.Designer.cs">
+      <DependentUpon>PreprocessingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Src\Learning\MathOperations\Iteracja.cs" />
+    <Compile Include="Src\Learning\MathOperations\Pierwiastek.cs" />
     <Compile Include="Src\Preprocessing\Category.cs" />
     <Compile Include="Src\Preprocessing\LearningDocInfo.cs" />
     <Compile Include="Src\Preprocessing\WordCountList.cs" />
@@ -111,6 +120,10 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Src\GUI\PreprocessingForm.resx">
+      <DependentUpon>PreprocessingForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Src\Preprocessing\PreprocessingTestForm.resx">

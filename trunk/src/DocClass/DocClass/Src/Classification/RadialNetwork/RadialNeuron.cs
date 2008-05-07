@@ -105,7 +105,6 @@ namespace DocClass.Src.Classification.RadialNetwork
             
         }
 
-        //TODO: do sprawdzenia
         /// <summary>
         /// Funkcja z definicji
         /// Uzywana do poprawy wspolczynnikow warstwy ukrytej neuronow
@@ -126,7 +125,6 @@ namespace DocClass.Src.Classification.RadialNetwork
             return result;
         }
 
-        //TODO: do sprawdzenia
         /// <summary>
         /// Funkcja z definicji
         /// Uzywana do poprawy wspolczynnikow warstwy ukrytej neuronow.
@@ -142,7 +140,6 @@ namespace DocClass.Src.Classification.RadialNetwork
             return (x[t] - cellCenter[t]) * (x[t] - cellCenter[t]) / sigma[t] / sigma[t] / sigma[t];
         }
 
-        //TODO: do sprawdzenia
         /// <summary>
         /// Funkcja z definicji
         /// Uzywana do poprawy wspolczynnikow warstwy ukrytej neuronow
@@ -169,7 +166,6 @@ namespace DocClass.Src.Classification.RadialNetwork
         }
 
 
-        //TODO: sprawdzic poprawnosc dzialania
         /// <summary>
         /// Funkcja gaussa dla neuronu
         /// </summary>
@@ -193,6 +189,15 @@ namespace DocClass.Src.Classification.RadialNetwork
 
 
         #endregion
+
+        /// <summary>
+        /// Ustawia poczatkowy punkt srodkowy neuronu
+        /// </summary>
+        /// <param name="newCellCenter">Wspolrzedne punktu</param>
+        public void SetCellCenter(double[] newCellCenter)
+        {
+            this.cellCenter = newCellCenter;
+        }
 
         public override string ToString()
         {

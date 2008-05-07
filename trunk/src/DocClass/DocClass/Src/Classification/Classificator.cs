@@ -24,7 +24,6 @@ namespace DocClass.Src.Classification
         /// <returns></returns>
         public abstract bool Learn(DocumentList list);
 
-        //TODO: Czy rzeczywicie IDocument, a nie IDictionary?
         /// <summary>
         /// Klasyfikacja dokumentu
         /// </summary>

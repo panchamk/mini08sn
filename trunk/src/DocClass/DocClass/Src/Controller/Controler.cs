@@ -194,6 +194,12 @@ namespace DocClass.Src.Controller
                 default:
                     throw new NotImplementedException("Nieznany typ klasyfikacji.");
             }
+            //TODO: Emil
+            //DocumentList dl = new DocumentList(Properties.Settings.Default.pathLearningDir, dictionary, Properties.Settings.Default.documentRepresentationType, null, 
+            DocumentList dl = PreprocessingUtility.CreateLearningDocumentList(Properties.Settings.Default.pathLearningDir, dictionary, (DocumentRepresentationType)Properties.Settings.Default.documentRepresentationType, learningDocInfo);
+            //nauka
+            //radialNetwork.Learn(Docu); 
+            Console.Out.WriteLine("Koniec nauki.");
         }
 
         /// <summary>

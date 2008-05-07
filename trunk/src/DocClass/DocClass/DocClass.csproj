@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{189FC98C-7EF8-4A8A-9CB3-E9E2F45FF8B5}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -204,8 +204,6 @@
     <Compile Include="Src\Preprocessing\PreprocessingTest.cs" />
     <Compile Include="Src\Preprocessing\WordInfo.cs" />
     <Compile Include="Src\Preprocessing\ZIP\ZipManager.cs" />
-    <Compile Include="Src\Tests\BayesClassificationTest.cs" />
-    <Compile Include="Src\Tests\Bayes\BayesClassificationTest.cs" />
     <Compile Include="Src\Tests\DictionaryFake.cs" />
     <Compile Include="Src\Tests\RadialNetworkTest.cs" />
     <Compile Include="Src\Tests\SVDTest.cs" />
@@ -234,6 +232,9 @@
     <None Include="Resources\Folder_Open.png" />
     <None Include="Resources\Generic_Document.png" />
     <None Include="Resources\openHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Src\Tests\Bayes\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

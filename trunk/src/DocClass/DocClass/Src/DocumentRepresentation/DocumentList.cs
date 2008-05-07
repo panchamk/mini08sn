@@ -27,6 +27,13 @@ namespace DocClass.Src.DocumentRepresentation
 
         }
         /// <summary>
+        /// Tworzy pust¹ listê.
+        /// </summary>
+        public DocumentList()
+        {
+            documentList = new List<Document>();
+        }
+        /// <summary>
         /// Tworzy listê na podstawie katalogu z plikami w postaci s³owo, iloœæ wyst¹pieñ.
         /// </summary>
         /// <param name="sourceDir">Katalog z plikami.</param>

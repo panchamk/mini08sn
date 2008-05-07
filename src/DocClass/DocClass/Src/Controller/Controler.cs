@@ -196,7 +196,7 @@ namespace DocClass.Src.Controller
             }
             //TODO: Emil
             //DocumentList dl = new DocumentList(Properties.Settings.Default.pathLearningDir, dictionary, Properties.Settings.Default.documentRepresentationType, null, 
-            DocumentList dl = PreprocessingUtility.CreateLearningDocumentList(Properties.Settings.Default.pathLearningDir, dictionary, (DocumentRepresentationType)Properties.Settings.Default.documentRepresentationType, learningDocInfo);
+            //DocumentList dl = PreprocessingUtility.CreateLearningDocumentList(Properties.Settings.Default.pathLearningDir, dictionary, (DocumentRepresentationType)Properties.Settings.Default.documentRepresentationType, learningDocInfo);
             //nauka
             //radialNetwork.Learn(Docu); 
             Console.Out.WriteLine("Koniec nauki.");
@@ -303,10 +303,8 @@ namespace DocClass.Src.Controller
             radialNetwork = new RadialNetwork(Properties.Settings.Default.hiddenLayerInitNeuronCount,
                                                Properties.Settings.Default.outputLayerNeuronCount);
 
-            //TODO: Emil
-            //DocumentList dl = new DocumentList(Properties.Settings.Default.pathLearningDir, dictionary, Properties.Settings.Default.documentRepresentationType, null, 
-            //nauka
-            //radialNetwork.Learn(Docu); 
+            DocumentList dl = PreprocessingUtility.CreateLearningDocumentList(Properties.Settings.Default.pathLearningDir, dictionary, (DocumentRepresentationType)Properties.Settings.Default.documentRepresentationType, learningDocInfo);
+            radialNetwork.Learn(dl); 
         }
 
         private void BayesLearn()

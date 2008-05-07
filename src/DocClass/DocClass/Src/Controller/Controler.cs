@@ -36,6 +36,8 @@ namespace DocClass.Src.Controller
         /// </summary>
         private List<string> fileToClassification;
 
+        private List<string> classificationResult;
+
         /// <summary>
         /// Objekt reprezentujący sieć neuronową.
         /// </summary>
@@ -123,7 +125,7 @@ namespace DocClass.Src.Controller
 
         void OnClassificationWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Console.Out.WriteLine("CLASSIFICATION CHANGE");
+            form.ClassificationEnd(classificationResult);
         }
 
         void OnClassificationWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -199,7 +201,11 @@ namespace DocClass.Src.Controller
             //DocumentList dl = PreprocessingUtility.CreateLearningDocumentList(Properties.Settings.Default.pathLearningDir, dictionary, (DocumentRepresentationType)Properties.Settings.Default.documentRepresentationType, learningDocInfo);
             //nauka
             //radialNetwork.Learn(Docu); 
-            Console.Out.WriteLine("Koniec nauki.");
+            //Console.Out.WriteLine("Koniec nauki.");
+
+
+
+
         }
 
         /// <summary>
@@ -218,6 +224,9 @@ namespace DocClass.Src.Controller
         /// </summary>
         public void ClassificateProcess()
         {
+            classificationResult = new List<string>();
+            string categoryName;
+
             foreach (string path in fileToClassification)
             {
                 if (classificationWorker.CancellationPending)
@@ -228,14 +237,20 @@ namespace DocClass.Src.Controller
                 switch ((ClasyficatorType)Properties.Settings.Default.clasificatorType)
                 {
                     case (ClasyficatorType.Bayes):
-                        BayesClassificate(path);
+                        categoryName = BayesClassificate(path);
                         break;
                     case (ClasyficatorType.RadialNeural):
-                        RadialNeuralClassificate(path);
+                        int result = RadialNeuralClassificate(path);
+                        categoryName = DocumentClass.GetClassName(result);
                         break;
                     default:
                         throw new NotImplementedException("Nieznany typ klasyfikacji.");
                 }
+
+                //zapisanie wyniku klasyfikacji
+                classificationResult.Add(categoryName);
+
+                //progress
                 classificationWorker.ReportProgress(1, path);
             }
         }
@@ -327,7 +342,7 @@ namespace DocClass.Src.Controller
         /// Metoda wykonująca klasyfikacjie Bayesa.
         /// </summary>
         /// <param name="pathFile"></param>
-        private void BayesClassificate(String pathFile)
+        private string BayesClassificate(String pathFile)
         {
             String preprocessingPathFile = Path.GetTempPath() + getNameFromPath(pathFile);
 
@@ -339,17 +354,18 @@ namespace DocClass.Src.Controller
 
             //klasyfikacja
             string category = bayesClassificator.Classificate(wordsCollection);
-            Console.Out.WriteLine(category);
 
             //usunięcie pliku
             new FileInfo(preprocessingPathFile).Delete();
+
+            return category;
         }
 
         /// <summary>
         /// Metoda wykonująca klasyfikacie na podtstawie nauczonej sieci.
         /// </summary>
         /// <param name="pathFile"></param>
-        private void RadialNeuralClassificate(String pathFile)
+        private int RadialNeuralClassificate(String pathFile)
         {
             String preprocessingPathFile = Path.GetTempPath() + getNameFromPath(pathFile);
 
@@ -360,10 +376,12 @@ namespace DocClass.Src.Controller
             Document document = documentFactory(preprocessingPathFile);
 
             //klasyfikacji
-            radialNetwork.Classificate(document);
+            int result = radialNetwork.Classificate(document);
 
             //usunięcie pliku
             new FileInfo(preprocessingPathFile).Delete();
+
+            return result;
         }
 
         /// <summary>

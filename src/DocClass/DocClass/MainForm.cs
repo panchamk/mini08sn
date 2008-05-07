@@ -337,6 +337,14 @@ namespace DocClass
             }
         }
 
+        public void ClassificationEnd(List<string> classificationResult)
+        {
+            for (int i = 0; i < classificationResult.Count; i++)
+            {
+                dataGridViewClassificationResults[1, i].Value = classificationResult[i];
+            }
+        }
+
         /// <summary>
         /// Metoda sprawdzaj¹ca czy preprocesing by³ wykonany dla tego katalogu.
         /// UWAGA! Sprawdza tylko czy istnieje tam plik summary.

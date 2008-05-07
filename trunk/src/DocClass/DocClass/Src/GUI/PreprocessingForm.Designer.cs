@@ -79,6 +79,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PreprocessingForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Analizowanie danych";
             this.tableLayoutPanel.ResumeLayout(false);

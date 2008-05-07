@@ -10,6 +10,7 @@ using DocClass.Src.Classification;
 using DocClass.Src.DocumentRepresentation;
 using DocClass.Src.Controller;
 using DocClass.Src.Preprocessing;
+using DocClass.Src.GUI;
 using System.Diagnostics;
 using System.IO;
 
@@ -22,51 +23,93 @@ namespace DocClass
     /// </summary>
     public partial class MainForm : Form
     {
-        private Controller controller = new Controller();
+        private Controller controller;
+
+        public ProgressBar ProgressBarClassification
+        {
+            get { return progressBarClassification; }
+        }
+
+        #region CONSTRUKTOR
 
         public MainForm()
         {
             InitializeComponent();
+            controller = new Controller(this);
 
         }
 
+        #endregion
+
         #region EVENTS
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            splitContainerMain.Panel1Collapsed = true;
-            
+        /// <summary>
+        /// ZA£ADOWANIE okna.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnMainForm_Load(object sender, EventArgs e)
+        {            
             labelLearningValuePathDir.Text = Properties.Settings.Default.pathLearningDir;
             labelLearningValueNumbersHiddenNerons.Text = Properties.Settings.Default.hiddenLayerInitNeuronCount.ToString();
             labelLearningValueNumberOutNerons.Text = Properties.Settings.Default.outputLayerNeuronCount.ToString();
             labelLearningValueNumbersCategoriesAll.Text = Properties.Settings.Default.numberAllCategories.ToString();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// WYJŒCIE w MENU.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// BAYES w MENU.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnBayesaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.RadialNetworkToolStripMenuItem.Checked = false;
             this.BayesToolStripMenuItem.Checked = true;
             this.splitContainerMain.Panel1Collapsed = true;
+
+            Properties.Settings.Default.clasificatorType = (int)ClasyficatorType.Bayes;
         }
 
-        private void RadialNetworkToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// SIE w MENU.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnRadialNetworkToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.BayesToolStripMenuItem.Checked = false;
             this.RadialNetworkToolStripMenuItem.Checked = true;
             this.splitContainerMain.Panel1Collapsed = false;
+
+            Properties.Settings.Default.clasificatorType = (int)ClasyficatorType.RadialNeural;
         }
 
-        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// WCZYTANIE PLIKU.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowOpenFileDialogDateLoad("Tektowe (*.txt*)|*.txt*|Wszystkie (*.*)|*.*|Zip (*.zip*)|*.zip*");
         }
 
-        private void directoryToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// WCZYTANIE KATALOGU.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             String pathTemp = ShowFolderBrowserDialogDateLoad();
 
@@ -75,7 +118,7 @@ namespace DocClass
             {
                 case OperationType.Learning:
                     String pathSummaryTemp = pathTemp + "\\" + PreprocessingConsts.SummaryFileName;
-                    if (!System.IO.File.Exists(pathSummaryTemp))
+                    if (!IsPrepocessingDone(pathTemp))
                     {
                         MessageBox.Show("Dokonaj preprocessing'u dla danych ucz¹cych.");
                         return;
@@ -98,19 +141,14 @@ namespace DocClass
                 default:
                     break;
             }
-
-
-
-            
-
-
-
-            /*
-
-        */
         }
 
-        private void dataGridViewClassificationResults_CellClick(object sender, DataGridViewCellEventArgs e)
+        /// <summary>
+        /// WYŒWIETLENIE ZAWARTOSCI PLIKU.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDataGridViewClassificationResults_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 2)
             {
@@ -119,26 +157,52 @@ namespace DocClass
             }
         }
 
-        private void buttonClassificationStop_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Naciœniêcie STOP dla UCZENIA.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnButtonClassificationStop_Click(object sender, EventArgs e)
         {
             this.buttonClassificationStop.Visible = false;
             this.buttonClassificationStart.Visible = true;
+
+            progressBarClassification.Value = 0;
+            progressBarClassification.Visible = false;
+            controller.CancelClassification();
+            
         }
 
-        private void buttonClassificationStart_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Naciœniêcie START dla KLASYFIKACJI.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnButtonClassificationStart_Click(object sender, EventArgs e)
         {
             this.buttonClassificationStop.Visible = true;
             this.buttonClassificationStart.Visible = false;
-            this.controller.Classificate(null);
+            progressBarClassification.Visible = true;
+            this.controller.Classificate();
         }
 
-        private void buttonLearningStop1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Naciœniêcie STOP dla UCZENIA.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnButtonLearningStop1_Click(object sender, EventArgs e)
         {
             this.buttonLearningStop1.Visible = false;
             this.buttonLearningStart1.Visible = true;
         }
 
-        private void buttonLearningStart1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Nacisniêcie START dla UCZENIA.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnButtonLearningStart1_Click(object sender, EventArgs e)
         {
             String s = Properties.Settings.Default.pathLearningDir;
             if (!System.IO.Directory.Exists(Properties.Settings.Default.pathLearningDir))
@@ -163,6 +227,22 @@ namespace DocClass
             Properties.Settings.Default.operationType = this.tabControlUse.SelectedIndex;
         }
 
+        /// <summary>
+        /// Zdarzenie wywo³ywane gdy ma byæ wykonywany preprocessing.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnPreproccesingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String pathTemp = ShowFolderBrowserDialogDateLoad();
+            if (IsPrepocessingDone(pathTemp))
+            {
+                MessageBox.Show("Preproccesing ju¿ jest zrobiony w tym katalogu.");
+                return;
+            }
+            controller.PreprocessingDir(pathTemp);
+        }
+        
         #endregion
 
         #region METHODES
@@ -176,11 +256,17 @@ namespace DocClass
             DataGridViewRow dgv = new DataGridViewRow();
             dgv.CreateCells(dataGridViewClassificationResults, tab);
             dgv.Tag = path;
+            controller.AddFileToClassification(path);
             dataGridViewClassificationResults.Rows.Add(dgv);
         }
 
+        /// <summary>
+        /// Dodaje do tabelki z plikami do klasyfikacji z ca³ego folderu.
+        /// </summary>
+        /// <param name="pathDir"></param>
         private void AddItemsToClassificationResultFtomDir(String pathDir)
         {
+            controller.ClearFileToClassification();
             DirectoryInfo sourceDirInfo = new DirectoryInfo(pathDir);
             foreach (FileInfo sourceFile in sourceDirInfo.GetFiles())
             {
@@ -251,19 +337,18 @@ namespace DocClass
             }
         }
 
+        /// <summary>
+        /// Metoda sprawdzaj¹ca czy preprocesing by³ wykonany dla tego katalogu.
+        /// UWAGA! Sprawdza tylko czy istnieje tam plik summary.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private bool IsPrepocessingDone(String path)
+        {
+            return System.IO.File.Exists(path+"\\"+PreprocessingConsts.SummaryFileName);
+        }
+
         #endregion
-
-        private void groupBoxLearningParameters_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void labelLearningNameNumbersDocumentsInLearning_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
 
     }
 }

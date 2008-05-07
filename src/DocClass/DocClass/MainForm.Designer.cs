@@ -79,10 +79,12 @@ namespace DocClass
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonClassificationStop = new System.Windows.Forms.Button();
             this.buttonClassificationStart = new System.Windows.Forms.Button();
+            this.progressBarClassification = new System.Windows.Forms.ProgressBar();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonLearningStart = new System.Windows.Forms.Button();
             this.buttonLearningStop = new System.Windows.Forms.Button();
+            this.preproccesingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.radioButtonDictionaryFrequance = new DocClass.RadioButtonDictionary();
             this.radioButtonDictionaryFixed = new DocClass.RadioButtonDictionary();
             this.radioButtonDictionaryCtfIdf = new DocClass.RadioButtonDictionary();
@@ -127,6 +129,7 @@ namespace DocClass
             // 
             this.programToolStripMenuItemProgram.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadToolStripMenuItem,
+            this.preproccesingToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.programToolStripMenuItemProgram.Name = "programToolStripMenuItemProgram";
             this.programToolStripMenuItemProgram.Size = new System.Drawing.Size(59, 20);
@@ -138,7 +141,7 @@ namespace DocClass
             this.fileToolStripMenuItem,
             this.directoryToolStripMenuItem});
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadToolStripMenuItem.Text = "Wczytaj";
             // 
             // fileToolStripMenuItem
@@ -146,21 +149,21 @@ namespace DocClass
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.fileToolStripMenuItem.Text = "Plik";
-            this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
+            this.fileToolStripMenuItem.Click += new System.EventHandler(this.OnFileToolStripMenuItem_Click);
             // 
             // directoryToolStripMenuItem
             // 
             this.directoryToolStripMenuItem.Name = "directoryToolStripMenuItem";
             this.directoryToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.directoryToolStripMenuItem.Text = "Folder";
-            this.directoryToolStripMenuItem.Click += new System.EventHandler(this.directoryToolStripMenuItem_Click);
+            this.directoryToolStripMenuItem.Click += new System.EventHandler(this.OnDirectoryToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.OnExitToolStripMenuItem_Click);
             // 
             // metodaKlasyfikacjiToolStripMenuItem
             // 
@@ -173,8 +176,6 @@ namespace DocClass
             // 
             // BayesToolStripMenuItem
             // 
-            this.BayesToolStripMenuItem.Checked = true;
-            this.BayesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.BayesToolStripMenuItem.Name = "BayesToolStripMenuItem";
             this.BayesToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.BayesToolStripMenuItem.Text = "Klasyfikator Bayes\'a";
@@ -182,10 +183,12 @@ namespace DocClass
             // 
             // RadialNetworkToolStripMenuItem
             // 
+            this.RadialNetworkToolStripMenuItem.Checked = true;
+            this.RadialNetworkToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.RadialNetworkToolStripMenuItem.Name = "RadialNetworkToolStripMenuItem";
             this.RadialNetworkToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.RadialNetworkToolStripMenuItem.Text = "Siec Radialna";
-            this.RadialNetworkToolStripMenuItem.Click += new System.EventHandler(this.RadialNetworkToolStripMenuItem_Click);
+            this.RadialNetworkToolStripMenuItem.Click += new System.EventHandler(this.OnRadialNetworkToolStripMenuItem_Click);
             // 
             // AboutToolStripMenuItem
             // 
@@ -288,8 +291,9 @@ namespace DocClass
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(948, 363);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -317,7 +321,6 @@ namespace DocClass
             this.groupBoxLearningParameters.TabIndex = 2;
             this.groupBoxLearningParameters.TabStop = false;
             this.groupBoxLearningParameters.Text = "Parametry";
-            this.groupBoxLearningParameters.Enter += new System.EventHandler(this.groupBoxLearningParameters_Enter);
             // 
             // labelLearningValueNumberOutNerons
             // 
@@ -445,7 +448,6 @@ namespace DocClass
             this.labelLearningNameNumbersDocumentsInLearning.Size = new System.Drawing.Size(174, 13);
             this.labelLearningNameNumbersDocumentsInLearning.TabIndex = 1;
             this.labelLearningNameNumbersDocumentsInLearning.Text = "Liczba przekazanych dokumentów:";
-            this.labelLearningNameNumbersDocumentsInLearning.Click += new System.EventHandler(this.labelLearningNameNumbersDocumentsInLearning_Click);
             // 
             // labelNameAllNumbersParameters
             // 
@@ -462,7 +464,7 @@ namespace DocClass
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(752, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(193, 357);
+            this.panel1.Size = new System.Drawing.Size(193, 337);
             this.panel1.TabIndex = 3;
             // 
             // tableLayoutPanel4
@@ -489,7 +491,7 @@ namespace DocClass
             this.buttonLearningStart1.TabIndex = 1;
             this.buttonLearningStart1.Text = "Start";
             this.buttonLearningStart1.UseVisualStyleBackColor = true;
-            this.buttonLearningStart1.Click += new System.EventHandler(this.buttonLearningStart1_Click);
+            this.buttonLearningStart1.Click += new System.EventHandler(this.OnButtonLearningStart1_Click);
             // 
             // buttonLearningStop1
             // 
@@ -501,7 +503,7 @@ namespace DocClass
             this.buttonLearningStop1.Text = "Stop";
             this.buttonLearningStop1.UseVisualStyleBackColor = true;
             this.buttonLearningStop1.Visible = false;
-            this.buttonLearningStop1.Click += new System.EventHandler(this.buttonLearningStop1_Click);
+            this.buttonLearningStop1.Click += new System.EventHandler(this.OnButtonLearningStop1_Click);
             // 
             // tabPageClasyfication
             // 
@@ -551,7 +553,7 @@ namespace DocClass
             this.dataGridViewClassificationResults.Name = "dataGridViewClassificationResults";
             this.dataGridViewClassificationResults.Size = new System.Drawing.Size(1423, 298);
             this.dataGridViewClassificationResults.TabIndex = 5;
-            this.dataGridViewClassificationResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewClassificationResults_CellClick);
+            this.dataGridViewClassificationResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnDataGridViewClassificationResults_CellClick);
             // 
             // ColumnName
             // 
@@ -581,6 +583,7 @@ namespace DocClass
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)));
             this.panel3.Controls.Add(this.tableLayoutPanel3);
+            this.panel3.Controls.Add(this.progressBarClassification);
             this.panel3.Location = new System.Drawing.Point(752, 3);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(193, 357);
@@ -602,7 +605,9 @@ namespace DocClass
             // 
             // buttonClassificationStop
             // 
-            this.buttonClassificationStop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonClassificationStop.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonClassificationStop.Location = new System.Drawing.Point(3, 3);
             this.buttonClassificationStop.Name = "buttonClassificationStop";
             this.buttonClassificationStop.Size = new System.Drawing.Size(90, 31);
@@ -610,7 +615,7 @@ namespace DocClass
             this.buttonClassificationStop.Text = "Stop";
             this.buttonClassificationStop.UseVisualStyleBackColor = true;
             this.buttonClassificationStop.Visible = false;
-            this.buttonClassificationStop.Click += new System.EventHandler(this.buttonClassificationStop_Click);
+            this.buttonClassificationStop.Click += new System.EventHandler(this.OnButtonClassificationStop_Click);
             // 
             // buttonClassificationStart
             // 
@@ -621,7 +626,15 @@ namespace DocClass
             this.buttonClassificationStart.TabIndex = 1;
             this.buttonClassificationStart.Text = "Start";
             this.buttonClassificationStart.UseVisualStyleBackColor = true;
-            this.buttonClassificationStart.Click += new System.EventHandler(this.buttonClassificationStart_Click);
+            this.buttonClassificationStart.Click += new System.EventHandler(this.OnButtonClassificationStart_Click);
+            // 
+            // progressBarClassification
+            // 
+            this.progressBarClassification.Location = new System.Drawing.Point(6, 58);
+            this.progressBarClassification.Name = "progressBarClassification";
+            this.progressBarClassification.Size = new System.Drawing.Size(177, 26);
+            this.progressBarClassification.TabIndex = 4;
+            this.progressBarClassification.Visible = false;
             // 
             // statusStrip1
             // 
@@ -663,6 +676,13 @@ namespace DocClass
             this.buttonLearningStop.TabIndex = 1;
             this.buttonLearningStop.Text = "Stop";
             this.buttonLearningStop.UseVisualStyleBackColor = true;
+            // 
+            // preproccesingToolStripMenuItem
+            // 
+            this.preproccesingToolStripMenuItem.Name = "preproccesingToolStripMenuItem";
+            this.preproccesingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.preproccesingToolStripMenuItem.Text = "Preproccesing";
+            this.preproccesingToolStripMenuItem.Click += new System.EventHandler(this.OnPreproccesingToolStripMenuItem_Click);
             // 
             // radioButtonDictionaryFrequance
             // 
@@ -752,7 +772,7 @@ namespace DocClass
             this.MainMenuStrip = this.menuStripMain;
             this.Name = "MainForm";
             this.Text = "Klasyfikator dokumentów";
-            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Load += new System.EventHandler(this.OnMainForm_Load);
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
             this.splitContainerMain.Panel1.ResumeLayout(false);
@@ -845,6 +865,8 @@ namespace DocClass
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCategory;
         private System.Windows.Forms.DataGridViewLinkColumn Podgl¹d;
+        private System.Windows.Forms.ProgressBar progressBarClassification;
+        private System.Windows.Forms.ToolStripMenuItem preproccesingToolStripMenuItem;
     }
 }
 

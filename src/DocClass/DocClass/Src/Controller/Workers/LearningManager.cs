@@ -10,9 +10,9 @@ namespace DocClass.Src.Controller.Workers
     /// Klasa implementujaca uczenie.
     /// Zarzadza operacja uczenia w innym watku.
     /// </summary>
-    public class LearningManager : IDisposable
+    public class LearningManager //: IDisposable
     {
-        #region Private Fields
+        /*#region Private Fields
 
         /// <summary>
         /// Uzywany klasyfikator.
@@ -107,5 +107,6 @@ namespace DocClass.Src.Controller.Workers
         }
 
         #endregion
+         * */
     }
 }

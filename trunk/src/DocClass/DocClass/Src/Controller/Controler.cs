@@ -304,7 +304,7 @@ namespace DocClass.Src.Controller
         /// <param name="pathFile"></param>
         private void RadialNeuralClassificate(String pathFile)
         {
-            pathFile = "C:\\Documents and Settings\\Tomi\\Moje dokumenty\\SIECI\\SVN COPY\\res\\Dane uczące\\train\\alt.atheism\\51060";
+            //pathFile = "C:\\Documents and Settings\\Tomi\\Moje dokumenty\\SIECI\\SVN COPY\\res\\Dane uczące\\train\\alt.atheism\\51060";
             String preprocessingPathFile = Path.GetTempPath() + getNameFromPath(pathFile);
 
             //preprocesing

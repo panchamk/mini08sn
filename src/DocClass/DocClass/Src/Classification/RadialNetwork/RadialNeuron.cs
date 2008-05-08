@@ -5,6 +5,7 @@ using DocClass.Src.Exceptions;
 
 namespace DocClass.Src.Classification.RadialNetwork
 {
+    [Serializable]
     class RadialNeuron : INeuron
     {
         #region private members
@@ -208,6 +209,28 @@ namespace DocClass.Src.Classification.RadialNetwork
                 result += "\nSigma[" + i + "]=" + this.sigma[i] + "\n";
             }
             return result;
+        }
+
+        //dodałem Tomek
+        public static RadialNeuron TestSave()
+        {
+            RadialNeuron rn = new RadialNeuron();
+            rn.cellCenter = new double[1] { 1.0 };
+            rn.VectorSize = 1;
+            rn.sigma = new double[1] { 1.0 };
+
+            Console.Out.WriteLine("  " + rn.CellCenter[0]);
+            Console.Out.WriteLine("  " + rn.VectorSize);
+            Console.Out.WriteLine("  " + rn.sigma[0]);
+            return rn;
+        }
+        //dodałem Tomek
+        public static void TestLoad(RadialNeuron rn)
+        {
+
+            Console.Out.WriteLine("  " + rn.CellCenter[0]);
+            Console.Out.WriteLine("  " + rn.VectorSize);
+            Console.Out.WriteLine("  " + rn.sigma[0]);
         }
     }
 }

@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
+
 using DocClass.Src.Exceptions;
 using DocClass.Src.Dictionaries;
 using DocClass.Src.Learning.MathOperations;
 using DocClass.Src.DocumentRepresentation;
 
+
 namespace DocClass.Src.Classification.RadialNetwork
 {
+    [Serializable]
     class RadialNetwork : Classificator
     {
         #region statics
@@ -32,15 +36,15 @@ namespace DocClass.Src.Classification.RadialNetwork
         private Collection<INeuron> neuronOutputLayer;
 
         //lista wszystkich dokumentow do uczenia
+        [NonSerialized]
         private List<Document> documentList;
 
         //lista wszystkich dokumentow do testowania uczenia
+        [NonSerialized]
         private List<Document> checkList;
 
         //dane wyjsciowe przetworzone
         private List<double[]> outputData;
-
-
 
         /// <summary>
         /// Aktualna macierz greena
@@ -49,8 +53,6 @@ namespace DocClass.Src.Classification.RadialNetwork
         
         //neurony radialne warstwy ukrytej
         private Collection<INeuron> neuronHiddenLayer;
-
-
 
         //wagi poszczegolnych neuronow wyjsciowych;
         private List<double[]> outputLayerNeutonWeights;
@@ -523,6 +525,40 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         #endregion
 
+        //dodałem TOMEK
+        public static RadialNetwork TestSave()
+        {
+            RadialNetwork rn = new RadialNetwork();
+            rn.outputLayerNeutonWeights.Add(new double[] {1.0});
+            rn.outputData = new List<double[]>();
+            rn.outputData.Add(new double[] { 1.0 });
+            rn.greenMatrix = new double[1, 1];
+            rn.greenMatrix[0, 0] = 2;
+
+            
+            rn.neuronOutputLayer[0] = (INeuron)RadialNeuron.TestSave();
+            Console.Out.WriteLine(rn.outputLayerNeutonWeights[0][0]);
+            Console.Out.WriteLine(rn.outputData[0][0]);
+            Console.Out.WriteLine(rn.neuronHiddenLayer.Count);
+            Console.Out.WriteLine(rn.neuronOutputLayer.Count);
+            Console.Out.WriteLine(rn.greenMatrix[0, 0]);
+
+            return rn;
+        }
+
+        //dodałem TOMEK
+        public static void TestLoad(RadialNetwork rn)
+        {
+            Console.Out.WriteLine();
+            
+            RadialNeuron.TestLoad((RadialNeuron)rn.neuronOutputLayer[0]);
+            Console.Out.WriteLine(rn.outputLayerNeutonWeights[0][0]);
+            Console.Out.WriteLine(rn.outputData[0][0]);
+            Console.Out.WriteLine(rn.neuronHiddenLayer.Count);
+            Console.Out.WriteLine(rn.neuronOutputLayer.Count);
+            Console.Out.WriteLine(rn.greenMatrix[0, 0]); 
+
+        }
 
     }
 }

@@ -15,7 +15,7 @@
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="pathStopWords" Type="System.String" Scope="User">
-      <Value Profile="(Default)">stopwords.txt</Value>
+      <Value Profile="(Default)">./stopwords.txt</Value>
     </Setting>
     <Setting Name="pathLearningDir" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

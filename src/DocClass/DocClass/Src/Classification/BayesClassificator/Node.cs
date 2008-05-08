@@ -9,6 +9,7 @@ namespace DocClass.Src.Classification.BayesClassificator
     /// Klasa implementuje wezel
     /// zawierajacy slowo oraz liczbe wystapien.
     /// </summary>
+    [Serializable]
     [DebuggerDisplay("Word = {mWord}, Count = {mCount}")]
     public class Node
     {

@@ -23,6 +23,8 @@ namespace DocClass
     /// </summary>
     public partial class MainForm : Form
     {
+        private static string filePattern = "Wszystkie (*.*)|*.*|Tektowe (*.txt*)|*.txt*|Zip (*.zip*)|*.zip*";
+
         private Controller controller;
 
         public ProgressBar ProgressBarClassification
@@ -101,7 +103,21 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowOpenFileDialogDateLoad("Tektowe (*.txt*)|*.txt*|Wszystkie (*.*)|*.*|Zip (*.zip*)|*.zip*");
+            String pathTemp = ShowOpenFileDialogDateLoad(filePattern);
+            if (pathTemp == null)
+                return;
+
+            OperationType operationType =  (OperationType)Properties.Settings.Default.operationType;
+            switch (operationType)
+            {
+                case OperationType.Learning:
+                    break;
+                case OperationType.Classification:
+                    AddItemsToClassificationResultFromFile(pathTemp);
+                    break;
+                default:
+                    break;
+            }
         }
 
         /// <summary>
@@ -112,6 +128,8 @@ namespace DocClass
         private void OnDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             String pathTemp = ShowFolderBrowserDialogDateLoad();
+            if (pathTemp == null)
+                return;
 
             OperationType operationType =  (OperationType)Properties.Settings.Default.operationType;
             switch (operationType)
@@ -183,6 +201,7 @@ namespace DocClass
             this.buttonClassificationStop.Visible = true;
             this.buttonClassificationStart.Visible = false;
             progressBarClassification.Visible = true;
+            ProgressBarClassification.Value = ProgressBarClassification.Minimum;
             this.controller.Classificate();
         }
 
@@ -235,6 +254,9 @@ namespace DocClass
         private void OnPreproccesingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             String pathTemp = ShowFolderBrowserDialogDateLoad();
+            if (pathTemp == null)
+                return;
+
             if (IsPrepocessingDone(pathTemp))
             {
                 MessageBox.Show("Preproccesing ju¿ jest zrobiony w tym katalogu.");
@@ -242,7 +264,60 @@ namespace DocClass
             }
             controller.PreprocessingDir(pathTemp);
         }
-        
+
+        /// <summary>
+        /// Odczyt sieci z pliku.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param> 
+        private void OnLoadStateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String pathTemp = ShowOpenFileDialogDateLoad(filePattern);
+            if (pathTemp == null)
+                return;
+
+            controller.LoadRadialNetwork(pathTemp);
+            MessageBox.Show("Sieæ zosta³a odczytana.");
+        }
+
+        /// <summary>
+        /// Zapis sieci do pliku.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSaveStateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String pathTemp = ShowSaveFileDialog(filePattern);
+            controller.SaveRadialNetwork(pathTemp);
+            MessageBox.Show("Sieæ zosta³a zapisana.");
+        }
+
+        /// <summary>
+        /// Zapis klasyfikato Bayes'a do pliku.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSaveBayesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String pathTemp = ShowSaveFileDialog(filePattern);
+            controller.SaveBayes(pathTemp);
+            MessageBox.Show("Klasyfikator Bayes'a zosta³ zapisany.");
+        }
+
+        /// <summary>
+        /// Odczytuje klasyfikato Bayes'a z pliku.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnLoadBayesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String pathTemp = ShowOpenFileDialogDateLoad(filePattern);
+            if (pathTemp == null)
+                return;
+
+            controller.LoadBayes(pathTemp);
+            MessageBox.Show("Klasyfikator Bayes'a zosta³ odczytany.");
+        }
         #endregion
 
         #region METHODES
@@ -251,7 +326,7 @@ namespace DocClass
         /// Dodaje elementy do tabelki z wynikami klasyfikacji.
         /// </summary>
         /// <param name="tab"></param>
-        public void AddItemsToClassificationResults(String[] tab,String path)
+        private void AddItemsToClassificationResults(String[] tab,String path)
         {
             DataGridViewRow dgv = new DataGridViewRow();
             dgv.CreateCells(dataGridViewClassificationResults, tab);
@@ -262,16 +337,31 @@ namespace DocClass
 
         /// <summary>
         /// Dodaje do tabelki z plikami do klasyfikacji z ca³ego folderu.
+        /// Czyci stare.
         /// </summary>
-        /// <param name="pathDir"></param>
+        /// <param name="pathDir">Scie¿ka do folderu</param>
         private void AddItemsToClassificationResultFtomDir(String pathDir)
         {
+            dataGridViewClassificationResults.Rows.Clear();
             controller.ClearFileToClassification();
             DirectoryInfo sourceDirInfo = new DirectoryInfo(pathDir);
             foreach (FileInfo sourceFile in sourceDirInfo.GetFiles())
             {
                 AddItemsToClassificationResults(new string[] { sourceFile.Name, "", "Podgl¹d"},sourceFile.FullName);
             }
+        }
+
+        /// <summary>
+        /// Dodaje do tabelki z plikami do klasyfikacji z jednego pliku.
+        /// Czyci stare.
+        /// </summary>
+        /// <param name="path">Scie¿ka do pliku.</param>
+        private void AddItemsToClassificationResultFromFile(String path)
+        {
+            dataGridViewClassificationResults.Rows.Clear();
+            controller.ClearFileToClassification();
+            FileInfo f = new FileInfo(path);
+            AddItemsToClassificationResults(new string[] { f.Name, "", "Podgl¹d" }, f.FullName);
         }
 
         /// <summary>
@@ -326,9 +416,11 @@ namespace DocClass
         /// <returns></returns>
         public String ShowOpenFileDialogDateLoad(String filter)
         {
+            String workDirPath = Directory.GetCurrentDirectory();
             openFileDialogDateLoad.Filter = filter;
             if (openFileDialogDateLoad.ShowDialog() == DialogResult.OK)
             {
+                Directory.SetCurrentDirectory(workDirPath);
                 return openFileDialogDateLoad.FileName;
             }
             else
@@ -337,13 +429,43 @@ namespace DocClass
             }
         }
 
+        /// <summary>
+        /// Wyœwietla okno dialogowe do zapisu pliku.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public String ShowSaveFileDialog(String filter)
+        {
+            String workDirPath = Directory.GetCurrentDirectory();
+            saveFileDialog.Filter = filter;
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Directory.SetCurrentDirectory(workDirPath);
+                return saveFileDialog.FileName;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Wyœwietla wyniki clasyfikacji.
+        /// </summary>
+        /// <param name="classificationResult"></param>
         public void ClassificationEnd(List<string> classificationResult)
         {
+            this.buttonClassificationStop.Visible = false;
+            this.buttonClassificationStart.Visible = true;
+            this.progressBarClassification.Visible = false;
+            
+
             for (int i = 0; i < classificationResult.Count; i++)
             {
                 dataGridViewClassificationResults[1, i].Value = classificationResult[i];
             }
         }
+
 
         /// <summary>
         /// Metoda sprawdzaj¹ca czy preprocesing by³ wykonany dla tego katalogu.
@@ -357,6 +479,9 @@ namespace DocClass
         }
 
         #endregion
+
+
+
 
     }
 }

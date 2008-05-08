@@ -36,6 +36,8 @@ namespace DocClass
             this.directoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preproccesingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadNetworkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveNetworkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metodaKlasyfikacjiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BayesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RadialNetworkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,6 +88,9 @@ namespace DocClass
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonLearningStart = new System.Windows.Forms.Button();
             this.buttonLearningStop = new System.Windows.Forms.Button();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.radioButtonDictionaryFrequance = new DocClass.RadioButtonDictionary();
             this.radioButtonDictionaryFixed = new DocClass.RadioButtonDictionary();
             this.radioButtonDictionaryCtfIdf = new DocClass.RadioButtonDictionary();
@@ -93,6 +98,9 @@ namespace DocClass
             this.radioButtonDocumentRepresentationOwn = new DocClass.RadioButtonDocumentRepresentation();
             this.radioButtonDocumentRepresentationTfIdf = new DocClass.RadioButtonDocumentRepresentation();
             this.fileInput2 = new DocClass.FileInput();
+            this.saveBayesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadBayesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStripMain.SuspendLayout();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -131,6 +139,13 @@ namespace DocClass
             this.programToolStripMenuItemProgram.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadToolStripMenuItem,
             this.preproccesingToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.saveNetworkToolStripMenuItem,
+            this.loadNetworkToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.saveBayesToolStripMenuItem,
+            this.loadBayesToolStripMenuItem,
+            this.toolStripSeparator3,
             this.exitToolStripMenuItem});
             this.programToolStripMenuItemProgram.Name = "programToolStripMenuItemProgram";
             this.programToolStripMenuItemProgram.Size = new System.Drawing.Size(59, 20);
@@ -142,7 +157,7 @@ namespace DocClass
             this.fileToolStripMenuItem,
             this.directoryToolStripMenuItem});
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
             this.loadToolStripMenuItem.Text = "Wczytaj";
             // 
             // fileToolStripMenuItem
@@ -164,7 +179,7 @@ namespace DocClass
             // preproccesingToolStripMenuItem
             // 
             this.preproccesingToolStripMenuItem.Name = "preproccesingToolStripMenuItem";
-            this.preproccesingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.preproccesingToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
             this.preproccesingToolStripMenuItem.Text = "Preproccesing";
             this.preproccesingToolStripMenuItem.Click += new System.EventHandler(this.OnPreproccesingToolStripMenuItem_Click);
             // 
@@ -172,9 +187,23 @@ namespace DocClass
             // 
             this.exitToolStripMenuItem.Image = global::DocClass.Properties.Resources.delete;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.OnExitToolStripMenuItem_Click);
+            // 
+            // loadNetworkToolStripMenuItem
+            // 
+            this.loadNetworkToolStripMenuItem.Name = "loadNetworkToolStripMenuItem";
+            this.loadNetworkToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.loadNetworkToolStripMenuItem.Text = "Wczytaj sieæ";
+            this.loadNetworkToolStripMenuItem.Click += new System.EventHandler(this.OnLoadStateToolStripMenuItem_Click);
+            // 
+            // saveNetworkToolStripMenuItem
+            // 
+            this.saveNetworkToolStripMenuItem.Name = "saveNetworkToolStripMenuItem";
+            this.saveNetworkToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.saveNetworkToolStripMenuItem.Text = "Zapisz sieæ";
+            this.saveNetworkToolStripMenuItem.Click += new System.EventHandler(this.OnSaveStateToolStripMenuItem_Click);
             // 
             // metodaKlasyfikacjiToolStripMenuItem
             // 
@@ -553,16 +582,16 @@ namespace DocClass
             // 
             // dataGridViewClassificationResults
             // 
-            this.dataGridViewClassificationResults.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridViewClassificationResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewClassificationResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnName,
             this.ColumnCategory,
             this.Podgl¹d});
-            this.dataGridViewClassificationResults.Location = new System.Drawing.Point(0, 74);
+            this.dataGridViewClassificationResults.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewClassificationResults.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewClassificationResults.Name = "dataGridViewClassificationResults";
-            this.dataGridViewClassificationResults.Size = new System.Drawing.Size(1423, 298);
+            this.dataGridViewClassificationResults.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dataGridViewClassificationResults.Size = new System.Drawing.Size(743, 357);
             this.dataGridViewClassificationResults.TabIndex = 5;
             this.dataGridViewClassificationResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnDataGridViewClassificationResults_CellClick);
             // 
@@ -688,6 +717,16 @@ namespace DocClass
             this.buttonLearningStop.Text = "Stop";
             this.buttonLearningStop.UseVisualStyleBackColor = true;
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(221, 6);
+            // 
             // radioButtonDictionaryFrequance
             // 
             this.radioButtonDictionaryFrequance.AutoSize = true;
@@ -764,6 +803,25 @@ namespace DocClass
             this.fileInput2.Name = "fileInput2";
             this.fileInput2.Size = new System.Drawing.Size(357, 27);
             this.fileInput2.TabIndex = 0;
+            // 
+            // saveBayesToolStripMenuItem
+            // 
+            this.saveBayesToolStripMenuItem.Name = "saveBayesToolStripMenuItem";
+            this.saveBayesToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.saveBayesToolStripMenuItem.Text = "Zapisz klasyfikator Bayes\'a";
+            this.saveBayesToolStripMenuItem.Click += new System.EventHandler(this.OnSaveBayesToolStripMenuItem_Click);
+            // 
+            // loadBayesToolStripMenuItem
+            // 
+            this.loadBayesToolStripMenuItem.Name = "loadBayesToolStripMenuItem";
+            this.loadBayesToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.loadBayesToolStripMenuItem.Text = "Wczytak klasyfikator Bayes\'a";
+            this.loadBayesToolStripMenuItem.Click += new System.EventHandler(this.OnLoadBayesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(221, 6);
             // 
             // MainForm
             // 
@@ -871,6 +929,14 @@ namespace DocClass
         private System.Windows.Forms.DataGridViewLinkColumn Podgl¹d;
         private System.Windows.Forms.ProgressBar progressBarClassification;
         private System.Windows.Forms.ToolStripMenuItem preproccesingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadNetworkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveNetworkToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem saveBayesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadBayesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
 

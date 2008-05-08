@@ -7,12 +7,14 @@ using DocClass.Src.Learning;
 
 namespace DocClass.Src.Classification
 {
+    [Serializable]
     abstract class Classificator
     {
         #region private members
         #endregion
 
         #region protected members
+        [NonSerialized]
         protected DocumentList learningData;
         #endregion
 

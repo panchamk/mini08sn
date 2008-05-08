@@ -8,6 +8,7 @@ namespace DocClass.Src.Classification.BayesClassificator
     /// <summary>
     /// Klasa implementuje kategorie pliku,
     /// </summary>
+    [Serializable]
     [DebuggerDisplay("Exists Words Count = {mExistsWords.Count}, Total Words = {mTotalWords}")]
     public class Category : IDisposable
     {

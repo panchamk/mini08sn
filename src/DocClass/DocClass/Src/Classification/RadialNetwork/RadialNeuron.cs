@@ -91,6 +91,24 @@ namespace DocClass.Src.Classification.RadialNetwork
             //TODO: rozwiazac kwestie szerokoscie zakresu losowania srodkow komorek
         }
 
+        /// <summary>
+        /// Losowanie polozenia komorki w przedziale [min, max]
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        public void RandomizeCells(double[] min, double[] max)
+        {
+            cellCenter = new double[min.Length];
+            sigma = new double[min.Length];
+            for (int i = 0; i < min.Length; i++)
+            {
+                cellCenter[i] = min[i] + r.NextDouble() * Math.Abs(max[i] - min[i]);
+                sigma[i] = r.NextDouble();
+
+            }
+            //TODO: rozwiazac kwestie szerokoscie zakresu losowania srodkow komorek
+        }
+
         
         #endregion
 
@@ -119,6 +137,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         {
             double result = 0;
             for (int ii = 0; ii < x.Length; ii++)
+            
             {
                 result += (x[ii] - CellCenter[ii]) * (x[ii] - CellCenter[ii]) / sigma[ii] / sigma[ii];
             }

@@ -452,7 +452,7 @@ namespace DocClass.Src.Controller
             switch ((DictionaryType)Properties.Settings.Default.dictionaryType)
             {
                 case DictionaryType.CtfIdf:
-                    return new CtfIdfDictionary(Properties.Settings.Default.pathLearningDir, pathSummary, 1000/*wordCountList.GetUniqueWordsCount()*/);
+                    return new CtfIdfDictionary(Properties.Settings.Default.pathLearningDir, pathSummary, 20/*wordCountList.GetUniqueWordsCount()*/);
                 case DictionaryType.Fixed:
                     return new FixedDictionary(Properties.Settings.Default.pathLearningDir, wordCountList.GetUniqueWordsCount());
                 case DictionaryType.Frequent:

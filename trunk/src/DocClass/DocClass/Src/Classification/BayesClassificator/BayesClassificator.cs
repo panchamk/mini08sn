@@ -17,6 +17,7 @@ namespace DocClass.Src.Classification.BayesClassificator
     /// <summary>
     /// Klasa implementuje naiwny klasyfikator Bayes'a.
     /// </summary>
+    [Serializable]
     [DebuggerDisplay("Categories Count = {mKey}")]
     class BayesClassificator : Classificator, IDisposable
     {
@@ -36,6 +37,7 @@ namespace DocClass.Src.Classification.BayesClassificator
         /// <summary>
         /// Watek wykonujacy klasyfikacje.
         /// </summary>
+        [NonSerialized]
         private BackgroundWorker mOwner;
 
         #endregion

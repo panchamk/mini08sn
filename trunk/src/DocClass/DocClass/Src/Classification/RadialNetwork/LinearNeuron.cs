@@ -5,6 +5,7 @@ using System.Collections;
 
 namespace DocClass.Src.Classification.RadialNetwork
 {
+    [Serializable]
     class LinearNeuron : INeuron
     {
         #region static members

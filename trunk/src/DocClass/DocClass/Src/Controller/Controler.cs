@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 using DocClass.Src.Classification.BayesClassificator;
 using DocClass.Src.Classification.RadialNetwork;
@@ -21,6 +23,8 @@ namespace DocClass.Src.Controller
     
     public class Controller
     {
+        #region FIELDS
+
         /// <summary>
         /// Główne okno aplikacji.
         /// </summary>
@@ -83,7 +87,9 @@ namespace DocClass.Src.Controller
         /// </summary>
         private String preprocessingPath;
 
-        #region CONSTRUCTOR 
+        #endregion
+
+        #region CONSTRUCTOR
 
         public Controller(MainForm form)
         {
@@ -179,8 +185,6 @@ namespace DocClass.Src.Controller
         /// </summary>
         public void LearnProcess()
         {
-            
-
             switch ((ClasyficatorType)Properties.Settings.Default.clasificatorType)
             {
                 case (ClasyficatorType.Bayes):
@@ -202,10 +206,6 @@ namespace DocClass.Src.Controller
             //nauka
             //radialNetwork.Learn(Docu); 
             //Console.Out.WriteLine("Koniec nauki.");
-
-
-
-
         }
 
         /// <summary>
@@ -300,6 +300,58 @@ namespace DocClass.Src.Controller
         {
             classificationWorker.CancelAsync();
 
+        }
+
+        /// <summary>
+        /// Zapisuje siec neuronową do podanego pliku.
+        /// </summary>
+        /// <param name="pathFile">Scieżka do pliku.</param>
+        public void SaveRadialNetwork(String pathFile)
+        {
+            //RadialNetwork rn = RadialNetwork.TestSave();
+            Stream stream = File.Open(pathFile, FileMode.OpenOrCreate);
+            BinaryFormatter bFormatter = new BinaryFormatter();
+            bFormatter.Serialize(stream, this.radialNetwork);
+            stream.Close();
+        }
+
+        /// <summary>
+        /// Odczytuje sieć nuronową z podanego pliku.
+        /// </summary>
+        /// <param name="pathFile">Scieżka do pliku.</param>
+        public void LoadRadialNetwork(String pathFile)
+        {
+            Stream stream = File.Open(pathFile, FileMode.Open);
+            BinaryFormatter bFormatter = new BinaryFormatter();
+            this.radialNetwork = (RadialNetwork)bFormatter.Deserialize(stream);
+            stream.Close();
+            //RadialNetwork.TestLoad(rn);
+        }
+
+        /// <summary>
+        /// Zapisuje klasyfikator Bayes'a do podanego pliku.
+        /// </summary>
+        /// <param name="pathFile">Scieżka do pliku.</param>
+        public void SaveBayes(String pathFile)
+        {
+            Stream stream = File.Open(pathFile, FileMode.OpenOrCreate);
+            BinaryFormatter bFormatter = new BinaryFormatter();
+            bFormatter.Serialize(stream, this.bayesClassificator);
+            bFormatter.Serialize(stream, Properties.Settings.Default.pathSummaryFile);
+            stream.Close();
+        }
+
+        /// <summary>
+        /// Odczytuje klasyfikator Bayesa z podanego pliku.
+        /// </summary>
+        /// <param name="pathFile">Scieżka do pliku.</param>
+        public void LoadBayes(String pathFile)
+        {
+            Stream stream = File.Open(pathFile, FileMode.Open);
+            BinaryFormatter bFormatter = new BinaryFormatter();
+            this.bayesClassificator = (BayesClassificator)bFormatter.Deserialize(stream);
+            Properties.Settings.Default.pathSummaryFile = (string)bFormatter.Deserialize(stream);
+            stream.Close();
         }
 
         # endregion

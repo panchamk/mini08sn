@@ -454,8 +454,7 @@ namespace DocClass.Src.Controller
                 case DictionaryType.CtfIdf:
                     return new CtfIdfDictionary(Properties.Settings.Default.pathLearningDir, pathSummary, 1000/*wordCountList.GetUniqueWordsCount()*/);
                 case DictionaryType.Fixed:
-                    //TODO: dodać jak bedzie zrobione
-                    throw new Exception("Not implemented konstruktor");
+                    return new FixedDictionary(Properties.Settings.Default.pathLearningDir, wordCountList.GetUniqueWordsCount());
                 case DictionaryType.Frequent:
                     return new FrequentDictionary(pathSummary, wordCountList.GetUniqueWordsCount());
                 default:

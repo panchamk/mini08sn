@@ -78,7 +78,7 @@ namespace DocClass
             this.dataGridViewClassificationResults = new System.Windows.Forms.DataGridView();
             this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Podgl퉐 = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.Podglad = new System.Windows.Forms.DataGridViewLinkColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonClassificationStop = new System.Windows.Forms.Button();
@@ -586,7 +586,7 @@ namespace DocClass
             this.dataGridViewClassificationResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnName,
             this.ColumnCategory,
-            this.Podgl퉐});
+            this.Podglad});
             this.dataGridViewClassificationResults.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewClassificationResults.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewClassificationResults.Name = "dataGridViewClassificationResults";
@@ -609,14 +609,14 @@ namespace DocClass
             this.ColumnCategory.ReadOnly = true;
             this.ColumnCategory.Width = 200;
             // 
-            // Podgl퉐
+            // Podglad
             // 
-            this.Podgl퉐.HeaderText = "ColumnPath";
-            this.Podgl퉐.Name = "Podgl퉐";
-            this.Podgl퉐.ReadOnly = true;
-            this.Podgl퉐.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Podgl퉐.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Podgl퉐.Width = 250;
+            this.Podglad.HeaderText = "ColumnPath";
+            this.Podglad.Name = "Podglad";
+            this.Podglad.ReadOnly = true;
+            this.Podglad.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Podglad.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Podglad.Width = 250;
             // 
             // panel3
             // 
@@ -926,7 +926,7 @@ namespace DocClass
         private System.Windows.Forms.Label labelLearningNameNumberOutNerons;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCategory;
-        private System.Windows.Forms.DataGridViewLinkColumn Podgl퉐;
+        private System.Windows.Forms.DataGridViewLinkColumn Podglad;
         private System.Windows.Forms.ProgressBar progressBarClassification;
         private System.Windows.Forms.ToolStripMenuItem preproccesingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadNetworkToolStripMenuItem;

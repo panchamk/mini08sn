@@ -8,6 +8,7 @@ using DocClass.Src.Exceptions;
 using DocClass.Src.Dictionaries;
 using DocClass.Src.Learning.MathOperations;
 using DocClass.Src.DocumentRepresentation;
+using System.Windows.Forms;
 
 
 namespace DocClass.Src.Classification.RadialNetwork
@@ -98,34 +99,38 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         #region private methods
 
-        ///// <summary>
-        ///// Pokrywa rownomiernie przestrzen neuronami
-        ///// </summary>
-        ///// <param name="minValues">Tablica minimalnych wartosci w danym wymiarze</param>
-        ///// <param name="maxValues">Tablica maksymalnych wartosci w danym wymiarze</param>
-        ///// <param name="neuronList">Lista neuronow do ustawienia</param>
-        ///// <returns></returns>
-        //private bool CoverSpaceByNeuronCells(double[] minValues, double[] maxValues, Collection<INeuron> neuronList)
-        //{
-        //    double mult = 0;
-        //    if(minValues.Length != maxValues.Length)
-        //        throw new Exception("Niezgodne dlugosci tablic");
-        //    for (int i = 0; i < minValues.Length; i++)
-        //    {
-        //        mult *= maxValues[i] - minValues[i];
-        //    }
-        //    Pierwiastek p = new Pierwiastek();
-            
-        //    double per = mult / neuronList.Count;
-        //    p.Liczba = per;
-        //    p.LiczbaIteracji = 3;
-        //    p.PunbktStartowy = 1;
-        //    p.Stopien = minValues.Length;
-        //    List<Iteracja> wynik = p.obliczenia();
-        //    double w = wynik[wynik.Count - 1].F3;
+        /// <summary>
+        /// Pokrywa rownomiernie przestrzen neuronami
+        /// </summary>
+        /// <param name="minValues">Tablica minimalnych wartosci w danym wymiarze</param>
+        /// <param name="maxValues">Tablica maksymalnych wartosci w danym wymiarze</param>
+        /// <param name="neuronList">Lista neuronow do ustawienia</param>
+        /// <returns></returns>
+        private bool CoverSpaceByNeuronCells(double[] minValues, double[] maxValues, Collection<INeuron> neuronList)
+        {
+            for (int i = 0; i < this.neuronHiddenLayer.Count; i++)
+            {
+                ((RadialNeuron)this.neuronHiddenLayer[i]).RandomizeCells(minValues, maxValues);
+            }
+            //double mult = 0;
+            //if (minValues.Length != maxValues.Length)
+            //    throw new Exception("Niezgodne dlugosci tablic");
+            //for (int i = 0; i < minValues.Length; i++)
+            //{
+            //    mult *= maxValues[i] - minValues[i];
+            //}
+            //Pierwiastek p = new Pierwiastek();
 
-        //    return true;
-        //}
+            //double per = mult / neuronList.Count;
+            //p.Liczba = per;
+            //p.LiczbaIteracji = 3;
+            //p.PunbktStartowy = 1;
+            //p.Stopien = minValues.Length;
+            //List<Iteracja> wynik = p.obliczenia();
+            //double w = wynik[wynik.Count - 1].F3;
+
+            return true;
+        }
 
         /// <summary>
         /// Y liczone zgodnie ze wzorami na siec, jako iloczyn aktualnej macierzy greena i wektora wag dla danej klasy.
@@ -224,17 +229,17 @@ namespace DocClass.Src.Classification.RadialNetwork
             if (documentList == null || documentList.Count == 0)
                 throw new NullReferenceException("DocumentList pusty");
             List<double[]> desiredOutputData = PrepareOutputData(documentList);
-            //CoverSpaceByNeuronCells(docList.GetMinValues().ToArray(), docList.GetMaxValues().ToArray(), this.neuronOutputLayer);
+            CoverSpaceByNeuronCells(docList.GetMinValues().ToArray(), docList.GetMaxValues().ToArray(), this.neuronOutputLayer);
             do
             {
                 OutputLayerLearning(desiredOutputData);
                 HiddenLayerLearning();
                 HiddenLayerLearning();
                 HiddenLayerLearning();
-
                 num2 = num1;
                 num1 = LearnCheck();
             } while (num1 > num2);
+            MessageBox.Show("Koniec nauki");
             return true;
         }
 
@@ -315,7 +320,9 @@ namespace DocClass.Src.Classification.RadialNetwork
         private void HiddenLayerLearning()
         {
             //dla kazdej klasy wyjsciowej
-            for (int k = 0; k < DocumentClass.CategoriesCount; k++)
+            for (
+                
+                int k = 0; k < DocumentClass.CategoriesCount; k++)
             {
                 // kazdego neuronu warstwy ukrytej
                 for (int j = 0; j < neuronHiddenLayer.Count; j++)

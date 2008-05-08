@@ -347,7 +347,7 @@ namespace DocClass
             DirectoryInfo sourceDirInfo = new DirectoryInfo(pathDir);
             foreach (FileInfo sourceFile in sourceDirInfo.GetFiles())
             {
-                AddItemsToClassificationResults(new string[] { sourceFile.Name, "", "Podgl¹d"},sourceFile.FullName);
+                AddItemsToClassificationResults(new string[] { sourceFile.Name, "", "Podglad"},sourceFile.FullName);
             }
         }
 
@@ -361,7 +361,7 @@ namespace DocClass
             dataGridViewClassificationResults.Rows.Clear();
             controller.ClearFileToClassification();
             FileInfo f = new FileInfo(path);
-            AddItemsToClassificationResults(new string[] { f.Name, "", "Podgl¹d" }, f.FullName);
+            AddItemsToClassificationResults(new string[] { f.Name, "", "Podglad" }, f.FullName);
         }
 
         /// <summary>

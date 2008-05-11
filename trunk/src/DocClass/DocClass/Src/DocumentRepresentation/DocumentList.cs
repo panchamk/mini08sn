@@ -9,6 +9,7 @@ namespace DocClass.Src.DocumentRepresentation
 {
     class DocumentList
     {
+        private Stack<int> indexStack = null;
         private List<Document> documentList;
         /// <summary>
         /// Sprawdza czy podane parametry s¹ zgodne z parametrami dla plików zapisanych na liœcie.
@@ -150,6 +151,47 @@ namespace DocClass.Src.DocumentRepresentation
             return result;
         }
 
+        public void Randomize()
+        {
+            List<int> indexList = new List<int>();
+            for (int i = 0; i < documentList.Count; i++) //tworze liste kolejnych liczb
+                indexList.Add(i);
+            while (indexList.Count > 0)
+            {
+                Random r = new Random();
+                int index = r.Next() % indexList.Count;
+                indexStack.Push(indexList[index]); //dodaje kolejny indeks na stos
+                indexList.RemoveAt(index); //usuwam indeks
+            }
+
+        }
+        /// <summary>
+        /// Zwraca kolejny element listy w kolejnoœci losowej. Przed pierwszym u¿yciem nale¿y u¿yæ metody
+        /// Randomize, ¿eby wylosowaæ kolejnoœæ elementów.
+        /// </summary>
+        /// <returns>Kolejny dokument  lub null, jeœli wszystkie elementy zosta³y wybrane.</returns>
+        public Document nextRandomDocument()
+        {
+            if (indexStack == null) //jesli pierwsze wywolanie, to losuje kolejne indeksy
+                throw new Exception("List isn't randomize. Use Randomize method first.");
+            if (indexStack.Count > 0)
+                return documentList[indexStack.Pop()]; //zwraca dokument i usuwa indeks ze stosu
+            else
+                return null;
+        }
+        /// <summary>
+        /// Zwraca kolejny wektor wartoœci. Przed pierwszym u¿yciem nale¿y u¿yæ metody
+        /// Randomize, ¿eby wylosowaæ kolejnoœæ elementów.
+        /// </summary>
+        /// <returns>Kolejny wektor wartoœci lub null, jeœli wszystkie elementy zosta³y wybrane.</returns>
+        public List<double> nextRandomValues()
+        {
+            Document resultDocument = nextRandomDocument();
+            if (resultDocument != null)
+                return resultDocument.GetValues();
+            else
+                return null;
+        }
 
     }
 }

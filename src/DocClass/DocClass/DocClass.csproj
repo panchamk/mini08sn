@@ -29,7 +29,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <StartupObject>DocClass.Program</StartupObject>
+    <StartupObject>DocClass.Src.Preprocessing.PreprocessingTest</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -83,6 +83,7 @@
     <Compile Include="Src\Controller\Workers\PreprocessingBackgroundWorker.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Src\Dictionaries\TestDictionary.cs" />
     <Compile Include="Src\DocumentRepresentation\Document.cs" />
     <Compile Include="Src\DocumentRepresentation\DocumentList.cs" />
     <Compile Include="Src\GUI\PreprocessingForm.cs">

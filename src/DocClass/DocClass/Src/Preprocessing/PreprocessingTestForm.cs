@@ -186,5 +186,14 @@ namespace DocClass.Src.Preprocessing
             Console.WriteLine(dictionary);
 
         }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                TestDictionary td = new TestDictionary(openFileDialog1.FileName);
+                Console.WriteLine(td);
+            }
+        }
     }
 }

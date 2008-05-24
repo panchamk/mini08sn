@@ -9,6 +9,7 @@ using DocClass.Src.Dictionaries;
 using DocClass.Src.Learning.MathOperations;
 using DocClass.Src.DocumentRepresentation;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 
 namespace DocClass.Src.Classification.RadialNetwork
@@ -50,7 +51,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <summary>
         /// Aktualna macierz greena
         /// </summary>
-        double[,] greenMatrix;
+//        double[,] greenMatrix;
         
         //neurony radialne warstwy ukrytej
         private Collection<INeuron> neuronHiddenLayer;
@@ -110,7 +111,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         {
             for (int i = 0; i < this.neuronHiddenLayer.Count; i++)
             {
-                ((RadialNeuron)this.neuronHiddenLayer[i]).RandomizeCells(minValues, maxValues);
+                ((RadialNeuron)this.neuronHiddenLayer[i]).RandomizeCells(minValues, maxValues, i);
             }
             //double mult = 0;
             //if (minValues.Length != maxValues.Length)
@@ -141,12 +142,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         private double[] y(double[] w)
         {
             double[] result;
-            if (greenMatrix != null)
-            {
-                result = Matrix.Multiply(greenMatrix, w);
-            }
-            else
-                throw new NullReferenceException();
+            result = Matrix.Multiply(CreateGreenMatrix(), w);
             return result;
         }
 
@@ -160,11 +156,11 @@ namespace DocClass.Src.Classification.RadialNetwork
         {
             if(learningData == null)
                 throw new NullReferenceException("Puste learningData");
-            List<Document> documentCollection = learningData.GetDocumentList();
+            List<Document> documentCollection = learningData.GetAllDataRandomized();
             if(documentCollection == null || documentCollection.Count == 0)
                 throw new NullReferenceException("documentCollecion puste");
-            double[,] result = new double[documentCollection.Count, neuronHiddenLayer.Count+1];
-            for (int y = 0; y < documentCollection.Count; y++)
+            double[,] result = new double[this.documentList.Count, /*documentCollection.Count, */neuronHiddenLayer.Count+1];
+            for (int y = 0; y < documentList.Count /*documentCollection.Count*/; y++)
             {
                 for (int x = 0; x < neuronHiddenLayer.Count+1; x++)
                 {
@@ -172,7 +168,7 @@ namespace DocClass.Src.Classification.RadialNetwork
                         result[y, x] = 1;
                     else
                     {
-                        result[y, x] = ((RadialNeuron)neuronHiddenLayer[x-1]).GaussianFunction(documentCollection[y].GetValues().ToArray());
+                        result[y, x] = ((RadialNeuron)neuronHiddenLayer[x-1]).GaussianFunction(documentList[y].GetValues().ToArray()/* documentCollection[y].GetValues().ToArray()*/);
                     }
                 }
             }
@@ -197,12 +193,13 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <param name="outputDesirableData"></param>
         private void OutputLayerLearning(List<double[]> outputDesirableData)
         {
-            greenMatrix = CreateGreenMatrix();
+            double[,] greenMatrix = CreateGreenMatrix();
             double[,] invertedGreenmatrix = Pseudoinverse.Solve(greenMatrix);
             for (int i = 0; i < neuronOutputLayer.Count ; i++)
             {
                 double[] weight = Matrix.Multiply(invertedGreenmatrix, outputDesirableData[i]);
                 ((LinearNeuron)neuronOutputLayer[i]).Weights = weight;
+
             }
         }
 
@@ -223,8 +220,10 @@ namespace DocClass.Src.Classification.RadialNetwork
 
             double num1 = 0, num2 = 0;
             DocumentList docList = obj as DocumentList;
+            docList.ToString();
+
             this.learningData = docList;
-            documentList = docList.GetDocumentList();
+            documentList = docList.GetAllDataRandomized();
             PreSelect();
             if (documentList == null || documentList.Count == 0)
                 throw new NullReferenceException("DocumentList pusty");
@@ -233,14 +232,27 @@ namespace DocClass.Src.Classification.RadialNetwork
             do
             {
                 OutputLayerLearning(desiredOutputData);
+PrintNeuronsInfo();
                 HiddenLayerLearning();
+PrintNeuronsInfo();
                 HiddenLayerLearning();
+PrintNeuronsInfo();
                 HiddenLayerLearning();
+PrintNeuronsInfo();
                 num2 = num1;
                 num1 = LearnCheck();
             } while (num1 > num2);
             MessageBox.Show("Koniec nauki");
             return true;
+        }
+
+        private void PrintNeuronsInfo()
+        {
+            Debug.WriteLine("NeuronPrint------------------------------------------------------------");
+            foreach (RadialNeuron n in neuronHiddenLayer)
+            {
+                n.ToString();
+            }
         }
 
         /// <summary>
@@ -320,9 +332,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         private void HiddenLayerLearning()
         {
             //dla kazdej klasy wyjsciowej
-            for (
-                
-                int k = 0; k < DocumentClass.CategoriesCount; k++)
+            for (int k = 0; k < DocumentClass.CategoriesCount; k++)
             {
                 // kazdego neuronu warstwy ukrytej
                 for (int j = 0; j < neuronHiddenLayer.Count; j++)
@@ -529,6 +539,13 @@ namespace DocClass.Src.Classification.RadialNetwork
             }
             return output;
         }
+        //druga proba
+        //private double[] NetworkOutputVector(double[] vector)
+        //{
+        //    return Matrix.Multiply(this.CreateGreenMatrix(), vector);
+        //}
+
+
 
         #endregion
 
@@ -539,8 +556,8 @@ namespace DocClass.Src.Classification.RadialNetwork
             rn.outputLayerNeutonWeights.Add(new double[] {1.0});
             rn.outputData = new List<double[]>();
             rn.outputData.Add(new double[] { 1.0 });
-            rn.greenMatrix = new double[1, 1];
-            rn.greenMatrix[0, 0] = 2;
+            //rn.greenMatrix = new double[1, 1];
+            //rn.greenMatrix[0, 0] = 2;
 
             
             rn.neuronOutputLayer[0] = (INeuron)RadialNeuron.TestSave();
@@ -548,7 +565,7 @@ namespace DocClass.Src.Classification.RadialNetwork
             Console.Out.WriteLine(rn.outputData[0][0]);
             Console.Out.WriteLine(rn.neuronHiddenLayer.Count);
             Console.Out.WriteLine(rn.neuronOutputLayer.Count);
-            Console.Out.WriteLine(rn.greenMatrix[0, 0]);
+            //Console.Out.WriteLine(rn.greenMatrix[0, 0]);
 
             return rn;
         }
@@ -563,7 +580,7 @@ namespace DocClass.Src.Classification.RadialNetwork
             Console.Out.WriteLine(rn.outputData[0][0]);
             Console.Out.WriteLine(rn.neuronHiddenLayer.Count);
             Console.Out.WriteLine(rn.neuronOutputLayer.Count);
-            Console.Out.WriteLine(rn.greenMatrix[0, 0]); 
+            //Console.Out.WriteLine(rn.greenMatrix[0, 0]); 
 
         }
 

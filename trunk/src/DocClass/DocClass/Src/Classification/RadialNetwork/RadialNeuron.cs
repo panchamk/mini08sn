@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using DocClass.Src.Exceptions;
+using System.Diagnostics;
+using DocClass.Src.DocumentRepresentation;
 
 namespace DocClass.Src.Classification.RadialNetwork
 {
@@ -14,15 +16,18 @@ namespace DocClass.Src.Classification.RadialNetwork
         private double[] sigma;
         private int vectorSize;
         private static Random r = new Random();
+        int number;
 
         /// <summary>
         /// Wspolczynnik uczenia sieci
         /// </summary>
-        public const double eta = 0.03;
+        public const double eta = 0.3;
 
         //sigma dla funkcji gaussa
 
         #endregion
+
+
 
         #region accessors
 
@@ -82,11 +87,12 @@ namespace DocClass.Src.Classification.RadialNetwork
         {
             cellCenter = new double[VectorSize];
             sigma = new double[VectorSize];
+            Debug.WriteLine("Losowanie centrow");
             for (int i = 0; i < VectorSize; i++)
             {
                 cellCenter[i] = r.NextDouble();
                 sigma[i] = r.NextDouble();
-
+                Debug.Write(String.Format("Wsp[{0}] = {1,5:F2}, S[{2}] = {3,5:F2}", i, cellCenter[i], i ,sigma[i]));
             }
             //TODO: rozwiazac kwestie szerokoscie zakresu losowania srodkow komorek
         }
@@ -96,30 +102,32 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// </summary>
         /// <param name="min"></param>
         /// <param name="max"></param>
-        public void RandomizeCells(double[] min, double[] max)
+        public void RandomizeCells(double[] min, double[] max, int neuronNumber)
         {
             cellCenter = new double[min.Length];
+            this.number = neuronNumber;
+            
             sigma = new double[min.Length];
             for (int i = 0; i < min.Length; i++)
             {
                 cellCenter[i] = min[i] + r.NextDouble() * Math.Abs(max[i] - min[i]);
                 sigma[i] = r.NextDouble();
-
             }
             //TODO: rozwiazac kwestie szerokoscie zakresu losowania srodkow komorek
+            this.ToString();
         }
 
-        
+       
         #endregion
 
         #region public methods
 
-        public void CorrectFactors(double[] c, double[] sigma)
+        public void CorrectFactors(double[] c, double[] s)
         {
             for (int i = 0; i < c.Length; i++)
             {
-                cellCenter[i] -= RadialNeuron.eta * c[i];
-                this.sigma[i] -= RadialNeuron.eta * sigma[i];
+                this.cellCenter[i] -= RadialNeuron.eta * c[i];//-
+                this.sigma[i] -= RadialNeuron.eta * s[i];//-
             }
             
         }
@@ -221,13 +229,19 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         public override string ToString()
         {
-            String result = String.Empty;
-            for (int i = 0; i < CellCenter.Length; i++)
+            Debug.WriteLine("\n\nNeuron "+ number);
+            for (int i = 0; i < cellCenter.Length; i++)
             {
-                result += "Center[" + i + "]=" + cellCenter[i];
-                result += "\nSigma[" + i + "]=" + this.sigma[i] + "\n";
+                Debug.Write(String.Format("Wsp[{0}] = {1,5:F2}\t", i, cellCenter[i]));
             }
-            return result;
+            Debug.WriteLine("");
+            for (int i = 0; i < cellCenter.Length; i++)
+            {
+                Debug.Write(String.Format("S[{0}]   = {1,5:F2}\t", i, sigma[i]));
+            }
+            Debug.WriteLine("");
+            Debug.WriteLine("Nalezy do grupy " + TestDocument.classBelonings(new List<double>(cellCenter)).ToString());
+            return null;
         }
 
         //dodałem Tomek

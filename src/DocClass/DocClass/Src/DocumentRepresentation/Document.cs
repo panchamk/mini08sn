@@ -12,13 +12,13 @@ namespace DocClass.Src.DocumentRepresentation
         protected WordCountList wordCountList;
         protected DictionaryType dictionaryType;
 
-        
+        protected Document() { }
 
         protected Document(Dictionary dictionary)
         {
             dictionaryType = dictionary.GetDictionaryType();
         }
-        public int ClassNo
+        virtual public int ClassNo
         {
             get { return classNo; }
         }
@@ -43,7 +43,7 @@ namespace DocClass.Src.DocumentRepresentation
         /// Zwraca listê wartoœci. Jeœli nie ma ¿adnych wartoœci to zwraca pust¹ listê.
         /// </summary>
         /// <returns>Lista wartoœci lub pusta lista.</returns>
-        public  List<double> GetValues()
+        virtual public  List<double> GetValues()
         {
             List<double> result = new List<double>();
             foreach (WordCountPair wordCountPair in wordCountList)

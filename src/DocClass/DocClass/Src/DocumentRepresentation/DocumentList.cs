@@ -11,6 +11,7 @@ namespace DocClass.Src.DocumentRepresentation
     {
         private Stack<int> indexStack = null;
         private List<Document> documentList;
+        private List<Document> randomizedList = null;
         /// <summary>
         /// Sprawdza czy podane parametry s¹ zgodne z parametrami dla plików zapisanych na liœcie.
         /// Jeœli nie ma zgodnoœci, to rzuca wyj¹tek.
@@ -33,6 +34,7 @@ namespace DocClass.Src.DocumentRepresentation
         public DocumentList()
         {
             documentList = new List<Document>();
+            randomizedList = null;
         }
         /// <summary>
         /// Tworzy listê na podstawie katalogu z plikami w postaci s³owo, iloœæ wyst¹pieñ.
@@ -96,7 +98,7 @@ namespace DocClass.Src.DocumentRepresentation
         /// Zwraca wektor z maksymaln¹ wartoœci¹ na ka¿dej wspó³rzêdnej.
         /// </summary>
         /// <returns>Wektor z maksymaln¹ wartoœci¹ na ka¿dej wspó³rzêdnej.</returns>
-        public List<double> GetMaxValues()
+        public virtual List<double> GetMaxValues()
         {
             if (documentList.Count == 0)
                 throw new Exception("Document list is empty");
@@ -115,7 +117,7 @@ namespace DocClass.Src.DocumentRepresentation
         /// Zwraca wektor z minimaln¹ wartoœci¹ na ka¿dej wspó³rzêdnej.
         /// </summary>
         /// <returns>Wektor z minimaln¹ wartoœci¹ na ka¿dej wspó³rzêdnej.</returns>
-        public List<double> GetMinValues()
+        public virtual List<double> GetMinValues()
         {
             if (documentList.Count == 0)
                 throw new Exception("Document list is empty");
@@ -153,6 +155,8 @@ namespace DocClass.Src.DocumentRepresentation
 
         public void Randomize()
         {
+            if (indexStack == null)
+                indexStack = new Stack<int>();
             List<int> indexList = new List<int>();
             for (int i = 0; i < documentList.Count; i++) //tworze liste kolejnych liczb
                 indexList.Add(i);
@@ -193,5 +197,28 @@ namespace DocClass.Src.DocumentRepresentation
                 return null;
         }
 
+
+        /// <summary>
+        /// Pobiera liste dokumentow juz posortowana.
+        /// Sortowana jest tylko pierwszym razem i pozniej uzywana jest ta sama posortowana lista
+        /// </summary>
+        /// <returns></returns>
+        virtual public List<Document> GetAllDataRandomized()
+        {
+            if (randomizedList == null)
+            {
+                randomizedList = new List<Document>();
+                this.Randomize();
+                Document d ;
+                while ((d = this.nextRandomDocument()) != null)
+                    randomizedList.Add(d);
+            }
+            return randomizedList;
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }

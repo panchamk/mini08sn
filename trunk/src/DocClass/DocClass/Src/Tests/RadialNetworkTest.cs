@@ -6,6 +6,9 @@ using DocClass.Src.Classification;
 using DocClass.Src.Classification.RadialNetwork;
 using DocClass.Src.Dictionaries;
 using System.Diagnostics;
+using System.Windows.Forms;
+using DocClass.Src.DocumentRepresentation;
+using DocClass.Src.Preprocessing;
 
 namespace DocClass.Src.Tests
 {
@@ -49,6 +52,17 @@ namespace DocClass.Src.Tests
             Console.WriteLine("Skutecznosc rzedu: " + (double)counter / total * 100);
 
             
+        }
+
+        [STAThread]
+        static void Main()
+        {
+            TestDocumentList tdl = new TestDocumentList(100, 3);
+            RadialNetwork rn = new RadialNetwork(20, 20);
+            for (int i = 0; i < 20; i++)
+                DocumentClass.AddClass(i.ToString());
+            rn.Learn(tdl);
+
         }
 
         private int desiredOutput(double[] dict)

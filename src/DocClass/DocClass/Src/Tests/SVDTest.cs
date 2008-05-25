@@ -63,7 +63,7 @@ namespace DocClass.Src.Tests
         }*/
 
         [Test]
-        public static void SVDtest()
+        public void SVDtest()
         {
             double[,] a = StartMatrix();
             double[,] svdA = Pseudoinverse.Solve(a);
@@ -72,6 +72,13 @@ namespace DocClass.Src.Tests
             svdA = Pseudoinverse.Solve(svdA);
             Console.WriteLine("Macierz po kolejnej operacji SVD wynikowa.");
             Console.WriteLine(Matrix.ToString(svdA));
+            for(int i = 0; i < svdA.GetLength(0); i++)
+                for(int j = 0; j < svdA.GetLength(1); j++)
+                {
+                    if(Math.Abs(svdA[i, j] -a[i,j])>0.05)
+                        Assert.IsTrue(false);
+                }
+            Assert.IsTrue(true);
         }
 
         private static double[,] StartMatrix()

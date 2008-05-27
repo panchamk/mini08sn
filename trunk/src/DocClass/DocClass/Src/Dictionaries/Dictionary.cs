@@ -25,6 +25,8 @@ namespace DocClass.Src.Dictionaries
                 return DictionaryType.Fixed;
             if (myType == typeof(FrequentDictionary))
                 return DictionaryType.Frequent;
+            if(myType == typeof(TestDictionary))
+                return DictionaryType.Test;
             throw new Exception("Unknown type: " + myType);
         }
         /// <summary>

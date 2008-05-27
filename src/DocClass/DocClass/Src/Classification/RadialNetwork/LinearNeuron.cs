@@ -15,6 +15,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         #region private members
 
         double[] weigths;
+        double[] prevWeigths;
 
         #endregion
 
@@ -52,6 +53,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         {
             set
             {
+                this.prevWeigths = this.weigths;
                 this.weigths = value;
             }
             get
@@ -71,5 +73,15 @@ namespace DocClass.Src.Classification.RadialNetwork
             }
             return result;
         }
+
+        #region INeuron Members
+
+
+        public void BackToPrevWeights()
+        {
+            this.weigths = this.prevWeigths;
+        }
+
+        #endregion
     }
 }

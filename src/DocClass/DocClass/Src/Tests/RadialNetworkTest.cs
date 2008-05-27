@@ -57,9 +57,10 @@ namespace DocClass.Src.Tests
         [STAThread]
         static void Main()
         {
-            TestDocumentList tdl = new TestDocumentList(100, 3);
-            RadialNetwork rn = new RadialNetwork(20, 20);
-            for (int i = 0; i < 20; i++)
+            int classNum = 20;
+            TestDocumentList tdl = new TestDocumentList(100, 100);
+            RadialNetwork rn = new RadialNetwork(50, classNum);
+            for (int i = 0; i < classNum; i++)
                 DocumentClass.AddClass(i.ToString());
             rn.Learn(tdl);
 

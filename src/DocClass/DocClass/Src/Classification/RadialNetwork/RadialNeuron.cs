@@ -14,6 +14,8 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         private double[] cellCenter;
         private double[] sigma;
+        private double[] prevCellCenter;
+        private double[] prevSigma;
         private int vectorSize;
         private static Random r = new Random();
         int number;
@@ -21,7 +23,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <summary>
         /// Wspolczynnik uczenia sieci
         /// </summary>
-        public const double eta = 0.3;
+        public const double eta = 0.03;
 
         //sigma dla funkcji gaussa
 
@@ -111,7 +113,7 @@ namespace DocClass.Src.Classification.RadialNetwork
             for (int i = 0; i < min.Length; i++)
             {
                 cellCenter[i] = min[i] + r.NextDouble() * Math.Abs(max[i] - min[i]);
-                sigma[i] = r.NextDouble();
+                sigma[i] = r.NextDouble()*(Math.Abs(max[i] - min[i]));
             }
             //TODO: rozwiazac kwestie szerokoscie zakresu losowania srodkow komorek
             this.ToString();
@@ -124,8 +126,12 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         public void CorrectFactors(double[] c, double[] s)
         {
+            this.prevCellCenter = new double[cellCenter.Length];
+            this.prevSigma = new double[sigma.Length];
             for (int i = 0; i < c.Length; i++)
             {
+                this.prevCellCenter[i] = this.cellCenter[i];
+                this.prevSigma[i] = this.sigma[i];
                 this.cellCenter[i] -= RadialNeuron.eta * c[i];//-
                 this.sigma[i] -= RadialNeuron.eta * s[i];//-
             }
@@ -265,5 +271,19 @@ namespace DocClass.Src.Classification.RadialNetwork
             Console.Out.WriteLine("  " + rn.VectorSize);
             Console.Out.WriteLine("  " + rn.sigma[0]);
         }
+
+        #region INeuron Members
+
+
+        public void BackToPrevWeights()
+        {
+            for (int i = 0; i < this.sigma.Length; i++)
+            {
+                this.cellCenter[i] = this.prevCellCenter[i];
+                this.sigma[i] = this.prevSigma[i];
+            }
+        }
+
+        #endregion
     }
 }

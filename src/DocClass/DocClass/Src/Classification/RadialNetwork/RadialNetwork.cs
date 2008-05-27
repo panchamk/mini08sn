@@ -25,7 +25,7 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         public const int HIDDEN_LAYER_MAX_NEURON_COUNT = 40;
 
-        private const int TH_DOCUMENT_TO_CHECK = 4;
+        private const int TH_DOCUMENT_TO_CHECK = 2;
 
 
 
@@ -51,7 +51,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <summary>
         /// Aktualna macierz greena
         /// </summary>
-//        double[,] greenMatrix;
+        double[,] greenMatrix;
         
         //neurony radialne warstwy ukrytej
         private Collection<INeuron> neuronHiddenLayer;
@@ -142,7 +142,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         private double[] y(double[] w)
         {
             double[] result;
-            result = Matrix.Multiply(CreateGreenMatrix(), w);
+            result = Matrix.Multiply(greenMatrix, w);
             return result;
         }
 
@@ -193,7 +193,7 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <param name="outputDesirableData"></param>
         private void OutputLayerLearning(List<double[]> outputDesirableData)
         {
-            double[,] greenMatrix = CreateGreenMatrix();
+            greenMatrix = CreateGreenMatrix();
             double[,] invertedGreenmatrix = Pseudoinverse.Solve(greenMatrix);
             for (int i = 0; i < neuronOutputLayer.Count ; i++)
             {
@@ -219,6 +219,7 @@ namespace DocClass.Src.Classification.RadialNetwork
                 throw new ArgumentException("Argument nie jest typu: DocumentList !");
 
             double num1 = 0, num2 = 0;
+         
             DocumentList docList = obj as DocumentList;
             docList.ToString();
 
@@ -231,18 +232,23 @@ namespace DocClass.Src.Classification.RadialNetwork
             CoverSpaceByNeuronCells(docList.GetMinValues().ToArray(), docList.GetMaxValues().ToArray(), this.neuronOutputLayer);
             do
             {
+                double num3 = 0, num4 = 0;
                 OutputLayerLearning(desiredOutputData);
-PrintNeuronsInfo();
-                HiddenLayerLearning();
-PrintNeuronsInfo();
-                HiddenLayerLearning();
-PrintNeuronsInfo();
-                HiddenLayerLearning();
-PrintNeuronsInfo();
+                do
+                {
+                    HiddenLayerLearning();
+                    PrintNeuronsInfo();
+                    num4 = num3;
+                    num3 = LearnCheck();
+                } while (num3 > num4);
+                foreach (RadialNeuron n in neuronHiddenLayer)
+                    n.BackToPrevWeights();
                 num2 = num1;
                 num1 = LearnCheck();
             } while (num1 > num2);
             MessageBox.Show("Koniec nauki");
+            foreach (LinearNeuron n in neuronOutputLayer)
+                n.BackToPrevWeights();
             return true;
         }
 
@@ -293,7 +299,7 @@ PrintNeuronsInfo();
                 if (this.Classificate(checkList[i]) == checkList[i].ClassNo)
                     counter++;
             }
-            double result = ((double)counter) / documentList.Count / checkList.Count;
+            double result = ((double)counter) / (documentList.Count + checkList.Count);
             Console.WriteLine("Skutecznosc: " + result.ToString());
             return result;
         }
@@ -517,8 +523,8 @@ PrintNeuronsInfo();
                 }
             }
             Console.Write("                ");
-            for (int i = 0; i < output.Length; i++)
-                Console.Write("   " + output[i].ToString());
+            //for (int i = 0; i < output.Length; i++)
+            //  Console.Write("   " + output[i].ToString());
             Console.WriteLine();
             return max;
 

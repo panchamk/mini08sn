@@ -24,7 +24,7 @@ namespace DocClass.Src.DocumentRepresentation
             result = new List<double>();
             for (int i = 0; i < dims; i++)
             {
-                result.Add(r.NextDouble());
+                result.Add(r.NextDouble()*100);
             }
             return result;
         }
@@ -37,17 +37,28 @@ namespace DocClass.Src.DocumentRepresentation
             }
         }
 
+
+        //public static int classBelonings(List<double> result)
+        //{
+        //    if (result[0] > 0.5 && result[1] > 0.5 && result[2] > 0.5)
+        //        return 1;
+
+        //    else if (result[0] < 0.5 && result[1] < 0.5 && result[2] < 0.5)
+        //        return 2;
+        //    return 0;
+        //}
+        ///*
         public static int classBelonings(List<double> result)
         {
-            if (result[0] < 0.33)
+            if (result[0] < 33)
             {
-                if (result[1] < 0.33)
+                if (result[1] < 33)
                 {
-                    if (result[2] < 0.33)
+                    if (result[2] < 33)
                     {
                         return 0;
                     }
-                    else if (result[2] < 0.66)
+                    else if (result[2] < 66)
                     {
                         return 1;
                     }
@@ -56,13 +67,13 @@ namespace DocClass.Src.DocumentRepresentation
                         return 2;
                     }
                 }
-                else if (result[1] < 0.66)
+                else if (result[1] < 66)
                 {
-                    if (result[2] < 0.33)
+                    if (result[2] < 33)
                     {
                         return 3;
                     }
-                    else if (result[2] < 0.66)
+                    else if (result[2] < 66)
                     {
                         return 4;
                     }
@@ -73,11 +84,11 @@ namespace DocClass.Src.DocumentRepresentation
                 }
                 else
                 {
-                    if (result[2] < 0.33)
+                    if (result[2] < 33)
                     {
                         return 6;
                     }
-                    else if (result[2] < 0.66)
+                    else if (result[2] < 66)
                     {
                         return 7;
                     }
@@ -87,15 +98,15 @@ namespace DocClass.Src.DocumentRepresentation
                     }
                 }
             }
-            else if (result[0] < 0.66)
+            else if (result[0] < 66)
             {
-                if (result[1] < 0.33)
+                if (result[1] < 33)
                 {
-                    if (result[2] < 0.33)
+                    if (result[2] < 33)
                     {
                         return 9;
                     }
-                    else if (result[2] < 0.66)
+                    else if (result[2] < 66)
                     {
                         return 10;
                     }
@@ -104,13 +115,13 @@ namespace DocClass.Src.DocumentRepresentation
                         return 11;
                     }
                 }
-                else if (result[1] < 0.66)
+                else if (result[1] < 66)
                 {
-                    if (result[2] < 0.33)
+                    if (result[2] < 33)
                     {
                         return 12;
                     }
-                    else if (result[2] < 0.66)
+                    else if (result[2] < 66)
                     {
                         return 13;
                     }
@@ -121,11 +132,11 @@ namespace DocClass.Src.DocumentRepresentation
                 }
                 else
                 {
-                    if (result[2] < 0.33)
+                    if (result[2] < 33)
                     {
                         return 15;
                     }
-                    else if (result[2] < 0.66)
+                    else if (result[2] < 66)
                     {
                         return 16;
                     }
@@ -137,13 +148,13 @@ namespace DocClass.Src.DocumentRepresentation
             }
             else
             {
-                if (result[1] < 0.33)
+                if (result[1] < 33)
                 {
-                    if (result[2] < 0.33)
+                    if (result[2] < 33)
                     {
                         return 18;
                     }
-                    else if (result[2] < 0.66)
+                    else if (result[2] < 66)
                     {
                         return 19;
                     }
@@ -152,13 +163,13 @@ namespace DocClass.Src.DocumentRepresentation
                         return 0;
                     }
                 }
-                else if (result[1] < 0.66)
+                else if (result[1] < 66)
                 {
-                    if (result[2] < 0.33)
+                    if (result[2] < 33)
                     {
                         return 1;
                     }
-                    else if (result[2] < 0.66)
+                    else if (result[2] < 66)
                     {
                         return 2;
                     }
@@ -169,11 +180,11 @@ namespace DocClass.Src.DocumentRepresentation
                 }
                 else
                 {
-                    if (result[2] < 0.33)
+                    if (result[2] < 33)
                     {
                         return 4;
                     }
-                    else if (result[2] < 0.66)
+                    else if (result[2] < 66)
                     {
                         return 5;
                     }
@@ -184,5 +195,6 @@ namespace DocClass.Src.DocumentRepresentation
                 }
             }
         }
+        //*/
     }
 }

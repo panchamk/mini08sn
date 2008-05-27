@@ -25,13 +25,12 @@ namespace DocClass.Src.Tests
                 result.Add(d);
             }
             return result;
-            return null;
         }
 
         public override List<double> GetMinValues()
         {
             List<double> r = new List<double>();
-            for(int i= 0; i<3; i++)
+            for(int i= 0; i<dims; i++)
                 r.Add(0);
             return r;
         }
@@ -39,8 +38,8 @@ namespace DocClass.Src.Tests
         public override List<double> GetMaxValues()
         {
             List<double> r = new List<double>();
-            for (int i = 0; i < 3; i++)
-                r.Add(1);
+            for (int i = 0; i < dims; i++)
+                r.Add(100);
             return r;
         }
     }

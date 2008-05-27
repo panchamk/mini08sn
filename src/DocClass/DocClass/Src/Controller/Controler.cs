@@ -515,7 +515,7 @@ namespace DocClass.Src.Controller
             switch ((DictionaryType)Settings.Default.dictionaryType)
             {
                 case DictionaryType.CtfIdf:
-                    return new CtfIdfDictionary(Settings.Default.pathLearningDir, pathSummary, 20/*wordCountList.GetUniqueWordsCount()*/);
+                    return new CtfIdfDictionary(Settings.Default.pathLearningDir, pathSummary, wordCountList.GetUniqueWordsCount());
                 case DictionaryType.Fixed:
                     return new FixedDictionary(Settings.Default.pathLearningDir, wordCountList.GetUniqueWordsCount());
                 case DictionaryType.Frequent:

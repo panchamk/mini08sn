@@ -6,6 +6,7 @@ namespace DocClass.Src.Dictionaries
     {
         CtfIdf,
         Fixed,
-        Frequent
+        Frequent,
+        Test
     }
 }

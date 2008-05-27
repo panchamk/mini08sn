@@ -14,5 +14,6 @@ namespace DocClass.Src.Classification.RadialNetwork
         /// <param name="vector"></param>
         /// <returns></returns>
         double Process(double[] vector);
+        void BackToPrevWeights();
     }
 }

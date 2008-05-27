@@ -6,6 +6,7 @@ using DocClass.Src.Dictionaries;
 
 namespace DocClass.Src.DocumentRepresentation
 {
+    [Serializable]
     abstract class Document
     {
         protected int classNo = -1;

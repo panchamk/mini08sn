@@ -7,6 +7,7 @@ using DocClass.Src.Classification;
 
 namespace DocClass.Src.Dictionaries
 {
+    [Serializable]
     abstract class Dictionary:IEnumerable<String>
     {
 

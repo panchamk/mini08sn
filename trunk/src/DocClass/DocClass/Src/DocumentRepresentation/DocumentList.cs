@@ -7,6 +7,7 @@ using DocClass.Src.Preprocessing;
 
 namespace DocClass.Src.DocumentRepresentation
 {
+    [Serializable]
     class DocumentList
     {
         private Stack<int> indexStack = null;

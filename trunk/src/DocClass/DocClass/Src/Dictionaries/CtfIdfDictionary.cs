@@ -6,6 +6,7 @@ using System.IO;
 
 namespace DocClass.Src.Dictionaries
 {
+    [Serializable]
     class CtfIdfDictionary : Dictionary
     {
         public override bool Init(ICollection<DocClass.Src.DocumentRepresentation.Document> docs)

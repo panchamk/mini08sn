@@ -8,6 +8,7 @@ using DocClass.Src.Preprocessing;
 
 namespace DocClass.Src.DocumentRepresentation
 {
+    [Serializable]
     class OwnDocument : Document
     {
         

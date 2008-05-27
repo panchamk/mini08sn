@@ -15,6 +15,7 @@ using DocClass.Src.DocumentRepresentation;
 using DocClass.Src.Preprocessing;
 using DocClass.Src.Controller.Workers;
 using DocClass.Src.GUI;
+using DocClass.Properties;
 
 
 namespace DocClass.Src.Controller
@@ -126,7 +127,7 @@ namespace DocClass.Src.Controller
 
         void OnLearningWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Console.Out.WriteLine("LEARNING END");
+            form.LearnEnd();
         }
 
         void OnClassificationWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -141,7 +142,10 @@ namespace DocClass.Src.Controller
 
         void OnPreprocessingWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Console.Out.WriteLine("CLASSIFICATION CHANGE");
+            if(preprocessingForm!=null)
+            {
+                preprocessingForm.PreprocessingEnd();
+            }
         }
 
         void OnPreprocessingWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -185,7 +189,7 @@ namespace DocClass.Src.Controller
         /// </summary>
         public void LearnProcess()
         {
-            switch ((ClasyficatorType)Properties.Settings.Default.clasificatorType)
+            switch ((ClasyficatorType)Settings.Default.clasificatorType)
             {
                 case (ClasyficatorType.Bayes):
                     Console.Out.WriteLine("BAYES - Poczatek nauki.");
@@ -200,12 +204,6 @@ namespace DocClass.Src.Controller
                 default:
                     throw new NotImplementedException("Nieznany typ klasyfikacji.");
             }
-            //TODO: Emil
-            //DocumentList dl = new DocumentList(Properties.Settings.Default.pathLearningDir, dictionary, Properties.Settings.Default.documentRepresentationType, null, 
-            //DocumentList dl = PreprocessingUtility.CreateLearningDocumentList(Properties.Settings.Default.pathLearningDir, dictionary, (DocumentRepresentationType)Properties.Settings.Default.documentRepresentationType, learningDocInfo);
-            //nauka
-            //radialNetwork.Learn(Docu); 
-            //Console.Out.WriteLine("Koniec nauki.");
         }
 
         /// <summary>
@@ -234,7 +232,7 @@ namespace DocClass.Src.Controller
                     return;
                 }
 
-                switch ((ClasyficatorType)Properties.Settings.Default.clasificatorType)
+                switch ((ClasyficatorType)Settings.Default.clasificatorType)
                 {
                     case (ClasyficatorType.Bayes):
                         categoryName = BayesClassificate(path);
@@ -264,7 +262,8 @@ namespace DocClass.Src.Controller
         {
             int dirNumber = new DirectoryInfo(sourcePath).GetDirectories().Length;
 
-            preprocessingForm = new PreprocessingForm(dirNumber);
+            preprocessingForm = new PreprocessingForm(this);
+            preprocessingForm.MaxProgress = dirNumber;
             preprocessingPath = sourcePath;
             preprocessingWorker.RunWorkerAsync();
             preprocessingForm.ShowDialog();
@@ -280,7 +279,7 @@ namespace DocClass.Src.Controller
         {
             if (stopWords == null)
             {
-                stopWords = PreprocessingUtility.LoadStopWords(Properties.Settings.Default.pathStopWords);
+                stopWords = PreprocessingUtility.LoadStopWords(Settings.Default.pathStopWords);
             }
 
             DirectoryInfo rootDirInfo = new DirectoryInfo(preprocessingPath);
@@ -299,7 +298,6 @@ namespace DocClass.Src.Controller
         public void CancelClassification()
         {
             classificationWorker.CancelAsync();
-
         }
 
         /// <summary>
@@ -308,10 +306,11 @@ namespace DocClass.Src.Controller
         /// <param name="pathFile">Scieżka do pliku.</param>
         public void SaveRadialNetwork(String pathFile)
         {
-            //RadialNetwork rn = RadialNetwork.TestSave();
             Stream stream = File.Open(pathFile, FileMode.OpenOrCreate);
             BinaryFormatter bFormatter = new BinaryFormatter();
             bFormatter.Serialize(stream, this.radialNetwork);
+            bFormatter.Serialize(stream, this.dictionary);
+            SaveSettings(stream, bFormatter);
             stream.Close();
         }
 
@@ -324,8 +323,11 @@ namespace DocClass.Src.Controller
             Stream stream = File.Open(pathFile, FileMode.Open);
             BinaryFormatter bFormatter = new BinaryFormatter();
             this.radialNetwork = (RadialNetwork)bFormatter.Deserialize(stream);
+            this.dictionary = (Dictionary)bFormatter.Deserialize(stream);
+            LoadSettings(stream, bFormatter);
             stream.Close();
-            //RadialNetwork.TestLoad(rn);
+
+            this.form.LoadClassificatorEnd(ClasyficatorType.RadialNeural);
         }
 
         /// <summary>
@@ -337,7 +339,7 @@ namespace DocClass.Src.Controller
             Stream stream = File.Open(pathFile, FileMode.OpenOrCreate);
             BinaryFormatter bFormatter = new BinaryFormatter();
             bFormatter.Serialize(stream, this.bayesClassificator);
-            bFormatter.Serialize(stream, Properties.Settings.Default.pathSummaryFile);
+            SaveSettings(stream, bFormatter);
             stream.Close();
         }
 
@@ -350,8 +352,37 @@ namespace DocClass.Src.Controller
             Stream stream = File.Open(pathFile, FileMode.Open);
             BinaryFormatter bFormatter = new BinaryFormatter();
             this.bayesClassificator = (BayesClassificator)bFormatter.Deserialize(stream);
-            Properties.Settings.Default.pathSummaryFile = (string)bFormatter.Deserialize(stream);
+            LoadSettings(stream, bFormatter);
             stream.Close();
+
+            this.form.LoadClassificatorEnd(ClasyficatorType.Bayes);
+        }
+
+        public bool IsAfterLearn()
+        {
+            ClasyficatorType classificationType = (ClasyficatorType)Settings.Default.clasificatorType;
+            switch (classificationType)
+            {
+                case ClasyficatorType.Bayes:
+                    return (this.bayesClassificator != null);
+                case ClasyficatorType.RadialNeural:
+                    return (radialNetwork!=null);
+                default:
+                    throw new NotImplementedException("Nieznany typ klasyfikacji.");
+            }
+        }
+
+        public bool IsAfterLearn(ClasyficatorType classificatorType)
+        {
+            switch (classificatorType)
+            {
+                case ClasyficatorType.Bayes:
+                    return (this.bayesClassificator != null);
+                case ClasyficatorType.RadialNeural:
+                    return (radialNetwork != null);
+                default:
+                    throw new NotImplementedException("Nieznany typ klasyfikacji.");
+            }
         }
 
         # endregion
@@ -361,32 +392,64 @@ namespace DocClass.Src.Controller
         private void RadialNeuralLearn()
         {
             //ładuje listę kategorii
-            DocumentClass.LoadFromFiles(Properties.Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
+            DocumentClass.LoadFromFiles(Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
 
             //stworzenie słownika
-            dictionary = dictionaryFactory(Properties.Settings.Default.pathSummaryFile);
+            dictionary = DictionaryFactory(Settings.Default.pathSummaryFile);
             //dictionary.LearningData = new List<DocClass.Src.Learning.LearningPair>();
 
             //stworzenie sieci
-            radialNetwork = new RadialNetwork(Properties.Settings.Default.hiddenLayerInitNeuronCount, DocumentClass.CategoriesCount);
+            radialNetwork = new RadialNetwork(Settings.Default.numberNeuronsHidden, DocumentClass.CategoriesCount);
 
-            DocumentList dl = PreprocessingUtility.CreateLearningDocumentList(Properties.Settings.Default.pathLearningDir, dictionary, (DocumentRepresentationType)Properties.Settings.Default.documentRepresentationType, learningDocInfo);
+            DocumentList dl = PreprocessingUtility.CreateLearningDocumentList(Settings.Default.pathLearningDir, dictionary, (DocumentRepresentationType)Settings.Default.documentRepresentationType, learningDocInfo);
             radialNetwork.Learn(dl); 
         }
 
         private void BayesLearn()
         {
             //ładuje listę kategorii
-            DocumentClass.LoadFromFiles(Properties.Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
+            DocumentClass.LoadFromFiles(Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
 
             //tworze klasyfikator
             bayesClassificator = new BayesClassificator();
 
             //tworze liste kategorii
-            CategoryList categoryList = new CategoryList(Properties.Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
+            CategoryList categoryList = new CategoryList(Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
 
             //nauka
             bayesClassificator.Learn(categoryList);
+        }
+
+        private void SaveSettings(Stream stream, BinaryFormatter bFormatter)
+        {
+            bFormatter.Serialize(stream, Settings.Default.pathSummaryFile);
+            bFormatter.Serialize(stream, Settings.Default.pathLearningDir);
+
+            bFormatter.Serialize(stream, Settings.Default.numberLearningDocuments);
+            bFormatter.Serialize(stream, Settings.Default.numberLearningCategories);
+            bFormatter.Serialize(stream, Settings.Default.numberAllWordsInDictionary);
+
+            bFormatter.Serialize(stream, Settings.Default.dictionaryType);
+            bFormatter.Serialize(stream, Settings.Default.documentRepresentationType);
+
+            bFormatter.Serialize(stream, Settings.Default.numberNeuronsHidden);
+            bFormatter.Serialize(stream, Settings.Default.numberNeuronsOut);
+        }
+
+        private void LoadSettings(Stream stream, BinaryFormatter bFormatter)
+        {
+            Settings.Default.pathSummaryFile = (string)bFormatter.Deserialize(stream);
+            Settings.Default.pathLearningDir = (string)bFormatter.Deserialize(stream);
+
+            Settings.Default.numberLearningDocuments = (int)bFormatter.Deserialize(stream);
+            Settings.Default.numberLearningCategories = (int)bFormatter.Deserialize(stream);
+            Settings.Default.numberAllWordsInDictionary = (int)bFormatter.Deserialize(stream);
+
+            Settings.Default.dictionaryType = (int)bFormatter.Deserialize(stream);
+            Settings.Default.documentRepresentationType = (int)bFormatter.Deserialize(stream);
+
+            Settings.Default.numberNeuronsHidden = (int)bFormatter.Deserialize(stream);
+            Settings.Default.numberNeuronsOut = (int)bFormatter.Deserialize(stream);
         }
 
         /// <summary>
@@ -395,13 +458,13 @@ namespace DocClass.Src.Controller
         /// <param name="pathFile"></param>
         private string BayesClassificate(String pathFile)
         {
-            String preprocessingPathFile = Path.GetTempPath() + getNameFromPath(pathFile);
+            String preprocessingPathFile = Path.GetTempPath() + GetNameFromPath(pathFile);
 
             //preprocesing
             PreprocessingFile(pathFile, preprocessingPathFile);
 
             //tworze listę słów
-            ICollection<string> wordsCollection = wordsFromFile(preprocessingPathFile);
+            ICollection<string> wordsCollection = GetWordsFromFile(preprocessingPathFile);
 
             //klasyfikacja
             string category = bayesClassificator.Classificate(wordsCollection);
@@ -418,13 +481,13 @@ namespace DocClass.Src.Controller
         /// <param name="pathFile"></param>
         private int RadialNeuralClassificate(String pathFile)
         {
-            String preprocessingPathFile = Path.GetTempPath() + getNameFromPath(pathFile);
+            String preprocessingPathFile = Path.GetTempPath() + GetNameFromPath(pathFile);
 
             //preprocesing
             PreprocessingFile(pathFile, preprocessingPathFile);
 
             //stworzenie reprezentacji dokumentu
-            Document document = documentFactory(preprocessingPathFile);
+            Document document = DocumentFactory(preprocessingPathFile);
 
             //klasyfikacji
             int result = radialNetwork.Classificate(document);
@@ -441,20 +504,20 @@ namespace DocClass.Src.Controller
         /// </summary>
         /// <param name="pathSummary"></param>
         /// <returns></returns>
-        private Dictionary dictionaryFactory(String pathSummary)
+        private Dictionary DictionaryFactory(String pathSummary)
         {
             WordCountList wordCountList = new WordCountList(pathSummary);
             if (learningDocInfo == null)
             {
-                learningDocInfo = new LearningDocInfo(Properties.Settings.Default.pathLearningDir,
-                                                    Properties.Settings.Default.pathSummaryFile);
+                learningDocInfo = new LearningDocInfo(Settings.Default.pathLearningDir,
+                                                    Settings.Default.pathSummaryFile);
             }
-            switch ((DictionaryType)Properties.Settings.Default.dictionaryType)
+            switch ((DictionaryType)Settings.Default.dictionaryType)
             {
                 case DictionaryType.CtfIdf:
-                    return new CtfIdfDictionary(Properties.Settings.Default.pathLearningDir, pathSummary, 20/*wordCountList.GetUniqueWordsCount()*/);
+                    return new CtfIdfDictionary(Settings.Default.pathLearningDir, pathSummary, 20/*wordCountList.GetUniqueWordsCount()*/);
                 case DictionaryType.Fixed:
-                    return new FixedDictionary(Properties.Settings.Default.pathLearningDir, wordCountList.GetUniqueWordsCount());
+                    return new FixedDictionary(Settings.Default.pathLearningDir, wordCountList.GetUniqueWordsCount());
                 case DictionaryType.Frequent:
                     return new FrequentDictionary(pathSummary, wordCountList.GetUniqueWordsCount());
                 default:
@@ -468,9 +531,9 @@ namespace DocClass.Src.Controller
         /// </summary>
         /// <param name="pathFile"></param>
         /// <returns></returns>
-        private Document documentFactory(String pathFile)
+        private Document DocumentFactory(String pathFile)
         {
-            switch ((DocumentRepresentationType)Properties.Settings.Default.documentRepresentationType)
+            switch ((DocumentRepresentationType)Settings.Default.documentRepresentationType)
             {
                 case DocumentRepresentationType.Binary:
                     return new BinaryDocument(pathFile, dictionary, null);
@@ -479,8 +542,8 @@ namespace DocClass.Src.Controller
                 case DocumentRepresentationType.TfIdf:
                     if (learningDocInfo == null)
                     {
-                        learningDocInfo = new LearningDocInfo(Properties.Settings.Default.pathLearningDir,
-                                                            Properties.Settings.Default.pathSummaryFile);
+                        learningDocInfo = new LearningDocInfo(Settings.Default.pathLearningDir,
+                                                            Settings.Default.pathSummaryFile);
                     }
                     return new TfIdfDocument(pathFile,dictionary, null, learningDocInfo);
                 default:
@@ -494,7 +557,7 @@ namespace DocClass.Src.Controller
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        private String getNameFromPath(String path)
+        private String GetNameFromPath(String path)
         {
 
             for (int i = path.Length-1; i >= 0; i--)
@@ -516,12 +579,12 @@ namespace DocClass.Src.Controller
         {
             if (stopWords == null)
             {
-                stopWords = PreprocessingUtility.LoadStopWords(Properties.Settings.Default.pathStopWords);
+                stopWords = PreprocessingUtility.LoadStopWords(Settings.Default.pathStopWords);
             }
             PreprocessingUtility.StemFile(sourcePath, destinationFile, stopWords);
         }
 
-        private ICollection<string> wordsFromFile(String pathFile)
+        private ICollection<string> GetWordsFromFile(String pathFile)
         {
             //tworze liste
             WordCountList wcl = new WordCountList(pathFile);

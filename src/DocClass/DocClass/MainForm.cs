@@ -11,6 +11,7 @@ using DocClass.Src.DocumentRepresentation;
 using DocClass.Src.Controller;
 using DocClass.Src.Preprocessing;
 using DocClass.Src.GUI;
+using DocClass.Properties;
 using System.Diagnostics;
 using System.IO;
 
@@ -23,7 +24,11 @@ namespace DocClass
     /// </summary>
     public partial class MainForm : Form
     {
-        private static string filePattern = "Wszystkie (*.*)|*.*|Tektowe (*.txt*)|*.txt*|Zip (*.zip*)|*.zip*";
+        private static string documentFilePattern = "Wszystkie (*.*)|*.*|Tektowe (*.txt*)|*.txt*|Zip (*.zip*)|*.zip*";
+
+        private static string bayesFilePattern = "Klasyfikator Bayes'a (*.bay*)|*.bay*";
+
+        private static string radialNetworkFilePattern = "Sieæ radialna (*.rnet*)|*.rnet*";
 
         private Controller controller;
 
@@ -51,11 +56,8 @@ namespace DocClass
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnMainForm_Load(object sender, EventArgs e)
-        {            
-            labelLearningValuePathDir.Text = Properties.Settings.Default.pathLearningDir;
-            labelLearningValueNumbersHiddenNerons.Text = Properties.Settings.Default.hiddenLayerInitNeuronCount.ToString();
-            labelLearningValueNumberOutNerons.Text = Properties.Settings.Default.outputLayerNeuronCount.ToString();
-            labelLearningValueNumbersCategoriesAll.Text = Properties.Settings.Default.numberAllCategories.ToString();
+        {
+            SetLearningInfo();
         }
 
         /// <summary>
@@ -75,11 +77,9 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnBayesaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.RadialNetworkToolStripMenuItem.Checked = false;
-            this.BayesToolStripMenuItem.Checked = true;
-            this.splitContainerMain.Panel1Collapsed = true;
+            Settings.Default.clasificatorType = (int)ClasyficatorType.Bayes;
+            SetFormStateAfterChangeClassificationType();
 
-            Properties.Settings.Default.clasificatorType = (int)ClasyficatorType.Bayes;
         }
 
         /// <summary>
@@ -89,11 +89,8 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnRadialNetworkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.BayesToolStripMenuItem.Checked = false;
-            this.RadialNetworkToolStripMenuItem.Checked = true;
-            this.splitContainerMain.Panel1Collapsed = false;
-
-            Properties.Settings.Default.clasificatorType = (int)ClasyficatorType.RadialNeural;
+            Settings.Default.clasificatorType = (int)ClasyficatorType.RadialNeural;
+            SetFormStateAfterChangeClassificationType();
         }
 
         /// <summary>
@@ -103,11 +100,11 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String pathTemp = ShowOpenFileDialogDateLoad(filePattern);
+            String pathTemp = ShowOpenFileDialog(documentFilePattern);
             if (pathTemp == null)
                 return;
 
-            OperationType operationType =  (OperationType)Properties.Settings.Default.operationType;
+            OperationType operationType =  (OperationType)Settings.Default.operationType;
             switch (operationType)
             {
                 case OperationType.Learning:
@@ -127,11 +124,11 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String pathTemp = ShowFolderBrowserDialogDateLoad();
+            String pathTemp = ShowFolderBrowserDialog();
             if (pathTemp == null)
                 return;
 
-            OperationType operationType =  (OperationType)Properties.Settings.Default.operationType;
+            OperationType operationType =  (OperationType)Settings.Default.operationType;
             switch (operationType)
             {
                 case OperationType.Learning:
@@ -142,19 +139,18 @@ namespace DocClass
                         return;
                     }
 
-                    Properties.Settings.Default.pathLearningDir = pathTemp;
-                    Properties.Settings.Default.pathSummaryFile = pathSummaryTemp;
-                    Properties.Settings.Default.numberAllWordsInDictionary = new WordCountList(pathSummaryTemp).GetUniqueWordsCount();
-                    Properties.Settings.Default.numberLearningCategories = new DirectoryInfo(pathTemp).GetDirectories().Length;
-
-                    labelLearningValueNumbersCategoriesInLearning.Text = Properties.Settings.Default.numberLearningCategories.ToString();
-                    labelLearningValuePathDir.Text = Properties.Settings.Default.pathLearningDir;
-                    labelLearningValueNumberAllWords.Text = Properties.Settings.Default.numberAllWordsInDictionary.ToString();
-                    buttonLearningStart1.Enabled = true;
+                    Settings.Default.pathLearningDir = pathTemp;
+                    Settings.Default.pathSummaryFile = pathSummaryTemp;
+                    Settings.Default.numberAllWordsInDictionary = new WordCountList(pathSummaryTemp).GetUniqueWordsCount();
+                    Settings.Default.numberLearningCategories = PreprocessingUtility.GetCategoryNumber(pathTemp);
+                    Settings.Default.numberLearningDocuments = PreprocessingUtility.GetDocumentsNumber(pathTemp);
+                    
+                    SetFormStateAfterLoadLearningData();
                     break;
                 case OperationType.Classification:
-                    Properties.Settings.Default.pathClassificationDir = pathTemp;
-                    AddItemsToClassificationResultFtomDir(Properties.Settings.Default.pathClassificationDir);
+                    Settings.Default.pathClassificationDir = pathTemp;
+                    AddItemsToClassificationResultFtomDir(Settings.Default.pathClassificationDir);
+                    SetFormStateAfterLoadClassificateData();
                     break;
                 default:
                     break;
@@ -168,7 +164,7 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnDataGridViewClassificationResults_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 2)
+            if (e.ColumnIndex == dataGridViewClassificationResults.Columns["ColumnShow"].Index)
             {
                 String path = (String)dataGridViewClassificationResults.Rows[e.RowIndex].Tag;
                 ShowFile(path);
@@ -198,10 +194,21 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnButtonClassificationStart_Click(object sender, EventArgs e)
         {
-            this.buttonClassificationStop.Visible = true;
-            this.buttonClassificationStart.Visible = false;
-            progressBarClassification.Visible = true;
-            ProgressBarClassification.Value = ProgressBarClassification.Minimum;
+            if (!this.controller.IsAfterLearn())
+            {
+                switch ((ClasyficatorType)Settings.Default.clasificatorType)
+                {
+                    case ClasyficatorType.Bayes:
+                        MessageBox.Show("Klasyfikator Bayes'a nie zosta³ nauczony.");
+                        return;
+                    case ClasyficatorType.RadialNeural:
+                        MessageBox.Show("Sieæ nie zosta³a nauczona.");
+                        return;
+                    default:
+                        break;
+                }
+            }
+            SetFormStateBeforeClassification();
             this.controller.Classificate();
         }
 
@@ -223,15 +230,13 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnButtonLearningStart1_Click(object sender, EventArgs e)
         {
-            String s = Properties.Settings.Default.pathLearningDir;
-            if (!System.IO.Directory.Exists(Properties.Settings.Default.pathLearningDir))
+            String s = Settings.Default.pathLearningDir;
+            if (!System.IO.Directory.Exists(Settings.Default.pathLearningDir))
             {
                 MessageBox.Show("Nie mo¿na odnaleœæ katalogu z danymi ucz¹cymi.");
                 return;
             }
-
-            this.buttonLearningStop1.Visible = true;
-            this.buttonLearningStart1.Visible = false;
+            this.SetFormStateBeforeLearn();
             this.controller.Learn();
         }
 
@@ -243,7 +248,7 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnTabControlUse_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.operationType = this.tabControlUse.SelectedIndex;
+            Settings.Default.operationType = this.tabControlUse.SelectedIndex;
         }
 
         /// <summary>
@@ -253,7 +258,7 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnPreproccesingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String pathTemp = ShowFolderBrowserDialogDateLoad();
+            String pathTemp = ShowFolderBrowserDialog();
             if (pathTemp == null)
                 return;
 
@@ -270,14 +275,14 @@ namespace DocClass
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param> 
-        private void OnLoadStateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OnLoadNetworkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String pathTemp = ShowOpenFileDialogDateLoad(filePattern);
-            if (pathTemp == null)
-                return;
-
-            controller.LoadRadialNetwork(pathTemp);
-            MessageBox.Show("Sieæ zosta³a odczytana.");
+            String pathTemp = ShowOpenFileDialog(radialNetworkFilePattern);
+            if (pathTemp != null)
+            {
+                controller.LoadRadialNetwork(pathTemp);
+                MessageBox.Show("Sieæ zosta³a odczytana.");
+            }
         }
 
         /// <summary>
@@ -285,11 +290,14 @@ namespace DocClass
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnSaveStateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OnSaveNetworkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String pathTemp = ShowSaveFileDialog(filePattern);
-            controller.SaveRadialNetwork(pathTemp);
-            MessageBox.Show("Sieæ zosta³a zapisana.");
+            String pathTemp = ShowSaveFileDialog(radialNetworkFilePattern);
+            if (pathTemp != null)
+            {
+                controller.SaveRadialNetwork(pathTemp);
+                MessageBox.Show("Sieæ zosta³a zapisana.");
+            }
         }
 
         /// <summary>
@@ -299,9 +307,12 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnSaveBayesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String pathTemp = ShowSaveFileDialog(filePattern);
-            controller.SaveBayes(pathTemp);
-            MessageBox.Show("Klasyfikator Bayes'a zosta³ zapisany.");
+            String pathTemp = ShowSaveFileDialog(bayesFilePattern);
+            if (pathTemp != null)
+            {
+                controller.SaveBayes(pathTemp);
+                MessageBox.Show("Klasyfikator Bayes'a zosta³ zapisany.");
+            }
         }
 
         /// <summary>
@@ -311,93 +322,24 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnLoadBayesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String pathTemp = ShowOpenFileDialogDateLoad(filePattern);
-            if (pathTemp == null)
-                return;
-
-            controller.LoadBayes(pathTemp);
-            MessageBox.Show("Klasyfikator Bayes'a zosta³ odczytany.");
+            String pathTemp = ShowOpenFileDialog(bayesFilePattern);
+            if (pathTemp != null)
+            {
+                controller.LoadBayes(pathTemp);
+                MessageBox.Show("Klasyfikator Bayes'a zosta³ odczytany.");
+            }
         }
         #endregion
 
         #region METHODES
 
-        /// <summary>
-        /// Dodaje elementy do tabelki z wynikami klasyfikacji.
-        /// </summary>
-        /// <param name="tab"></param>
-        private void AddItemsToClassificationResults(String[] tab,String path)
-        {
-            DataGridViewRow dgv = new DataGridViewRow();
-            dgv.CreateCells(dataGridViewClassificationResults, tab);
-            dgv.Tag = path;
-            controller.AddFileToClassification(path);
-            dataGridViewClassificationResults.Rows.Add(dgv);
-        }
-
-        /// <summary>
-        /// Dodaje do tabelki z plikami do klasyfikacji z ca³ego folderu.
-        /// Czyci stare.
-        /// </summary>
-        /// <param name="pathDir">Scie¿ka do folderu</param>
-        private void AddItemsToClassificationResultFtomDir(String pathDir)
-        {
-            dataGridViewClassificationResults.Rows.Clear();
-            controller.ClearFileToClassification();
-            DirectoryInfo sourceDirInfo = new DirectoryInfo(pathDir);
-            foreach (FileInfo sourceFile in sourceDirInfo.GetFiles())
-            {
-                AddItemsToClassificationResults(new string[] { sourceFile.Name, "", "Podglad"},sourceFile.FullName);
-            }
-        }
-
-        /// <summary>
-        /// Dodaje do tabelki z plikami do klasyfikacji z jednego pliku.
-        /// Czyci stare.
-        /// </summary>
-        /// <param name="path">Scie¿ka do pliku.</param>
-        private void AddItemsToClassificationResultFromFile(String path)
-        {
-            dataGridViewClassificationResults.Rows.Clear();
-            controller.ClearFileToClassification();
-            FileInfo f = new FileInfo(path);
-            AddItemsToClassificationResults(new string[] { f.Name, "", "Podglad" }, f.FullName);
-        }
-
-        /// <summary>
-        /// Wyœwetla zawartoœæ dokumentu a podanej scie¿ce.
-        /// </summary>
-        /// <param name="path"></param>
-        public void ShowFile(String path)
-        {
-            Process process = new Process();
-            process.EnableRaisingEvents = false;
-            process.StartInfo.FileName = "notepad";
-            process.StartInfo.Arguments = path;
-            process.Start();
-            process.WaitForExit();
-        }
-
-        /// <summary>
-        /// Ustawia parametru nauki programu w g³ównym oknie aplikacji.
-        /// </summary>
-        public void SetLearningParameters()
-        {
-            labelLearningValueNumbersCategoriesAll.Text = "3";
-            labelValueAllNumbersParameters.Text = "3";
-
-            labelLearningValueNumbersCategoriesInLearning.Text = "3";
-            labelLearningValueNumbersDocumentsInLearning.Text = "3";
-            
-            labelLearningValueNumbersHiddenNerons.Text = "3";
-            labelLearningValueNumberAllWords.Text = "3";
-        }
+        //SHOW DIALOGS
 
         /// <summary>
         /// Wyœwietla okno dialogowe do przegl¹dania folderów.
         /// </summary>
         /// <returns></returns>
-        public String ShowFolderBrowserDialogDateLoad()
+        public String ShowFolderBrowserDialog()
         {
             if (folderBrowserDialogDateLoad.ShowDialog() == DialogResult.OK)
             {
@@ -414,7 +356,7 @@ namespace DocClass
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public String ShowOpenFileDialogDateLoad(String filter)
+        public String ShowOpenFileDialog(String filter)
         {
             String workDirPath = Directory.GetCurrentDirectory();
             openFileDialogDateLoad.Filter = filter;
@@ -449,23 +391,7 @@ namespace DocClass
             }
         }
 
-        /// <summary>
-        /// Wyœwietla wyniki clasyfikacji.
-        /// </summary>
-        /// <param name="classificationResult"></param>
-        public void ClassificationEnd(List<string> classificationResult)
-        {
-            this.buttonClassificationStop.Visible = false;
-            this.buttonClassificationStart.Visible = true;
-            this.progressBarClassification.Visible = false;
-            
-
-            for (int i = 0; i < classificationResult.Count; i++)
-            {
-                dataGridViewClassificationResults[1, i].Value = classificationResult[i];
-            }
-        }
-
+        //PREPROCESSING
 
         /// <summary>
         /// Metoda sprawdzaj¹ca czy preprocesing by³ wykonany dla tego katalogu.
@@ -478,10 +404,515 @@ namespace DocClass
             return System.IO.File.Exists(path+"\\"+PreprocessingConsts.SummaryFileName);
         }
 
+        //LOAD CLASSIFICATOR
+
+        public void LoadClassificatorEnd(ClasyficatorType classificationType)
+        {
+            this.SetFormStateArferLoadClassificator(classificationType);
+            
+            
+            switch (classificationType)
+            {
+                case ClasyficatorType.Bayes:
+                    MessageBox.Show("Klasyfikator Bayes'a zosta³ odczytany.");
+                    break;
+                case ClasyficatorType.RadialNeural:
+                    MessageBox.Show("Seiæ radialna zost³a odczytana.");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        //LOAD LEARNING DATA
+
+        public void SetLearningInfo()
+        {
+            //iloœæ przekazanych kategorii
+            try
+            {
+                labelLearningValueNumbersCategoriesInLearning.Text = Settings.Default.numberLearningCategories.ToString();
+            }
+            catch (NullReferenceException)
+            {
+                labelLearningValueNumbersCategoriesInLearning.Text = "";
+            }
+            //iloœæ przekazanych dokumentów
+            try
+            {
+                labelLearningValueNumbersDocumentsInLearning.Text = Settings.Default.numberLearningDocuments.ToString();
+            }
+            catch (NullReferenceException)
+            {
+                labelLearningValueNumbersDocumentsInLearning.Text = "";
+            }
+            //folder danych ucz¹cych
+            try
+            {
+                labelLearningValuePathDir.Text = Settings.Default.pathLearningDir;
+            }
+            catch (NullReferenceException)
+            {
+                labelLearningValuePathDir.Text = "";
+            }
+            //ilosæ wszystkich s³ów
+            try
+            {
+                labelLearningValueNumberAllWords.Text = Settings.Default.numberAllWordsInDictionary.ToString();
+            }
+            catch (NullReferenceException)
+            {
+                labelLearningValueNumberAllWords.Text = "";
+            }
+            //ilosæ neuronów warstwy ukrytej
+            try
+            {
+                labelLearningValueNumbersHiddenNerons.Text = Settings.Default.numberNeuronsHidden.ToString();
+            }
+            catch (NullReferenceException)
+            {
+                labelLearningValueNumbersHiddenNerons.Text = "";
+            }
+            //iloœc neuronów wyjœciowych
+            try
+            {
+                labelLearningValueNumberOutNerons.Text = Settings.Default.numberNeuronsOut.ToString();
+            }
+            catch (NullReferenceException)
+            {
+                labelLearningValueNumberOutNerons.Text = "";
+            }
+            //iloœæ wszystkich kategorii
+            try
+            {
+                labelLearningValueNumbersCategoriesAll.Text = Settings.Default.numberAllCategories.ToString();
+            }
+            catch (NullReferenceException)
+            {
+                labelLearningValueNumbersCategoriesAll.Text = "";
+            }
+            SetRadioButtonsDictionary();
+            SetRadioButtonsDocumentRepresentation();
+        }
+
+        private void SetRadioButtonsDictionary()
+        {
+            this.radioButtonDictionaryCtfIdf.BindWithSettings();
+            this.radioButtonDictionaryFixed.BindWithSettings();
+            this.radioButtonDictionaryFrequance.BindWithSettings();
+        }
+
+        private void SetRadioButtonsDocumentRepresentation()
+        {
+            this.radioButtonDocumentRepresentationBinary.BindWithSettings();
+            this.radioButtonDocumentRepresentationOwn.BindWithSettings();
+            this.radioButtonDocumentRepresentationTfIdf.BindWithSettings();
+        }
+
+        //LOAD CLASSIFICATION DATA
+
+        private void SetMenuSaveClassificatorState()
+        {
+            if (controller.IsAfterLearn(ClasyficatorType.RadialNeural))
+            {
+                saveNetworkToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                saveNetworkToolStripMenuItem.Enabled = false;
+            }
+            if (controller.IsAfterLearn(ClasyficatorType.Bayes))
+            {
+                saveBayesToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                saveBayesToolStripMenuItem.Enabled = false;
+            }
+        }
+
+        //LEARNING
+
+        public void LearnEnd()
+        {
+            SetFormStateAfterLearn((ClasyficatorType)Settings.Default.clasificatorType);
+            
+        }
+
+        private void SetEnableRadioButtonRepresentation(bool flag)
+        {
+            //wybór reprzezntacji
+            this.radioButtonDictionaryCtfIdf.Enabled = flag;
+            this.radioButtonDictionaryFixed.Enabled = flag;
+            this.radioButtonDictionaryFrequance.Enabled = flag;
+            this.radioButtonDocumentRepresentationBinary.Enabled = flag;
+            this.radioButtonDocumentRepresentationOwn.Enabled = flag;
+            this.radioButtonDocumentRepresentationTfIdf.Enabled = flag;
+        }
+
+        //CLASSIFICATION
+
+        /// <summary>
+        /// Wyœwietla wyniki clasyfikacji.
+        /// </summary>
+        /// <param name="classificationResult"></param>
+        public void ClassificationEnd(List<string> classificationResult)
+        {
+            SetClassificationResult(classificationResult);
+            SetClassificationInfoAfterClassification();
+            SetFormStateAfterClassification();
+        }
+
+        public int GetGoodRecognizeNumberDocuments()
+        {
+            int count = 0;
+            for (int i=0;i<dataGridViewClassificationResults.Rows.Count;i++)
+            {
+                if (i != dataGridViewClassificationResults.Rows.Count - 1)
+                {
+                    DataGridViewRow row = dataGridViewClassificationResults.Rows[i];
+                    String realCategory = (String)row.Cells["ColumnCategory"].Value;
+                    String recognizeCategory = (String)row.Cells["ColumnCategoryFind"].Value;
+                    if (realCategory.Equals(recognizeCategory))
+                    {
+                        count++;
+                    }
+                }
+            }
+            return count;
+
+            
+        }
+
+        private void SetClassificationInfoAfterClassification()
+        {
+            int numberGood = GetGoodRecognizeNumberDocuments();
+            int numberAll = dataGridViewClassificationResults.Rows.Count-1;
+
+            labelClassificationValueNumberAllDocuments.Text = numberAll.ToString();
+            labelClassificationValueNumberGoodDocuments.Text = numberGood.ToString();
+            labelClassificationValueEfficiency.Text = ((int)(((double)numberGood) / ((double)numberAll) * 100.0)).ToString() + "%";
+        }
+
+        private void SetClassificationInfoAfterLearn(ClasyficatorType classificationType)
+        {
+            if (classificationType == ClasyficatorType.RadialNeural)
+            {
+                labelClassificationValueDirectory.Text = ((DictionaryType)Settings.Default.dictionaryType).ToString();
+                labelClassificationValueDocument.Text = ((DocumentRepresentationType)Settings.Default.documentRepresentationType).ToString();
+            }
+        }
+
+        private void SetClassificationResult(List<string> classificationResult)
+        {
+            for (int i = 0; i < classificationResult.Count; i++)
+            {
+                dataGridViewClassificationResults.Rows[i].Cells["ColumnCategoryFind"].Value = classificationResult[i];
+            }
+        }
+
+        /// <summary>
+        /// Dodaje elementy do tabelki z wynikami klasyfikacji.
+        /// </summary>
+        /// <param name="tab"></param>
+        private void AddItemsToClassificationResults(String[] tab, String path)
+        {
+            DataGridViewRow dgv = new DataGridViewRow();
+            dgv.CreateCells(dataGridViewClassificationResults, tab);
+            dgv.Tag = path;
+            controller.AddFileToClassification(path);
+            dataGridViewClassificationResults.Rows.Add(dgv);
+        }
+
+        /// <summary>
+        /// Dodaje do tabelki z plikami do klasyfikacji z ca³ego folderu.
+        /// Czyci stare.
+        /// </summary>
+        /// <param name="pathDir">Scie¿ka do folderu</param>
+        private void AddItemsToClassificationResultFtomDir(String pathDir)
+        {
+            dataGridViewClassificationResults.Rows.Clear();
+            controller.ClearFileToClassification();
+            DirectoryInfo sourceDirInfo = new DirectoryInfo(pathDir);
+            foreach (DirectoryInfo categoryDirInfo in sourceDirInfo.GetDirectories())
+            {
+                foreach (FileInfo sourceFile in categoryDirInfo.GetFiles())
+                {
+                    AddItemsToClassificationResults(new string[] { sourceFile.Name, categoryDirInfo.Name, "", "Podglad" }, sourceFile.FullName);
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Dodaje do tabelki z plikami do klasyfikacji z jednego pliku.
+        /// Czyci stare.
+        /// </summary>
+        /// <param name="path">Scie¿ka do pliku.</param>
+        private void AddItemsToClassificationResultFromFile(String path)
+        {
+            dataGridViewClassificationResults.Rows.Clear();
+            controller.ClearFileToClassification();
+            FileInfo f = new FileInfo(path);
+            AddItemsToClassificationResults(new string[] { f.Name, "", "Podglad" }, f.FullName);
+        }
+
+        /// <summary>
+        /// Czyœci kolumne ze znalezion¹ kategori¹
+        /// </summary>
+        private void ClearCategoryFindColumn()
+        {
+            foreach (DataGridViewRow row in this.dataGridViewClassificationResults.Rows)
+            {
+                row.Cells["ColumnCategoryFind"].Value = String.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Wyœwetla zawartoœæ dokumentu a podanej scie¿ce.
+        /// </summary>
+        /// <param name="path"></param>
+        public void ShowFile(String path)
+        {
+            try
+            {
+                Process p = new Process();
+                p.EnableRaisingEvents = false;
+                p.StartInfo.FileName = "wordpad.exe";
+                p.StartInfo.Arguments = "\"" + path + "\"";
+                p.Start();
+                p.WaitForExit();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Nie mo¿na otworzyæ dokumentu.");
+            }
+        }
+
+        private void SetClassificatorState()
+        {
+            ClasyficatorType classificationType = (ClasyficatorType)Settings.Default.clasificatorType;
+            switch (classificationType)
+            {
+                case ClasyficatorType.Bayes:
+                    labelClassificationNameClassificatorState.Text = "Stan klasyfikatora Bayes'a:";
+                    if (controller.IsAfterLearn())
+                    {
+                        labelClassificationValueClassificatorState.Text = "Nauczony";
+                    }
+                    else
+                    {
+                        labelClassificationValueClassificatorState.Text = "Nie nauczony";
+                    }
+                    break;
+                case ClasyficatorType.RadialNeural:
+                    labelClassificationNameClassificatorState.Text = "Stan sieci:";
+                    if (controller.IsAfterLearn())
+                    {
+                        labelClassificationValueClassificatorState.Text = "Nauczona";
+                    }
+                    else
+                    {
+                        labelClassificationValueClassificatorState.Text = "Nie nauczona";
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
         #endregion
 
+        public void  SetFormStateArferLoadClassificator(ClasyficatorType classificateType)
+        {
+            //labele nauki
+            this.SetLearningInfo();   
+            
+            //label mówi¹cy o stanie klasyfikatora
+            SetClassificatorState();
+            SetClassificationInfoAfterLearn(classificateType);
+
+            //stan menu zapisu klasyfikatorów
+            SetMenuSaveClassificatorState();
+        }
+
+        private void SetFormStateAfterLoadLearningData()
+        {
+            //labele nauki
+            SetLearningInfo();
+        }
+
+        private void SetFormStateAfterLoadClassificateData()
+        {
+            this.SetClassificationInfoAfterClassification();
+
+        }
+
+        private void SetFormStateBeforeLearn()
+        {
+            this.buttonLearningStop1.Visible = true;
+            this.buttonLearningStart1.Visible = false;
+            this.progressBarLearn.Visible = true;
+            this.progressBarLearn.Value = ProgressBarClassification.Minimum;
+
+            //wybór reprzentacji s³owników i dokumentów
+            SetEnableRadioButtonRepresentation(false);
+
+            //zmiana operacji (nauka/klasyfikacjia)
+            this.RadialNetworkToolStripMenuItem.Enabled = false;
+            this.BayesToolStripMenuItem.Enabled = false;
+
+            //menu
+            this.preproccesingToolStripMenuItem.Enabled = false;
+            this.saveBayesToolStripMenuItem.Enabled = false;
+            this.saveNetworkToolStripMenuItem.Enabled = false;
+            this.loadBayesToolStripMenuItem.Enabled = false;
+            this.loadNetworkToolStripMenuItem.Enabled = false;
+            this.loadToolStripMenuItem.Enabled = false;
+
+            //this.tableLayoutPanel4.ColumnStyles[0].SizeType = SizeType.Percent;
+            //this.tableLayoutPanel4.ColumnStyles[0].Width = 100;
+            //this.tableLayoutPanel4.ColumnStyles[1].SizeType = SizeType.Percent;
+            //this.tableLayoutPanel4.ColumnStyles[1].Width = 0;
+        }
+
+        private void SetFormStateBeforeClassification()
+        {
+            this.buttonClassificationStop.Visible = true;
+            this.buttonClassificationStart.Visible = false;
+            progressBarClassification.Visible = true;
+            ProgressBarClassification.Value = ProgressBarClassification.Minimum;
+            this.ClearCategoryFindColumn();
+            
+
+            //wybór reprzentacji s³owników i dokumentów
+            SetEnableRadioButtonRepresentation(false);
+
+            //zmiana operacji (nauka/klasyfikacjia)
+            this.RadialNetworkToolStripMenuItem.Enabled = false;
+            this.BayesToolStripMenuItem.Enabled = false;
+
+            //menu
+            this.preproccesingToolStripMenuItem.Enabled = false;
+            this.saveBayesToolStripMenuItem.Enabled = false;
+            this.saveNetworkToolStripMenuItem.Enabled = false;
+            this.loadBayesToolStripMenuItem.Enabled = false;
+            this.loadNetworkToolStripMenuItem.Enabled = false;
+            this.loadToolStripMenuItem.Enabled = false;
+
+            //this.tableLayoutPanel3.ColumnStyles[0].SizeType = SizeType.Percent;
+            //this.tableLayoutPanel3.ColumnStyles[0].Width = 100;
+            //this.tableLayoutPanel3.ColumnStyles[1].SizeType = SizeType.Percent;
+            //this.tableLayoutPanel3.ColumnStyles[1].Width = 0;
+
+        }
+
+        private void SetFormStateAfterLearn(ClasyficatorType classificationType)
+        {
+            //buttons and progress bar
+            this.buttonLearningStop1.Visible = false;
+            this.buttonLearningStart1.Visible = true;
+            this.progressBarLearn.Visible = false;
+            this.progressBarLearn.Value = ProgressBarClassification.Minimum;
+
+            //label stanu klasyfikacji
+            SetClassificatorState();
+            SetClassificationInfoAfterLearn(classificationType);
+
+            //wybór reprzentacji s³owników i dokumentów
+            SetEnableRadioButtonRepresentation(true);
+
+            //zmiana operacji (nauka/klasyfikacjia)
+            this.RadialNetworkToolStripMenuItem.Enabled = true;
+            this.BayesToolStripMenuItem.Enabled = true;
+
+            //menu
+            this.preproccesingToolStripMenuItem.Enabled = true;
+            this.saveBayesToolStripMenuItem.Enabled = true;
+            this.saveNetworkToolStripMenuItem.Enabled = true;
+            this.loadBayesToolStripMenuItem.Enabled = true;
+            this.loadNetworkToolStripMenuItem.Enabled = true;
+            this.loadToolStripMenuItem.Enabled = true;
+
+            //menu (NA KONCU)
+            SetMenuSaveClassificatorState();
+        }
+
+        private void SetFormStateAfterClassification()
+        {
+            this.buttonClassificationStop.Visible = false;
+            this.buttonClassificationStart.Visible = true;
+            this.progressBarClassification.Visible = false;
 
 
+            //wybór reprzentacji s³owników i dokumentów
+            SetEnableRadioButtonRepresentation(true);
+
+            //zmiana operacji (nauka/klasyfikacjia)
+            this.RadialNetworkToolStripMenuItem.Enabled = true;
+            this.BayesToolStripMenuItem.Enabled = true;
+
+            //menu
+            this.preproccesingToolStripMenuItem.Enabled = true;
+            this.saveBayesToolStripMenuItem.Enabled = true;
+            this.saveNetworkToolStripMenuItem.Enabled = true;
+            this.loadBayesToolStripMenuItem.Enabled = true;
+            this.loadNetworkToolStripMenuItem.Enabled = true;
+            this.loadToolStripMenuItem.Enabled = true;
+            this.SetMenuSaveClassificatorState();
+        }
+
+        private void SetFormStateAfterChangeClassificationType()
+        {            
+            //stan klasyfikatorów
+            SetClassificatorState();
+
+            switch ((ClasyficatorType)Settings.Default.clasificatorType)
+            {
+                case ClasyficatorType.Bayes:
+                    this.RadialNetworkToolStripMenuItem.Checked = false;
+                    this.BayesToolStripMenuItem.Checked = true;
+                    //this.splitContainerMain.Panel1Collapsed = true;
+
+                    this.labelLearningValueNumbersHiddenNerons.Visible = false;
+                    this.labelLearningValueNumberOutNerons.Visible = false;
+                    this.labelLearningNameNumbersHiddenNerons.Visible = false;
+                    this.labelLearningNameNumberOutNerons.Visible = false;
+
+                    //reprzenetacja dokumentów i s³owników
+                    this.labelClassificationNameDocument.Visible = false;
+                    this.labelClassificationValueDocument.Visible = false;
+                    this.labelClassificationNameDirectory.Visible = false;
+                    this.labelClassificationValueDirectory.Visible = false;
+
+                    //wybór s³ownika i dokumentów
+                    this.groupBoxDictionary.Visible = false;
+                    this.groupBoxDocumentRepresentation.Visible = false;
+                    break;
+                case ClasyficatorType.RadialNeural:
+                    this.BayesToolStripMenuItem.Checked = false;
+                    this.RadialNetworkToolStripMenuItem.Checked = true;
+                    //this.splitContainerMain.Panel1Collapsed = false;
+
+                    this.labelLearningValueNumbersHiddenNerons.Visible = true;
+                    this.labelLearningValueNumberOutNerons.Visible = true;
+                    this.labelLearningNameNumbersHiddenNerons.Visible = true;
+                    this.labelLearningNameNumberOutNerons.Visible = true;
+
+                    //reprzenetacja dokumentów i s³owników
+                    this.labelClassificationNameDocument.Visible = true;
+                    this.labelClassificationValueDocument.Visible = true;
+                    this.labelClassificationNameDirectory.Visible = true;
+                    this.labelClassificationValueDirectory.Visible = true;
+
+                    //wybór s³ownika i dokumentów
+                    this.groupBoxDictionary.Visible = true;
+                    this.groupBoxDocumentRepresentation.Visible = true;
+                    break;
+                default:
+                    break;
+            }
+        }
 
     }
 }

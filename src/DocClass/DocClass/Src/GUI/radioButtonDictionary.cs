@@ -42,6 +42,11 @@ namespace DocClass
             Checked = (Properties.Settings.Default.dictionaryType == (int)dictionaryType);
         }
 
+        public void BindWithSettings()
+        {
+            this.Checked = (Properties.Settings.Default.dictionaryType == (int)this.dictionaryType);
+        }
+
 
 
         

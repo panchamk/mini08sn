@@ -6,6 +6,7 @@ using DocClass.Src.Preprocessing;
 
 namespace DocClass.Src.Dictionaries
 {
+    [Serializable]
     class FrequentDictionary : Dictionary
     {
         public override bool Init(ICollection<DocClass.Src.DocumentRepresentation.Document> docs)

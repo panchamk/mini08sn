@@ -9,6 +9,7 @@ using DocClass.Src.Classification;
 
 namespace DocClass.Src.DocumentRepresentation
 {
+    [Serializable]
     class TfIdfDocument : Document
     {
         

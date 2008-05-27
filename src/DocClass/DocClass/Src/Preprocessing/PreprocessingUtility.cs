@@ -174,5 +174,32 @@ namespace DocClass.Src.Preprocessing
                 result.AddDocumentsFromDir(dirInfo.FullName + "\\" + PreprocessingConsts.StemmedFolder,dictionary,drt,dirInfo.Name,learningDocInfo);
             return result;
         }
+
+        /// <summary>
+        /// Zwraca iloœc wszystkich artyku³ów w katalogu z kategoriami.
+        /// </summary>
+        /// <param name="sourceDir"></param>
+        /// <returns></returns>
+        public static int GetDocumentsNumber(String sourceDir)
+        {
+            int counter = 0;
+            DirectoryInfo sourceDirInfo = new DirectoryInfo(sourceDir);
+            foreach (DirectoryInfo categoryDirInfo in sourceDirInfo.GetDirectories())
+            {
+                counter += categoryDirInfo.GetFiles().Length;
+            }
+            return counter;
+        }
+
+        /// <summary>
+        /// Zwraca iloœc kategori w danym katalogu.
+        /// </summary>
+        /// <param name="sourceDir"></param>
+        /// <returns></returns>
+        public static int GetCategoryNumber(String sourceDir)
+        {
+            DirectoryInfo sourceDirInfo = new DirectoryInfo(sourceDir);
+            return sourceDirInfo.GetDirectories().Length;
+        }
     }
 }

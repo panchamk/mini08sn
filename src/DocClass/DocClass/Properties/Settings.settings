@@ -11,7 +11,7 @@
     <Setting Name="dictionaryType" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="hiddenLayerInitNeuronCount" Type="System.Int32" Scope="User">
+    <Setting Name="numberNeuronsHidden" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">20</Value>
     </Setting>
     <Setting Name="pathStopWords" Type="System.String" Scope="User">
@@ -37,6 +37,12 @@
     </Setting>
     <Setting Name="numberLearningCategories" Type="System.Int32" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="numberLearningDocuments" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="numberNeuronsOut" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>
 </SettingsFile>

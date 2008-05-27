@@ -61,25 +61,13 @@ namespace DocClass.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int hiddenLayerInitNeuronCount {
-            get {
-                return ((int)(this["hiddenLayerInitNeuronCount"]));
-            }
-            set {
-                this["hiddenLayerInitNeuronCount"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("20")]
-        public int outputLayerNeuronCount {
+        public int numberNeuronsHidden {
             get {
-                return ((int)(this["outputLayerNeuronCount"]));
+                return ((int)(this["numberNeuronsHidden"]));
             }
             set {
-                this["outputLayerNeuronCount"] = value;
+                this["numberNeuronsHidden"] = value;
             }
         }
         
@@ -174,6 +162,29 @@ namespace DocClass.Properties {
             }
             set {
                 this["numberLearningCategories"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public int numberLearningDocuments {
+            get {
+                return ((int)(this["numberLearningDocuments"]));
+            }
+            set {
+                this["numberLearningDocuments"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int numberNeuronsOut {
+            get {
+                return ((int)(this["numberNeuronsOut"]));
+            }
+            set {
+                this["numberNeuronsOut"] = value;
             }
         }
     }

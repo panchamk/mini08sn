@@ -37,5 +37,10 @@ namespace DocClass
             Text = DocumentRepresentationTypeUtil.ToString(documentRepresentationType);
             Checked = (Properties.Settings.Default.documentRepresentationType == (int)documentRepresentationType);
         }
+
+        public void BindWithSettings()
+        {
+            this.Checked = (Properties.Settings.Default.documentRepresentationType == (int)this.documentRepresentationType);
+        }
     }
 }

@@ -295,7 +295,7 @@ namespace DocClass
             String pathTemp = ShowSaveFileDialog(radialNetworkFilePattern);
             if (pathTemp != null)
             {
-                controller.SaveRadialNetwork(pathTemp);
+                controller.SaveRadialNetwork(radialNetworkFilePattern);
                 MessageBox.Show("Sieæ zosta³a zapisana.");
             }
         }

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 namespace DocClass.Src.Classification.BayesClassificator
 {
+    public delegate void ProgressChangedCategoryHandler();
+
     /// <summary>
     /// Klasa implementuje kategorie pliku,
     /// </summary>
@@ -31,6 +33,12 @@ namespace DocClass.Src.Classification.BayesClassificator
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string mName;
+
+        #endregion
+
+        #region Events
+
+        public event ProgressChangedCategoryHandler ProgressCategoryChange;
 
         #endregion
 
@@ -123,6 +131,9 @@ namespace DocClass.Src.Classification.BayesClassificator
                 else
                     node.Count++;
                 this.mTotalWords++;
+
+                if (this.ProgressCategoryChange != null)
+                    ProgressCategoryChange();
             }
         }
 

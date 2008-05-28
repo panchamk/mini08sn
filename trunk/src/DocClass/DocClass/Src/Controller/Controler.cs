@@ -412,12 +412,20 @@ namespace DocClass.Src.Controller
 
             //tworze klasyfikator
             bayesClassificator = new BayesClassificator();
+            bayesClassificator.ProgressChange += new ProgressChangedHandler(bayesClassificator_ProgressChange);
 
             //tworze liste kategorii
             CategoryList categoryList = new CategoryList(Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
 
             //nauka
             bayesClassificator.Learn(categoryList);
+        }
+
+        void bayesClassificator_ProgressChange(int progres, int max)
+        {
+            //prog.Value = p..;
+            //prog.max = max
+            Console.Out.WriteLine("dupa");
         }
 
         private void SaveSettings(Stream stream, BinaryFormatter bFormatter)

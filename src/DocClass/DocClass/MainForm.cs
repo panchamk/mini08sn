@@ -37,6 +37,11 @@ namespace DocClass
             get { return progressBarClassification; }
         }
 
+        public ProgressBar ProgressBarLearn
+        {
+            get { return progressBarLearn; }
+        }
+
         #region CONSTRUKTOR
 
         public MainForm()
@@ -295,7 +300,7 @@ namespace DocClass
             String pathTemp = ShowSaveFileDialog(radialNetworkFilePattern);
             if (pathTemp != null)
             {
-                controller.SaveRadialNetwork(radialNetworkFilePattern);
+                controller.SaveRadialNetwork(pathTemp);
                 MessageBox.Show("Sieæ zosta³a zapisana.");
             }
         }

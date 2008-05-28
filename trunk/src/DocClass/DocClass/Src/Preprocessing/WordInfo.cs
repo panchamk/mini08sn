@@ -4,6 +4,7 @@ using System.Text;
 
 namespace DocClass.Src.Preprocessing
 {
+    [Serializable]
     class WordInfo
     {
         String word;

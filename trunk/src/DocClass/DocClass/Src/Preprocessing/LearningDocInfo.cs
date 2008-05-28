@@ -10,6 +10,7 @@ namespace DocClass.Src.Preprocessing
     /// Pozwala uzyskaæ informacje iloœci wszystkich dokumentów ucz¹cych a tak¿e o wszystkich s³owach
     /// we wszystkich dokumentach ucz¹cych. 
     /// </summary>
+    [Serializable]
     class LearningDocInfo
     {
         private Dictionary<String, WordInfo> allWordsInfo;

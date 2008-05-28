@@ -122,7 +122,7 @@ namespace DocClass.Src.Controller
 
         void OnLearningWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            Console.Out.WriteLine("LEARNING CHANGE");
+            form.ProgressBarLearn.Increment(1);
         }
 
         void OnLearningWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -153,6 +153,11 @@ namespace DocClass.Src.Controller
             preprocessingForm.IncreseProgress(1);
         }
 
+        void bayesClassificator_ProgressChange()
+        {
+            this.learningWorker.ReportProgress(1);
+        }
+
         #endregion 
 
         #region PUBLIC METHODS
@@ -180,6 +185,14 @@ namespace DocClass.Src.Controller
         /// </summary>
         public void Learn()
         {
+
+            if (((ClasyficatorType)Settings.Default.clasificatorType)==ClasyficatorType.Bayes){
+                form.ProgressBarClassification.Maximum = fileToClassification.Count;
+                form.ProgressBarClassification.Minimum = 0;
+                //tworze klasyfikator
+                bayesClassificator = new BayesClassificator();
+                bayesClassificator.ProgressChange += new ProgressChangedHandler(bayesClassificator_ProgressChange);
+            }
             learningWorker.RunWorkerAsync();
         }
 
@@ -239,7 +252,8 @@ namespace DocClass.Src.Controller
                         break;
                     case (ClasyficatorType.RadialNeural):
                         int result = RadialNeuralClassificate(path);
-                        categoryName = DocumentClass.GetClassName(result);
+                        categoryName = result.ToString();
+                        //categoryName = DocumentClass.GetClassName(result);
                         break;
                     default:
                         throw new NotImplementedException("Nieznany typ klasyfikacji.");
@@ -310,6 +324,7 @@ namespace DocClass.Src.Controller
             BinaryFormatter bFormatter = new BinaryFormatter();
             bFormatter.Serialize(stream, this.radialNetwork);
             bFormatter.Serialize(stream, this.dictionary);
+            bFormatter.Serialize(stream, this.learningDocInfo);
             SaveSettings(stream, bFormatter);
             stream.Close();
         }
@@ -324,6 +339,7 @@ namespace DocClass.Src.Controller
             BinaryFormatter bFormatter = new BinaryFormatter();
             this.radialNetwork = (RadialNetwork)bFormatter.Deserialize(stream);
             this.dictionary = (Dictionary)bFormatter.Deserialize(stream);
+            this.learningDocInfo = (LearningDocInfo)bFormatter.Deserialize(stream);
             LoadSettings(stream, bFormatter);
             stream.Close();
 
@@ -410,22 +426,11 @@ namespace DocClass.Src.Controller
             //ładuje listę kategorii
             DocumentClass.LoadFromFiles(Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
 
-            //tworze klasyfikator
-            bayesClassificator = new BayesClassificator();
-            bayesClassificator.ProgressChange += new ProgressChangedHandler(bayesClassificator_ProgressChange);
-
             //tworze liste kategorii
             CategoryList categoryList = new CategoryList(Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
 
             //nauka
             bayesClassificator.Learn(categoryList);
-        }
-
-        void bayesClassificator_ProgressChange(int progres, int max)
-        {
-            //prog.Value = p..;
-            //prog.max = max
-            Console.Out.WriteLine("dupa");
         }
 
         private void SaveSettings(Stream stream, BinaryFormatter bFormatter)

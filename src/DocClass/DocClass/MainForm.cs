@@ -30,6 +30,10 @@ namespace DocClass
 
         private static string radialNetworkFilePattern = "Sieæ radialna (*.rnet*)|*.rnet*";
 
+        private static string bayesFileExt = "bay";
+
+        private static string radialNetworkFileExt = "rnet";
+
         private Controller controller;
 
         public ProgressBar ProgressBarClassification
@@ -297,7 +301,7 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnSaveNetworkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String pathTemp = ShowSaveFileDialog(radialNetworkFilePattern);
+            String pathTemp = ShowSaveFileDialog(radialNetworkFilePattern,radialNetworkFileExt);
             if (pathTemp != null)
             {
                 controller.SaveRadialNetwork(pathTemp);
@@ -312,7 +316,7 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnSaveBayesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String pathTemp = ShowSaveFileDialog(bayesFilePattern);
+            String pathTemp = ShowSaveFileDialog(bayesFilePattern,bayesFileExt);
             if (pathTemp != null)
             {
                 controller.SaveBayes(pathTemp);
@@ -381,10 +385,11 @@ namespace DocClass
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public String ShowSaveFileDialog(String filter)
+        public String ShowSaveFileDialog(String filter,String ext)
         {
             String workDirPath = Directory.GetCurrentDirectory();
             saveFileDialog.Filter = filter;
+            saveFileDialog.DefaultExt = ext;
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 Directory.SetCurrentDirectory(workDirPath);
@@ -918,6 +923,7 @@ namespace DocClass
                     break;
             }
         }
+
 
     }
 }

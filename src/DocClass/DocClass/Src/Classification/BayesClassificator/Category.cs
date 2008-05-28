@@ -132,6 +132,7 @@ namespace DocClass.Src.Classification.BayesClassificator
                     node.Count++;
                 this.mTotalWords++;
 
+                
                 if (this.ProgressCategoryChange != null)
                     ProgressCategoryChange();
             }

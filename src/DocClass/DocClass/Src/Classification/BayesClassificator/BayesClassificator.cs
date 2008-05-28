@@ -12,7 +12,7 @@ using DocClass.Src.Preprocessing;
 using BayesCategory = DocClass.Src.Classification.BayesClassificator.Category;
 using System.Collections.Specialized;
 
-public delegate void ProgressChangedHandler(int progres, int max);
+public delegate void ProgressChangedHandler();
 
 namespace DocClass.Src.Classification.BayesClassificator
 {
@@ -109,18 +109,15 @@ namespace DocClass.Src.Classification.BayesClassificator
             if (!(obj is CategoryList))
                 throw new ArgumentException("Argument nie jest typu CategoryList!");
 
-            CategoryList catList = obj as CategoryList;
+            CategoryList catList = obj as CategoryList; 
             int count = catList.CategoryCount, iter = 0;
             for(int i = 0; i < catList.CategoryCount; i++)
             {
                 BayesCategory bayesCategory = new BayesCategory();
+                bayesCategory.ProgressCategoryChange += new ProgressChangedCategoryHandler(category_ProgressCategoryChange);
                 bayesCategory.Name = catList[i].Name;
                 bayesCategory.Learn(catList[i].WordDictionary);
                 this.categories.Add(catList[i].Name.GetHashCode(), bayesCategory);
-
-                iter++;
-                if (this.ProgressChange != null)
-                    ProgressChange(iter, count);
             }
 
             return true;
@@ -195,9 +192,7 @@ namespace DocClass.Src.Classification.BayesClassificator
                 return false;
 
             Category category = new Category();
-            Dictionary<String, int> strDict = new Dictionary<String, int>();
-
-            category.ProgressCategoryChange += new ProgressChangedCategoryHandler(category_ProgressCategoryChange); 
+            Dictionary<String, int> strDict = new Dictionary<String, int>();  
             foreach (String word in dict)
             {
                 strDict.Add(word, 0);
@@ -210,7 +205,8 @@ namespace DocClass.Src.Classification.BayesClassificator
 
         void category_ProgressCategoryChange()
         {
-            Console.Out.WriteLine("DUPA");
+            if (this.ProgressChange != null)
+                ProgressChange();
         }
 
         #endregion

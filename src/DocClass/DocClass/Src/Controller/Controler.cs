@@ -205,6 +205,7 @@ namespace DocClass.Src.Controller
         /// </summary>
         public void Learn()
         {
+            
 
             if (((ClasyficatorType)Settings.Default.clasificatorType)==ClasyficatorType.RadialNeural){
                 form.ProgressBarLearn.Style = ProgressBarStyle.Marquee;
@@ -237,6 +238,11 @@ namespace DocClass.Src.Controller
 
         private void RadialNeuralLearn()
         {
+            if (learningDocInfo != null && learningDocInfo.SourceDir != Settings.Default.pathLearningDir)
+            {
+                learningDocInfo = null;
+            }
+
             //ładuje listę kategorii
             DocumentClass.LoadFromFiles(Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
 

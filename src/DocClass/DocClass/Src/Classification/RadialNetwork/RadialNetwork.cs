@@ -252,8 +252,8 @@ namespace DocClass.Src.Classification.RadialNetwork
                     PrintNeuronsInfo();
                     num4 = num3;
                     num3 = LearnCheck();
-                    if (bWorker != null && bWorker.CancellationPending)
-                        return false;
+                    //if (bWorker != null && bWorker.CancellationPending)dodałem tomek
+                    //    return false;
                 } while (num3 > num4);
                 foreach (RadialNeuron n in neuronHiddenLayer)
                     n.BackToPrevWeights();

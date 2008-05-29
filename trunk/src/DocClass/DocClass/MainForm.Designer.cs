@@ -56,14 +56,8 @@ namespace DocClass
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBoxLearningParameters = new System.Windows.Forms.GroupBox();
             this.groupBoxDictionary = new System.Windows.Forms.GroupBox();
-            this.radioButtonDictionaryFrequance = new DocClass.RadioButtonDictionary();
-            this.radioButtonDictionaryFixed = new DocClass.RadioButtonDictionary();
-            this.radioButtonDictionaryCtfIdf = new DocClass.RadioButtonDictionary();
             this.labelLearningValueNumberOutNerons = new System.Windows.Forms.Label();
             this.groupBoxDocumentRepresentation = new System.Windows.Forms.GroupBox();
-            this.radioButtonDocumentRepresentationBinary = new DocClass.RadioButtonDocumentRepresentation();
-            this.radioButtonDocumentRepresentationOwn = new DocClass.RadioButtonDocumentRepresentation();
-            this.radioButtonDocumentRepresentationTfIdf = new DocClass.RadioButtonDocumentRepresentation();
             this.labelLearningNameNumberOutNerons = new System.Windows.Forms.Label();
             this.labelLearningValuePathDir = new System.Windows.Forms.Label();
             this.labelLearningNamePathDir = new System.Windows.Forms.Label();
@@ -86,10 +80,6 @@ namespace DocClass
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridViewClassificationResults = new System.Windows.Forms.DataGridView();
-            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnCategoryFind = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnShow = new System.Windows.Forms.DataGridViewLinkColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.labelClassificationValueDirectory = new System.Windows.Forms.Label();
             this.labelClassificationNameDirectory = new System.Windows.Forms.Label();
@@ -112,7 +102,17 @@ namespace DocClass
             this.buttonLearningStart = new System.Windows.Forms.Button();
             this.buttonLearningStop = new System.Windows.Forms.Button();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.radioButtonDictionaryFrequance = new DocClass.RadioButtonDictionary();
+            this.radioButtonDictionaryFixed = new DocClass.RadioButtonDictionary();
+            this.radioButtonDictionaryCtfIdf = new DocClass.RadioButtonDictionary();
+            this.radioButtonDocumentRepresentationBinary = new DocClass.RadioButtonDocumentRepresentation();
+            this.radioButtonDocumentRepresentationOwn = new DocClass.RadioButtonDocumentRepresentation();
+            this.radioButtonDocumentRepresentationTfIdf = new DocClass.RadioButtonDocumentRepresentation();
             this.fileInput2 = new DocClass.FileInput();
+            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnCategoryFind = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnShow = new System.Windows.Forms.DataGridViewLinkColumn();
             this.menuStripMain.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
             this.splitContainerMain.SuspendLayout();
@@ -389,41 +389,6 @@ namespace DocClass
             this.groupBoxDictionary.TabStop = false;
             this.groupBoxDictionary.Text = "Dobieranie s³ów do s³ownika";
             // 
-            // radioButtonDictionaryFrequance
-            // 
-            this.radioButtonDictionaryFrequance.AutoSize = true;
-            this.radioButtonDictionaryFrequance.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.Frequent;
-            this.radioButtonDictionaryFrequance.Location = new System.Drawing.Point(25, 67);
-            this.radioButtonDictionaryFrequance.Name = "radioButtonDictionaryFrequance";
-            this.radioButtonDictionaryFrequance.Size = new System.Drawing.Size(67, 17);
-            this.radioButtonDictionaryFrequance.TabIndex = 3;
-            this.radioButtonDictionaryFrequance.Text = "Frequent";
-            this.radioButtonDictionaryFrequance.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonDictionaryFixed
-            // 
-            this.radioButtonDictionaryFixed.AutoSize = true;
-            this.radioButtonDictionaryFixed.Checked = true;
-            this.radioButtonDictionaryFixed.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.CtfIdf;
-            this.radioButtonDictionaryFixed.Location = new System.Drawing.Point(25, 21);
-            this.radioButtonDictionaryFixed.Name = "radioButtonDictionaryFixed";
-            this.radioButtonDictionaryFixed.Size = new System.Drawing.Size(50, 17);
-            this.radioButtonDictionaryFixed.TabIndex = 1;
-            this.radioButtonDictionaryFixed.TabStop = true;
-            this.radioButtonDictionaryFixed.Text = "CtfIdf";
-            this.radioButtonDictionaryFixed.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonDictionaryCtfIdf
-            // 
-            this.radioButtonDictionaryCtfIdf.AutoSize = true;
-            this.radioButtonDictionaryCtfIdf.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.Fixed;
-            this.radioButtonDictionaryCtfIdf.Location = new System.Drawing.Point(25, 44);
-            this.radioButtonDictionaryCtfIdf.Name = "radioButtonDictionaryCtfIdf";
-            this.radioButtonDictionaryCtfIdf.Size = new System.Drawing.Size(50, 17);
-            this.radioButtonDictionaryCtfIdf.TabIndex = 2;
-            this.radioButtonDictionaryCtfIdf.Text = "Fixed";
-            this.radioButtonDictionaryCtfIdf.UseVisualStyleBackColor = true;
-            // 
             // labelLearningValueNumberOutNerons
             // 
             this.labelLearningValueNumberOutNerons.AutoSize = true;
@@ -443,41 +408,6 @@ namespace DocClass
             this.groupBoxDocumentRepresentation.TabIndex = 0;
             this.groupBoxDocumentRepresentation.TabStop = false;
             this.groupBoxDocumentRepresentation.Text = "Reprezentacja dokumentu";
-            // 
-            // radioButtonDocumentRepresentationBinary
-            // 
-            this.radioButtonDocumentRepresentationBinary.AutoSize = true;
-            this.radioButtonDocumentRepresentationBinary.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.Binary;
-            this.radioButtonDocumentRepresentationBinary.Location = new System.Drawing.Point(31, 44);
-            this.radioButtonDocumentRepresentationBinary.Name = "radioButtonDocumentRepresentationBinary";
-            this.radioButtonDocumentRepresentationBinary.Size = new System.Drawing.Size(54, 17);
-            this.radioButtonDocumentRepresentationBinary.TabIndex = 2;
-            this.radioButtonDocumentRepresentationBinary.Text = "Binary";
-            this.radioButtonDocumentRepresentationBinary.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonDocumentRepresentationOwn
-            // 
-            this.radioButtonDocumentRepresentationOwn.AutoSize = true;
-            this.radioButtonDocumentRepresentationOwn.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.Own;
-            this.radioButtonDocumentRepresentationOwn.Location = new System.Drawing.Point(33, 67);
-            this.radioButtonDocumentRepresentationOwn.Name = "radioButtonDocumentRepresentationOwn";
-            this.radioButtonDocumentRepresentationOwn.Size = new System.Drawing.Size(47, 17);
-            this.radioButtonDocumentRepresentationOwn.TabIndex = 1;
-            this.radioButtonDocumentRepresentationOwn.Text = "Own";
-            this.radioButtonDocumentRepresentationOwn.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonDocumentRepresentationTfIdf
-            // 
-            this.radioButtonDocumentRepresentationTfIdf.AutoSize = true;
-            this.radioButtonDocumentRepresentationTfIdf.Checked = true;
-            this.radioButtonDocumentRepresentationTfIdf.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.TfIdf;
-            this.radioButtonDocumentRepresentationTfIdf.Location = new System.Drawing.Point(33, 21);
-            this.radioButtonDocumentRepresentationTfIdf.Name = "radioButtonDocumentRepresentationTfIdf";
-            this.radioButtonDocumentRepresentationTfIdf.Size = new System.Drawing.Size(47, 17);
-            this.radioButtonDocumentRepresentationTfIdf.TabIndex = 0;
-            this.radioButtonDocumentRepresentationTfIdf.TabStop = true;
-            this.radioButtonDocumentRepresentationTfIdf.Text = "TfIdf";
-            this.radioButtonDocumentRepresentationTfIdf.UseVisualStyleBackColor = true;
             // 
             // labelLearningNameNumberOutNerons
             // 
@@ -697,35 +627,6 @@ namespace DocClass
             this.dataGridViewClassificationResults.TabIndex = 5;
             this.dataGridViewClassificationResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnDataGridViewClassificationResults_CellClick);
             // 
-            // ColumnName
-            // 
-            this.ColumnName.HeaderText = "Nazwa";
-            this.ColumnName.Name = "ColumnName";
-            this.ColumnName.ReadOnly = true;
-            this.ColumnName.Width = 182;
-            // 
-            // ColumnCategory
-            // 
-            this.ColumnCategory.HeaderText = "Kategoria";
-            this.ColumnCategory.Name = "ColumnCategory";
-            this.ColumnCategory.Width = 182;
-            // 
-            // ColumnCategoryFind
-            // 
-            this.ColumnCategoryFind.HeaderText = "Kategoria znaleziona";
-            this.ColumnCategoryFind.Name = "ColumnCategoryFind";
-            this.ColumnCategoryFind.ReadOnly = true;
-            this.ColumnCategoryFind.Width = 182;
-            // 
-            // ColumnShow
-            // 
-            this.ColumnShow.HeaderText = "Podgl¹d";
-            this.ColumnShow.Name = "ColumnShow";
-            this.ColumnShow.ReadOnly = true;
-            this.ColumnShow.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColumnShow.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.ColumnShow.Width = 182;
-            // 
             // panel3
             // 
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -944,12 +845,111 @@ namespace DocClass
             this.buttonLearningStop.Text = "Stop";
             this.buttonLearningStop.UseVisualStyleBackColor = true;
             // 
+            // radioButtonDictionaryFrequance
+            // 
+            this.radioButtonDictionaryFrequance.AutoSize = true;
+            this.radioButtonDictionaryFrequance.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.Frequent;
+            this.radioButtonDictionaryFrequance.Location = new System.Drawing.Point(25, 67);
+            this.radioButtonDictionaryFrequance.Name = "radioButtonDictionaryFrequance";
+            this.radioButtonDictionaryFrequance.Size = new System.Drawing.Size(67, 17);
+            this.radioButtonDictionaryFrequance.TabIndex = 3;
+            this.radioButtonDictionaryFrequance.Text = "Frequent";
+            this.radioButtonDictionaryFrequance.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDictionaryFixed
+            // 
+            this.radioButtonDictionaryFixed.AutoSize = true;
+            this.radioButtonDictionaryFixed.Checked = true;
+            this.radioButtonDictionaryFixed.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.CtfIdf;
+            this.radioButtonDictionaryFixed.Location = new System.Drawing.Point(25, 21);
+            this.radioButtonDictionaryFixed.Name = "radioButtonDictionaryFixed";
+            this.radioButtonDictionaryFixed.Size = new System.Drawing.Size(50, 17);
+            this.radioButtonDictionaryFixed.TabIndex = 1;
+            this.radioButtonDictionaryFixed.TabStop = true;
+            this.radioButtonDictionaryFixed.Text = "CtfIdf";
+            this.radioButtonDictionaryFixed.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDictionaryCtfIdf
+            // 
+            this.radioButtonDictionaryCtfIdf.AutoSize = true;
+            this.radioButtonDictionaryCtfIdf.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.Fixed;
+            this.radioButtonDictionaryCtfIdf.Location = new System.Drawing.Point(25, 44);
+            this.radioButtonDictionaryCtfIdf.Name = "radioButtonDictionaryCtfIdf";
+            this.radioButtonDictionaryCtfIdf.Size = new System.Drawing.Size(50, 17);
+            this.radioButtonDictionaryCtfIdf.TabIndex = 2;
+            this.radioButtonDictionaryCtfIdf.Text = "Fixed";
+            this.radioButtonDictionaryCtfIdf.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDocumentRepresentationBinary
+            // 
+            this.radioButtonDocumentRepresentationBinary.AutoSize = true;
+            this.radioButtonDocumentRepresentationBinary.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.Binary;
+            this.radioButtonDocumentRepresentationBinary.Location = new System.Drawing.Point(31, 44);
+            this.radioButtonDocumentRepresentationBinary.Name = "radioButtonDocumentRepresentationBinary";
+            this.radioButtonDocumentRepresentationBinary.Size = new System.Drawing.Size(54, 17);
+            this.radioButtonDocumentRepresentationBinary.TabIndex = 2;
+            this.radioButtonDocumentRepresentationBinary.Text = "Binary";
+            this.radioButtonDocumentRepresentationBinary.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDocumentRepresentationOwn
+            // 
+            this.radioButtonDocumentRepresentationOwn.AutoSize = true;
+            this.radioButtonDocumentRepresentationOwn.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.Own;
+            this.radioButtonDocumentRepresentationOwn.Location = new System.Drawing.Point(33, 67);
+            this.radioButtonDocumentRepresentationOwn.Name = "radioButtonDocumentRepresentationOwn";
+            this.radioButtonDocumentRepresentationOwn.Size = new System.Drawing.Size(47, 17);
+            this.radioButtonDocumentRepresentationOwn.TabIndex = 1;
+            this.radioButtonDocumentRepresentationOwn.Text = "Own";
+            this.radioButtonDocumentRepresentationOwn.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDocumentRepresentationTfIdf
+            // 
+            this.radioButtonDocumentRepresentationTfIdf.AutoSize = true;
+            this.radioButtonDocumentRepresentationTfIdf.Checked = true;
+            this.radioButtonDocumentRepresentationTfIdf.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.TfIdf;
+            this.radioButtonDocumentRepresentationTfIdf.Location = new System.Drawing.Point(33, 21);
+            this.radioButtonDocumentRepresentationTfIdf.Name = "radioButtonDocumentRepresentationTfIdf";
+            this.radioButtonDocumentRepresentationTfIdf.Size = new System.Drawing.Size(47, 17);
+            this.radioButtonDocumentRepresentationTfIdf.TabIndex = 0;
+            this.radioButtonDocumentRepresentationTfIdf.TabStop = true;
+            this.radioButtonDocumentRepresentationTfIdf.Text = "TfIdf";
+            this.radioButtonDocumentRepresentationTfIdf.UseVisualStyleBackColor = true;
+            // 
             // fileInput2
             // 
             this.fileInput2.Location = new System.Drawing.Point(-16, 19);
             this.fileInput2.Name = "fileInput2";
             this.fileInput2.Size = new System.Drawing.Size(357, 27);
             this.fileInput2.TabIndex = 0;
+            // 
+            // ColumnName
+            // 
+            this.ColumnName.HeaderText = "Nazwa";
+            this.ColumnName.Name = "ColumnName";
+            this.ColumnName.ReadOnly = true;
+            this.ColumnName.Width = 175;
+            // 
+            // ColumnCategory
+            // 
+            this.ColumnCategory.HeaderText = "Kategoria";
+            this.ColumnCategory.Name = "ColumnCategory";
+            this.ColumnCategory.Width = 175;
+            // 
+            // ColumnCategoryFind
+            // 
+            this.ColumnCategoryFind.HeaderText = "Kategoria znaleziona";
+            this.ColumnCategoryFind.Name = "ColumnCategoryFind";
+            this.ColumnCategoryFind.ReadOnly = true;
+            this.ColumnCategoryFind.Width = 175;
+            // 
+            // ColumnShow
+            // 
+            this.ColumnShow.HeaderText = "Podgl¹d";
+            this.ColumnShow.Name = "ColumnShow";
+            this.ColumnShow.ReadOnly = true;
+            this.ColumnShow.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnShow.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ColumnShow.Width = 175;
             // 
             // MainForm
             // 
@@ -959,7 +959,9 @@ namespace DocClass
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.splitContainerMain);
             this.Controls.Add(this.menuStripMain);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStripMain;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Klasyfikator dokumentów";
             this.Load += new System.EventHandler(this.OnMainForm_Load);

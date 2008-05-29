@@ -88,6 +88,8 @@ namespace DocClass.Src.Controller
         /// </summary>
         private String preprocessingPath;
 
+        private int allWordsInBayesCategory;
+
         #endregion
 
         #region CONSTRUCTOR
@@ -122,11 +124,32 @@ namespace DocClass.Src.Controller
 
         void OnLearningWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            form.ProgressBarLearn.Maximum = allWordsInBayesCategory;
             form.ProgressBarLearn.Increment(1);
         }
 
         void OnLearningWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (!learningWorker.CancellationPending)
+            {
+                switch ((ClasyficatorType)Properties.Settings.Default.clasificatorType)
+                {
+                    case ClasyficatorType.Bayes:
+                        //DocumentClass??
+                        bayesClassificator =null;
+                        this.allWordsInBayesCategory = 0;
+                        break;
+                    case ClasyficatorType.RadialNeural:
+                        //DocumentClass??
+                        dictionary = null;
+                        radialNetwork = null;
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             form.LearnEnd();
         }
 
@@ -153,14 +176,9 @@ namespace DocClass.Src.Controller
             preprocessingForm.IncreseProgress(1);
         }
 
-        void bayesClassificator_ProgressChange()
-        {
-            this.learningWorker.ReportProgress(1);
-        }
-
         #endregion 
 
-        #region PUBLIC METHODS
+
 
         /// <summary>
         /// Dodaje plik o danej scieżce do listy klasyfikacyjnej.
@@ -179,6 +197,8 @@ namespace DocClass.Src.Controller
             fileToClassification.Clear();
         }
 
+        #region LEARN
+
         /// <summary>
         /// Metoda wywoływana na uczenie sieci.
         /// Metoda odpala wątek który bedzie uczył sieć.
@@ -186,12 +206,8 @@ namespace DocClass.Src.Controller
         public void Learn()
         {
 
-            if (((ClasyficatorType)Settings.Default.clasificatorType)==ClasyficatorType.Bayes){
-                form.ProgressBarClassification.Maximum = fileToClassification.Count;
-                form.ProgressBarClassification.Minimum = 0;
-                //tworze klasyfikator
-                bayesClassificator = new BayesClassificator();
-                //bayesClassificator.ProgressChange += new ProgressChangedHandler(bayesClassificator_ProgressChange);
+            if (((ClasyficatorType)Settings.Default.clasificatorType)==ClasyficatorType.RadialNeural){
+                form.ProgressBarLearn.Style = ProgressBarStyle.Marquee;
             }
             learningWorker.RunWorkerAsync();
         }
@@ -218,6 +234,45 @@ namespace DocClass.Src.Controller
                     throw new NotImplementedException("Nieznany typ klasyfikacji.");
             }
         }
+
+        private void RadialNeuralLearn()
+        {
+            //ładuje listę kategorii
+            DocumentClass.LoadFromFiles(Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
+
+            //stworzenie słownika
+            dictionary = DictionaryFactory(Settings.Default.pathSummaryFile);
+            //dictionary.LearningData = new List<DocClass.Src.Learning.LearningPair>();
+
+            //stworzenie sieci
+            radialNetwork = new RadialNetwork(Settings.Default.numberNeuronsHidden, DocumentClass.CategoriesCount);
+
+            DocumentList dl = PreprocessingUtility.CreateLearningDocumentList(Settings.Default.pathLearningDir, dictionary, (DocumentRepresentationType)Settings.Default.documentRepresentationType, learningDocInfo);
+            radialNetwork.Learn(dl);
+        }
+
+        private void BayesLearn()
+        {
+            //tworze klasyfikator
+            bayesClassificator = new BayesClassificator(learningWorker);
+
+            //ładuje listę kategorii
+            DocumentClass.LoadFromFiles(Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
+
+            //tworze liste kategorii
+            CategoryList categoryList = new CategoryList(Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
+            this.allWordsInBayesCategory = categoryList.AllWordsCount;
+
+            //nauka
+            bayesClassificator.Learn(categoryList);
+        }
+
+        public void StopLearning()
+        {
+            learningWorker.CancelAsync();
+        }
+
+        #endregion
 
         /// <summary>
         /// Metoda wywoływana na klasyfikacje sieci.
@@ -401,37 +456,10 @@ namespace DocClass.Src.Controller
             }
         }
 
-        # endregion
+
 
         #region PRIVATE METHODS
 
-        private void RadialNeuralLearn()
-        {
-            //ładuje listę kategorii
-            DocumentClass.LoadFromFiles(Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
-
-            //stworzenie słownika
-            dictionary = DictionaryFactory(Settings.Default.pathSummaryFile);
-            //dictionary.LearningData = new List<DocClass.Src.Learning.LearningPair>();
-
-            //stworzenie sieci
-            radialNetwork = new RadialNetwork(Settings.Default.numberNeuronsHidden, DocumentClass.CategoriesCount);
-
-            DocumentList dl = PreprocessingUtility.CreateLearningDocumentList(Settings.Default.pathLearningDir, dictionary, (DocumentRepresentationType)Settings.Default.documentRepresentationType, learningDocInfo);
-            radialNetwork.Learn(dl); 
-        }
-
-        private void BayesLearn()
-        {
-            //ładuje listę kategorii
-            DocumentClass.LoadFromFiles(Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
-
-            //tworze liste kategorii
-            CategoryList categoryList = new CategoryList(Settings.Default.pathLearningDir, PreprocessingConsts.CategoryFilePattern);
-
-            //nauka
-            bayesClassificator.Learn(categoryList);
-        }
 
         private void SaveSettings(Stream stream, BinaryFormatter bFormatter)
         {

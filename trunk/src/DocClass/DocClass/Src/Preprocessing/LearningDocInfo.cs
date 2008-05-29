@@ -15,6 +15,12 @@ namespace DocClass.Src.Preprocessing
     {
         private Dictionary<String, WordInfo> allWordsInfo;
         private int allDocCount;
+        private String sourceDir;
+
+        public String SourceDir
+        {
+            get { return sourceDir; }
+        }
         /// <summary>
         /// Tworzy nowy obiekt klasy LearningDocInfo.
         /// UWAGA Tworzenie tego obiektu jest stosukowo d³ugie. Nale¿y staraæ siê obiekt tej klasy tylko raz
@@ -24,6 +30,8 @@ namespace DocClass.Src.Preprocessing
         /// <param name="summaryFile">Plik zawieraj¹cy informacje o wszystkich s³owach ze wszystkich dokumentów.</param>
         public LearningDocInfo(String sourceDir, String summaryFile)
         {
+            this.sourceDir = sourceDir;
+
             //tworzê s³ownik informacji o wszystkich s³owach
             allWordsInfo = new Dictionary<string, WordInfo>();
             StreamReader sr = new StreamReader(summaryFile);

@@ -169,6 +169,7 @@ namespace DocClass.Src.Controller
             if(preprocessingForm!=null)
             {
                 preprocessingForm.PreprocessingEnd();
+                preprocessingForm.Close();
             }
         }
 

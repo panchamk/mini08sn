@@ -187,9 +187,7 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnButtonClassificationStop_Click(object sender, EventArgs e)
         {
-            this.buttonClassificationStop.Visible = false;
-            this.buttonClassificationStart.Visible = true;
-
+            changeClassificationButtons(false);
             progressBarClassification.Value = 0;
             progressBarClassification.Visible = false;
             controller.CancelClassification();
@@ -203,6 +201,8 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnButtonClassificationStart_Click(object sender, EventArgs e)
         {
+            changeClassificationButtons(true);
+
             if (!this.controller.IsAfterLearn())
             {
                 switch ((ClasyficatorType)Settings.Default.clasificatorType)
@@ -228,8 +228,8 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnButtonLearningStop1_Click(object sender, EventArgs e)
         {
-            this.buttonLearningStop1.Visible = false;
-            this.buttonLearningStart1.Visible = true;
+            changeLearningButtons(false);
+
             this.controller.StopLearning();
         }
 
@@ -240,6 +240,8 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnButtonLearningStart1_Click(object sender, EventArgs e)
         {
+            changeLearningButtons(true);
+
             String s = Settings.Default.pathLearningDir;
             if (!System.IO.Directory.Exists(Settings.Default.pathLearningDir))
             {
@@ -248,6 +250,27 @@ namespace DocClass
             }
             this.SetFormStateBeforeLearn();
             this.controller.Learn();
+        }
+
+        private void changeLearningButtons(bool isShowStart)
+        {
+            this.buttonLearningStop1.Visible = isShowStart;
+            this.buttonLearningStart1.Visible = !isShowStart;
+            this.tableLayoutPanel4.ColumnStyles[0].SizeType = SizeType.Percent;
+            this.tableLayoutPanel4.ColumnStyles[0].Width = (isShowStart)?100:0;
+            this.tableLayoutPanel4.ColumnStyles[1].SizeType = SizeType.Percent;
+            this.tableLayoutPanel4.ColumnStyles[1].Width = (isShowStart)?0:100;
+        }
+
+        private void changeClassificationButtons(bool isShowStart)
+        {
+            this.buttonClassificationStop.Visible = isShowStart;
+            this.buttonClassificationStart.Visible = !isShowStart;
+            this.tableLayoutPanel3.ColumnStyles[0].SizeType = SizeType.Percent;
+            this.tableLayoutPanel3.ColumnStyles[0].Width = (isShowStart) ? 100 : 0;
+            this.tableLayoutPanel3.ColumnStyles[1].SizeType = SizeType.Percent;
+            this.tableLayoutPanel3.ColumnStyles[1].Width = (isShowStart) ? 0 : 100;
+
         }
 
         /// <summary>
@@ -609,8 +632,8 @@ namespace DocClass
         {
             if (classificationType == ClasyficatorType.RadialNeural && this.controller.IsAfterLearn(ClasyficatorType.RadialNeural))
             {
-                labelClassificationValueDirectory.Text = ((DictionaryType)Settings.Default.dictionaryType).ToString();
-                labelClassificationValueDocument.Text = ((DocumentRepresentationType)Settings.Default.documentRepresentationType).ToString();
+                labelClassificationValueDirectory.Text = controller.LearnDictionaryType.ToString();
+                labelClassificationValueDocument.Text = controller.LearnDocumentRepresentationType.ToString();
             }
         }
 
@@ -821,8 +844,7 @@ namespace DocClass
         private void SetFormStateAfterLearn(ClasyficatorType classificationType)
         {
             //buttons and progress bar
-            this.buttonLearningStop1.Visible = false;
-            this.buttonLearningStart1.Visible = true;
+            changeLearningButtons(false);
             this.progressBarLearn.Visible = false;
             this.progressBarLearn.Value = ProgressBarClassification.Minimum;
 
@@ -851,8 +873,7 @@ namespace DocClass
 
         private void SetFormStateAfterClassification()
         {
-            this.buttonClassificationStop.Visible = false;
-            this.buttonClassificationStart.Visible = true;
+            changeClassificationButtons(false);
             this.progressBarClassification.Visible = false;
 
 

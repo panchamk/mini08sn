@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 using DocClass.Src.Exceptions;
 using DocClass.Src.Dictionaries;
@@ -58,6 +59,9 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         //wagi poszczegolnych neuronow wyjsciowych;
         private List<double[]> outputLayerNeutonWeights;
+
+        [NonSerialized]
+        private BackgroundWorker bWorker;
         
         #endregion
 
@@ -90,6 +94,14 @@ namespace DocClass.Src.Classification.RadialNetwork
                 neuronOutputLayer.Add(r);
             }
         }
+
+        public RadialNetwork(int hiddenLayerInitNeuronCount, int outputLayerNeuronCount,BackgroundWorker bWorker)
+        : this(hiddenLayerInitNeuronCount,outputLayerNeuronCount)
+        {
+            this.bWorker = bWorker;
+        }
+
+
 
 
         #endregion
@@ -240,6 +252,8 @@ namespace DocClass.Src.Classification.RadialNetwork
                     PrintNeuronsInfo();
                     num4 = num3;
                     num3 = LearnCheck();
+                    if (bWorker != null && bWorker.CancellationPending)
+                        return false;
                 } while (num3 > num4);
                 foreach (RadialNeuron n in neuronHiddenLayer)
                     n.BackToPrevWeights();

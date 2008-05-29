@@ -12,6 +12,12 @@ namespace DocClass.Src.Classification
     {
         private static List<String> documentCategories = new List<String>();
 
+        public static List<String> DocumentCategories
+        {
+            get { return DocumentClass.documentCategories; }
+            set { DocumentClass.documentCategories = value; }
+        }
+
 
         /// <summary>
         /// Zwraca iloœæ dostêpnych kategorii.

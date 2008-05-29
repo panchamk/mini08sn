@@ -191,7 +191,7 @@ namespace DocClass.Src.Controller
                 form.ProgressBarClassification.Minimum = 0;
                 //tworze klasyfikator
                 bayesClassificator = new BayesClassificator();
-                bayesClassificator.ProgressChange += new ProgressChangedHandler(bayesClassificator_ProgressChange);
+                //bayesClassificator.ProgressChange += new ProgressChangedHandler(bayesClassificator_ProgressChange);
             }
             learningWorker.RunWorkerAsync();
         }

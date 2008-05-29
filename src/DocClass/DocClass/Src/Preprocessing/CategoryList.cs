@@ -70,5 +70,22 @@ namespace DocClass.Src.Preprocessing
         {
             get { return this.categoryList; }
         }
+
+        /// <summary>
+        /// Zwraca liste wsztyskich s³ów w kategorii.
+        /// </summary>
+        public int AllWordsCount
+        {
+            get
+            {
+                int allWordsCount=0;
+                foreach (Category category in categoryList)
+	            {
+                    allWordsCount += category.AllWordsCount;		 
+	            }
+                return allWordsCount;
+            }
+            
+        }
     }
 }

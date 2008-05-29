@@ -12,8 +12,6 @@ using DocClass.Src.Preprocessing;
 using BayesCategory = DocClass.Src.Classification.BayesClassificator.Category;
 using System.Collections.Specialized;
 
-public delegate void ProgressChangedHandler();
-
 namespace DocClass.Src.Classification.BayesClassificator
 {
     /// <summary>
@@ -65,12 +63,6 @@ namespace DocClass.Src.Classification.BayesClassificator
 
         #endregion
 
-        #region Events
-
-        public event ProgressChangedHandler ProgressChange;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -114,9 +106,11 @@ namespace DocClass.Src.Classification.BayesClassificator
             for(int i = 0; i < catList.CategoryCount; i++)
             {
                 BayesCategory bayesCategory = new BayesCategory();
-                bayesCategory.ProgressCategoryChange += new ProgressChangedCategoryHandler(category_ProgressCategoryChange);
                 bayesCategory.Name = catList[i].Name;
-                bayesCategory.Learn(catList[i].WordDictionary);
+                bayesCategory.Learn(catList[i].WordDictionary, mOwner);
+                
+                if(mOwner!=null && mOwner.CancellationPending)
+                    return false;
                 this.categories.Add(catList[i].Name.GetHashCode(), bayesCategory);
             }
 
@@ -197,7 +191,7 @@ namespace DocClass.Src.Classification.BayesClassificator
             {
                 strDict.Add(word, 0);
             }
-            category.Learn(strDict);
+            category.Learn(strDict, mOwner);
             this.categories.Add(this.mKey, category);
             this.mKey++;
             return true;
@@ -205,8 +199,8 @@ namespace DocClass.Src.Classification.BayesClassificator
 
         void category_ProgressCategoryChange()
         {
-            if (this.ProgressChange != null)
-                ProgressChange();
+            if (mOwner != null)
+                mOwner.ReportProgress(1);
         }
 
         #endregion

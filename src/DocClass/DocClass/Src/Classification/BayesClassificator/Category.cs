@@ -2,6 +2,7 @@
 using System.Text;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DocClass.Src.Classification.BayesClassificator
 {
@@ -117,10 +118,13 @@ namespace DocClass.Src.Classification.BayesClassificator
         /// Kategoria zapamietuje slowa, nalezace do niej.
         /// </summary>
         /// <param name="words">Slowa definiujace kategorie.</param>
-        public void Learn(Dictionary<String, int> words)
+        public void Learn(Dictionary<String, int> words, BackgroundWorker worker)
         {
             foreach (KeyValuePair<String, int> w in words)
             {
+                if (worker != null && worker.CancellationPending)
+                    return;
+
                 Node node;
                 if (!TryGetValue(w.Key, out node))
                 {
@@ -132,9 +136,9 @@ namespace DocClass.Src.Classification.BayesClassificator
                     node.Count++;
                 this.mTotalWords++;
 
-                
-                if (this.ProgressCategoryChange != null)
-                    ProgressCategoryChange();
+
+                if (worker!=null)
+                    worker.ReportProgress(1);
             }
         }
 

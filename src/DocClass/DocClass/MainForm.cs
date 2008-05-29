@@ -230,6 +230,7 @@ namespace DocClass
         {
             this.buttonLearningStop1.Visible = false;
             this.buttonLearningStart1.Visible = true;
+            this.controller.StopLearning();
         }
 
         /// <summary>
@@ -606,7 +607,7 @@ namespace DocClass
 
         private void SetClassificationInfoAfterLearn(ClasyficatorType classificationType)
         {
-            if (classificationType == ClasyficatorType.RadialNeural)
+            if (classificationType == ClasyficatorType.RadialNeural && this.controller.IsAfterLearn(ClasyficatorType.RadialNeural))
             {
                 labelClassificationValueDirectory.Text = ((DictionaryType)Settings.Default.dictionaryType).ToString();
                 labelClassificationValueDocument.Text = ((DocumentRepresentationType)Settings.Default.documentRepresentationType).ToString();
@@ -922,6 +923,16 @@ namespace DocClass
                 default:
                     break;
             }
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
 

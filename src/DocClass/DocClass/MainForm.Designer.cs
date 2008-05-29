@@ -54,16 +54,15 @@ namespace DocClass
             this.tabControlUse = new System.Windows.Forms.TabControl();
             this.tabPageLearning = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.progressBarLearn = new System.Windows.Forms.ProgressBar();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonLearningStart1 = new System.Windows.Forms.Button();
+            this.buttonLearningStop1 = new System.Windows.Forms.Button();
             this.groupBoxLearningParameters = new System.Windows.Forms.GroupBox();
             this.groupBoxDictionary = new System.Windows.Forms.GroupBox();
-            this.radioButtonDictionaryFrequance = new DocClass.RadioButtonDictionary();
-            this.radioButtonDictionaryFixed = new DocClass.RadioButtonDictionary();
-            this.radioButtonDictionaryCtfIdf = new DocClass.RadioButtonDictionary();
             this.labelLearningValueNumberOutNerons = new System.Windows.Forms.Label();
             this.groupBoxDocumentRepresentation = new System.Windows.Forms.GroupBox();
-            this.radioButtonDocumentRepresentationBinary = new DocClass.RadioButtonDocumentRepresentation();
-            this.radioButtonDocumentRepresentationOwn = new DocClass.RadioButtonDocumentRepresentation();
-            this.radioButtonDocumentRepresentationTfIdf = new DocClass.RadioButtonDocumentRepresentation();
             this.labelLearningNameNumberOutNerons = new System.Windows.Forms.Label();
             this.labelLearningValuePathDir = new System.Windows.Forms.Label();
             this.labelLearningNamePathDir = new System.Windows.Forms.Label();
@@ -77,19 +76,10 @@ namespace DocClass
             this.labelLearningNameNumbersCategoriesInLearning = new System.Windows.Forms.Label();
             this.labelLearningNameNumbersCategoriesAll = new System.Windows.Forms.Label();
             this.labelLearningNameNumbersDocumentsInLearning = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.progressBarLearn = new System.Windows.Forms.ProgressBar();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonLearningStart1 = new System.Windows.Forms.Button();
-            this.buttonLearningStop1 = new System.Windows.Forms.Button();
             this.tabPageClasyfication = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridViewClassificationResults = new System.Windows.Forms.DataGridView();
-            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnCategoryFind = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnShow = new System.Windows.Forms.DataGridViewLinkColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.labelClassificationValueDirectory = new System.Windows.Forms.Label();
             this.labelClassificationNameDirectory = new System.Windows.Forms.Label();
@@ -112,6 +102,16 @@ namespace DocClass
             this.buttonLearningStart = new System.Windows.Forms.Button();
             this.buttonLearningStop = new System.Windows.Forms.Button();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnCategoryFind = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnShow = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.radioButtonDictionaryFrequance = new DocClass.RadioButtonDictionary();
+            this.radioButtonDictionaryFixed = new DocClass.RadioButtonDictionary();
+            this.radioButtonDictionaryCtfIdf = new DocClass.RadioButtonDictionary();
+            this.radioButtonDocumentRepresentationBinary = new DocClass.RadioButtonDocumentRepresentation();
+            this.radioButtonDocumentRepresentationOwn = new DocClass.RadioButtonDocumentRepresentation();
+            this.radioButtonDocumentRepresentationTfIdf = new DocClass.RadioButtonDocumentRepresentation();
             this.fileInput2 = new DocClass.FileInput();
             this.menuStripMain.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -119,11 +119,11 @@ namespace DocClass
             this.tabControlUse.SuspendLayout();
             this.tabPageLearning.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             this.groupBoxLearningParameters.SuspendLayout();
             this.groupBoxDictionary.SuspendLayout();
             this.groupBoxDocumentRepresentation.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
             this.tabPageClasyfication.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -141,7 +141,7 @@ namespace DocClass
             this.AboutToolStripMenuItem});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Size = new System.Drawing.Size(905, 24);
+            this.menuStripMain.Size = new System.Drawing.Size(959, 24);
             this.menuStripMain.TabIndex = 0;
             this.menuStripMain.Text = "menuStripMain";
             // 
@@ -308,7 +308,7 @@ namespace DocClass
             // splitContainerMain.Panel2
             // 
             this.splitContainerMain.Panel2.Controls.Add(this.tabControlUse);
-            this.splitContainerMain.Size = new System.Drawing.Size(905, 423);
+            this.splitContainerMain.Size = new System.Drawing.Size(959, 423);
             this.splitContainerMain.SplitterDistance = 145;
             this.splitContainerMain.TabIndex = 2;
             // 
@@ -320,7 +320,7 @@ namespace DocClass
             this.tabControlUse.Location = new System.Drawing.Point(0, 0);
             this.tabControlUse.Name = "tabControlUse";
             this.tabControlUse.SelectedIndex = 0;
-            this.tabControlUse.Size = new System.Drawing.Size(905, 423);
+            this.tabControlUse.Size = new System.Drawing.Size(959, 423);
             this.tabControlUse.TabIndex = 0;
             this.tabControlUse.SelectedIndexChanged += new System.EventHandler(this.OnTabControlUse_SelectedIndexChanged);
             // 
@@ -330,7 +330,7 @@ namespace DocClass
             this.tabPageLearning.Location = new System.Drawing.Point(4, 22);
             this.tabPageLearning.Name = "tabPageLearning";
             this.tabPageLearning.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLearning.Size = new System.Drawing.Size(897, 397);
+            this.tabPageLearning.Size = new System.Drawing.Size(951, 397);
             this.tabPageLearning.TabIndex = 0;
             this.tabPageLearning.Text = "Nauka";
             this.tabPageLearning.UseVisualStyleBackColor = true;
@@ -338,18 +338,73 @@ namespace DocClass
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 79.11F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.89F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.06329F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.93671F));
             this.tableLayoutPanel1.Controls.Add(this.groupBoxLearningParameters, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel4, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(891, 391);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 391F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(945, 391);
             this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.progressBarLearn);
+            this.panel4.Controls.Add(this.tableLayoutPanel4);
+            this.panel4.Location = new System.Drawing.Point(759, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(183, 385);
+            this.panel4.TabIndex = 2;
+            // 
+            // progressBarLearn
+            // 
+            this.progressBarLearn.Location = new System.Drawing.Point(3, 50);
+            this.progressBarLearn.Name = "progressBarLearn";
+            this.progressBarLearn.Size = new System.Drawing.Size(170, 23);
+            this.progressBarLearn.TabIndex = 1;
+            this.progressBarLearn.Visible = false;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel4.Controls.Add(this.buttonLearningStart1, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.buttonLearningStop1, 0, 0);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 3);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(186, 37);
+            this.tableLayoutPanel4.TabIndex = 0;
+            // 
+            // buttonLearningStart1
+            // 
+            this.buttonLearningStart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonLearningStart1.Location = new System.Drawing.Point(84, 3);
+            this.buttonLearningStart1.Name = "buttonLearningStart1";
+            this.buttonLearningStart1.Size = new System.Drawing.Size(99, 31);
+            this.buttonLearningStart1.TabIndex = 1;
+            this.buttonLearningStart1.Text = "Start";
+            this.buttonLearningStart1.UseVisualStyleBackColor = true;
+            this.buttonLearningStart1.Click += new System.EventHandler(this.OnButtonLearningStart1_Click);
+            // 
+            // buttonLearningStop1
+            // 
+            this.buttonLearningStop1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonLearningStop1.Location = new System.Drawing.Point(3, 3);
+            this.buttonLearningStop1.Name = "buttonLearningStop1";
+            this.buttonLearningStop1.Size = new System.Drawing.Size(75, 31);
+            this.buttonLearningStop1.TabIndex = 0;
+            this.buttonLearningStop1.Text = "Stop";
+            this.buttonLearningStop1.UseVisualStyleBackColor = true;
+            this.buttonLearningStop1.Visible = false;
+            this.buttonLearningStop1.Click += new System.EventHandler(this.OnButtonLearningStop1_Click);
             // 
             // groupBoxLearningParameters
             // 
@@ -371,7 +426,7 @@ namespace DocClass
             this.groupBoxLearningParameters.Controls.Add(this.labelLearningNameNumbersDocumentsInLearning);
             this.groupBoxLearningParameters.Location = new System.Drawing.Point(3, 3);
             this.groupBoxLearningParameters.Name = "groupBoxLearningParameters";
-            this.groupBoxLearningParameters.Size = new System.Drawing.Size(698, 365);
+            this.groupBoxLearningParameters.Size = new System.Drawing.Size(735, 370);
             this.groupBoxLearningParameters.TabIndex = 2;
             this.groupBoxLearningParameters.TabStop = false;
             this.groupBoxLearningParameters.Text = "Parametry";
@@ -387,41 +442,6 @@ namespace DocClass
             this.groupBoxDictionary.TabIndex = 1;
             this.groupBoxDictionary.TabStop = false;
             this.groupBoxDictionary.Text = "Dobieranie s³ów do s³ownika";
-            // 
-            // radioButtonDictionaryFrequance
-            // 
-            this.radioButtonDictionaryFrequance.AutoSize = true;
-            this.radioButtonDictionaryFrequance.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.Frequent;
-            this.radioButtonDictionaryFrequance.Location = new System.Drawing.Point(25, 67);
-            this.radioButtonDictionaryFrequance.Name = "radioButtonDictionaryFrequance";
-            this.radioButtonDictionaryFrequance.Size = new System.Drawing.Size(67, 17);
-            this.radioButtonDictionaryFrequance.TabIndex = 3;
-            this.radioButtonDictionaryFrequance.Text = "Frequent";
-            this.radioButtonDictionaryFrequance.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonDictionaryFixed
-            // 
-            this.radioButtonDictionaryFixed.AutoSize = true;
-            this.radioButtonDictionaryFixed.Checked = true;
-            this.radioButtonDictionaryFixed.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.CtfIdf;
-            this.radioButtonDictionaryFixed.Location = new System.Drawing.Point(25, 21);
-            this.radioButtonDictionaryFixed.Name = "radioButtonDictionaryFixed";
-            this.radioButtonDictionaryFixed.Size = new System.Drawing.Size(50, 17);
-            this.radioButtonDictionaryFixed.TabIndex = 1;
-            this.radioButtonDictionaryFixed.TabStop = true;
-            this.radioButtonDictionaryFixed.Text = "CtfIdf";
-            this.radioButtonDictionaryFixed.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonDictionaryCtfIdf
-            // 
-            this.radioButtonDictionaryCtfIdf.AutoSize = true;
-            this.radioButtonDictionaryCtfIdf.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.Fixed;
-            this.radioButtonDictionaryCtfIdf.Location = new System.Drawing.Point(25, 44);
-            this.radioButtonDictionaryCtfIdf.Name = "radioButtonDictionaryCtfIdf";
-            this.radioButtonDictionaryCtfIdf.Size = new System.Drawing.Size(50, 17);
-            this.radioButtonDictionaryCtfIdf.TabIndex = 2;
-            this.radioButtonDictionaryCtfIdf.Text = "Fixed";
-            this.radioButtonDictionaryCtfIdf.UseVisualStyleBackColor = true;
             // 
             // labelLearningValueNumberOutNerons
             // 
@@ -442,41 +462,6 @@ namespace DocClass
             this.groupBoxDocumentRepresentation.TabIndex = 0;
             this.groupBoxDocumentRepresentation.TabStop = false;
             this.groupBoxDocumentRepresentation.Text = "Reprezentacja dokumentu";
-            // 
-            // radioButtonDocumentRepresentationBinary
-            // 
-            this.radioButtonDocumentRepresentationBinary.AutoSize = true;
-            this.radioButtonDocumentRepresentationBinary.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.Binary;
-            this.radioButtonDocumentRepresentationBinary.Location = new System.Drawing.Point(31, 44);
-            this.radioButtonDocumentRepresentationBinary.Name = "radioButtonDocumentRepresentationBinary";
-            this.radioButtonDocumentRepresentationBinary.Size = new System.Drawing.Size(54, 17);
-            this.radioButtonDocumentRepresentationBinary.TabIndex = 2;
-            this.radioButtonDocumentRepresentationBinary.Text = "Binary";
-            this.radioButtonDocumentRepresentationBinary.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonDocumentRepresentationOwn
-            // 
-            this.radioButtonDocumentRepresentationOwn.AutoSize = true;
-            this.radioButtonDocumentRepresentationOwn.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.Own;
-            this.radioButtonDocumentRepresentationOwn.Location = new System.Drawing.Point(33, 67);
-            this.radioButtonDocumentRepresentationOwn.Name = "radioButtonDocumentRepresentationOwn";
-            this.radioButtonDocumentRepresentationOwn.Size = new System.Drawing.Size(47, 17);
-            this.radioButtonDocumentRepresentationOwn.TabIndex = 1;
-            this.radioButtonDocumentRepresentationOwn.Text = "Own";
-            this.radioButtonDocumentRepresentationOwn.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonDocumentRepresentationTfIdf
-            // 
-            this.radioButtonDocumentRepresentationTfIdf.AutoSize = true;
-            this.radioButtonDocumentRepresentationTfIdf.Checked = true;
-            this.radioButtonDocumentRepresentationTfIdf.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.TfIdf;
-            this.radioButtonDocumentRepresentationTfIdf.Location = new System.Drawing.Point(33, 21);
-            this.radioButtonDocumentRepresentationTfIdf.Name = "radioButtonDocumentRepresentationTfIdf";
-            this.radioButtonDocumentRepresentationTfIdf.Size = new System.Drawing.Size(47, 17);
-            this.radioButtonDocumentRepresentationTfIdf.TabIndex = 0;
-            this.radioButtonDocumentRepresentationTfIdf.TabStop = true;
-            this.radioButtonDocumentRepresentationTfIdf.Text = "TfIdf";
-            this.radioButtonDocumentRepresentationTfIdf.UseVisualStyleBackColor = true;
             // 
             // labelLearningNameNumberOutNerons
             // 
@@ -589,68 +574,13 @@ namespace DocClass
             this.labelLearningNameNumbersDocumentsInLearning.TabIndex = 1;
             this.labelLearningNameNumbersDocumentsInLearning.Text = "Liczba przekazanych dokumentów:";
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.progressBarLearn);
-            this.panel1.Controls.Add(this.tableLayoutPanel4);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(707, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(181, 365);
-            this.panel1.TabIndex = 3;
-            // 
-            // progressBarLearn
-            // 
-            this.progressBarLearn.Location = new System.Drawing.Point(6, 67);
-            this.progressBarLearn.Name = "progressBarLearn";
-            this.progressBarLearn.Size = new System.Drawing.Size(170, 23);
-            this.progressBarLearn.TabIndex = 1;
-            this.progressBarLearn.Visible = false;
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel4.Controls.Add(this.buttonLearningStart1, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.buttonLearningStop1, 0, 0);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 13);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(176, 37);
-            this.tableLayoutPanel4.TabIndex = 0;
-            // 
-            // buttonLearningStart1
-            // 
-            this.buttonLearningStart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonLearningStart1.Location = new System.Drawing.Point(84, 3);
-            this.buttonLearningStart1.Name = "buttonLearningStart1";
-            this.buttonLearningStart1.Size = new System.Drawing.Size(89, 31);
-            this.buttonLearningStart1.TabIndex = 1;
-            this.buttonLearningStart1.Text = "Start";
-            this.buttonLearningStart1.UseVisualStyleBackColor = true;
-            this.buttonLearningStart1.Click += new System.EventHandler(this.OnButtonLearningStart1_Click);
-            // 
-            // buttonLearningStop1
-            // 
-            this.buttonLearningStop1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonLearningStop1.Location = new System.Drawing.Point(3, 3);
-            this.buttonLearningStop1.Name = "buttonLearningStop1";
-            this.buttonLearningStop1.Size = new System.Drawing.Size(75, 31);
-            this.buttonLearningStop1.TabIndex = 0;
-            this.buttonLearningStop1.Text = "Stop";
-            this.buttonLearningStop1.UseVisualStyleBackColor = true;
-            this.buttonLearningStop1.Visible = false;
-            this.buttonLearningStop1.Click += new System.EventHandler(this.OnButtonLearningStop1_Click);
-            // 
             // tabPageClasyfication
             // 
             this.tabPageClasyfication.Controls.Add(this.tableLayoutPanel2);
             this.tabPageClasyfication.Location = new System.Drawing.Point(4, 22);
             this.tabPageClasyfication.Name = "tabPageClasyfication";
             this.tabPageClasyfication.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageClasyfication.Size = new System.Drawing.Size(897, 397);
+            this.tabPageClasyfication.Size = new System.Drawing.Size(951, 397);
             this.tabPageClasyfication.TabIndex = 1;
             this.tabPageClasyfication.Text = "Klasyfikacja";
             this.tabPageClasyfication.UseVisualStyleBackColor = true;
@@ -658,8 +588,8 @@ namespace DocClass
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.05907F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.94093F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.27004F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.72996F));
             this.tableLayoutPanel2.Controls.Add(this.panel2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel3, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -667,7 +597,7 @@ namespace DocClass
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(891, 391);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(945, 391);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // panel2
@@ -676,58 +606,31 @@ namespace DocClass
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(689, 385);
+            this.panel2.Size = new System.Drawing.Size(733, 385);
             this.panel2.TabIndex = 6;
             // 
             // dataGridViewClassificationResults
             // 
+            this.dataGridViewClassificationResults.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewClassificationResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewClassificationResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnName,
             this.ColumnCategory,
             this.ColumnCategoryFind,
             this.ColumnShow});
-            this.dataGridViewClassificationResults.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewClassificationResults.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewClassificationResults.Location = new System.Drawing.Point(3, 6);
             this.dataGridViewClassificationResults.Name = "dataGridViewClassificationResults";
             this.dataGridViewClassificationResults.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridViewClassificationResults.Size = new System.Drawing.Size(689, 385);
+            this.dataGridViewClassificationResults.Size = new System.Drawing.Size(727, 364);
             this.dataGridViewClassificationResults.TabIndex = 5;
             this.dataGridViewClassificationResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnDataGridViewClassificationResults_CellClick);
-            // 
-            // ColumnName
-            // 
-            this.ColumnName.HeaderText = "Nazwa";
-            this.ColumnName.Name = "ColumnName";
-            this.ColumnName.ReadOnly = true;
-            this.ColumnName.Width = 175;
-            // 
-            // ColumnCategory
-            // 
-            this.ColumnCategory.HeaderText = "Kategoria";
-            this.ColumnCategory.Name = "ColumnCategory";
-            this.ColumnCategory.Width = 175;
-            // 
-            // ColumnCategoryFind
-            // 
-            this.ColumnCategoryFind.HeaderText = "Kategoria znaleziona";
-            this.ColumnCategoryFind.Name = "ColumnCategoryFind";
-            this.ColumnCategoryFind.ReadOnly = true;
-            this.ColumnCategoryFind.Width = 175;
-            // 
-            // ColumnShow
-            // 
-            this.ColumnShow.HeaderText = "Podgl¹d";
-            this.ColumnShow.Name = "ColumnShow";
-            this.ColumnShow.ReadOnly = true;
-            this.ColumnShow.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColumnShow.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.ColumnShow.Width = 175;
             // 
             // panel3
             // 
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.Controls.Add(this.labelClassificationValueDirectory);
             this.panel3.Controls.Add(this.labelClassificationNameDirectory);
             this.panel3.Controls.Add(this.labelClassificationValueDocument);
@@ -742,10 +645,11 @@ namespace DocClass
             this.panel3.Controls.Add(this.labelClassificationNameNumberAllDocuments);
             this.panel3.Controls.Add(this.tableLayoutPanel3);
             this.panel3.Controls.Add(this.progressBarClassification);
-            this.panel3.Location = new System.Drawing.Point(698, 3);
+            this.panel3.Location = new System.Drawing.Point(753, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(190, 385);
+            this.panel3.Size = new System.Drawing.Size(189, 385);
             this.panel3.TabIndex = 7;
+            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // labelClassificationValueDirectory
             // 
@@ -860,11 +764,11 @@ namespace DocClass
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Controls.Add(this.buttonClassificationStop, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonClassificationStart, 1, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(5, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(180, 37);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(187, 37);
             this.tableLayoutPanel3.TabIndex = 8;
             // 
             // buttonClassificationStop
@@ -874,7 +778,7 @@ namespace DocClass
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonClassificationStop.Location = new System.Drawing.Point(3, 3);
             this.buttonClassificationStop.Name = "buttonClassificationStop";
-            this.buttonClassificationStop.Size = new System.Drawing.Size(90, 31);
+            this.buttonClassificationStop.Size = new System.Drawing.Size(89, 31);
             this.buttonClassificationStop.TabIndex = 0;
             this.buttonClassificationStop.Text = "Stop";
             this.buttonClassificationStop.UseVisualStyleBackColor = true;
@@ -884,9 +788,9 @@ namespace DocClass
             // buttonClassificationStart
             // 
             this.buttonClassificationStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonClassificationStart.Location = new System.Drawing.Point(99, 3);
+            this.buttonClassificationStart.Location = new System.Drawing.Point(98, 3);
             this.buttonClassificationStart.Name = "buttonClassificationStart";
-            this.buttonClassificationStart.Size = new System.Drawing.Size(78, 31);
+            this.buttonClassificationStart.Size = new System.Drawing.Size(86, 31);
             this.buttonClassificationStart.TabIndex = 1;
             this.buttonClassificationStart.Text = "Start";
             this.buttonClassificationStart.UseVisualStyleBackColor = true;
@@ -904,7 +808,7 @@ namespace DocClass
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 425);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(905, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(959, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -941,6 +845,105 @@ namespace DocClass
             this.buttonLearningStop.Text = "Stop";
             this.buttonLearningStop.UseVisualStyleBackColor = true;
             // 
+            // ColumnName
+            // 
+            this.ColumnName.HeaderText = "Nazwa";
+            this.ColumnName.Name = "ColumnName";
+            this.ColumnName.ReadOnly = true;
+            this.ColumnName.Width = 182;
+            // 
+            // ColumnCategory
+            // 
+            this.ColumnCategory.HeaderText = "Kategoria";
+            this.ColumnCategory.Name = "ColumnCategory";
+            this.ColumnCategory.Width = 182;
+            // 
+            // ColumnCategoryFind
+            // 
+            this.ColumnCategoryFind.HeaderText = "Kategoria znaleziona";
+            this.ColumnCategoryFind.Name = "ColumnCategoryFind";
+            this.ColumnCategoryFind.ReadOnly = true;
+            this.ColumnCategoryFind.Width = 182;
+            // 
+            // ColumnShow
+            // 
+            this.ColumnShow.HeaderText = "Podgl¹d";
+            this.ColumnShow.Name = "ColumnShow";
+            this.ColumnShow.ReadOnly = true;
+            this.ColumnShow.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnShow.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ColumnShow.Width = 182;
+            // 
+            // radioButtonDictionaryFrequance
+            // 
+            this.radioButtonDictionaryFrequance.AutoSize = true;
+            this.radioButtonDictionaryFrequance.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.Frequent;
+            this.radioButtonDictionaryFrequance.Location = new System.Drawing.Point(25, 67);
+            this.radioButtonDictionaryFrequance.Name = "radioButtonDictionaryFrequance";
+            this.radioButtonDictionaryFrequance.Size = new System.Drawing.Size(67, 17);
+            this.radioButtonDictionaryFrequance.TabIndex = 3;
+            this.radioButtonDictionaryFrequance.Text = "Frequent";
+            this.radioButtonDictionaryFrequance.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDictionaryFixed
+            // 
+            this.radioButtonDictionaryFixed.AutoSize = true;
+            this.radioButtonDictionaryFixed.Checked = true;
+            this.radioButtonDictionaryFixed.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.CtfIdf;
+            this.radioButtonDictionaryFixed.Location = new System.Drawing.Point(25, 21);
+            this.radioButtonDictionaryFixed.Name = "radioButtonDictionaryFixed";
+            this.radioButtonDictionaryFixed.Size = new System.Drawing.Size(50, 17);
+            this.radioButtonDictionaryFixed.TabIndex = 1;
+            this.radioButtonDictionaryFixed.TabStop = true;
+            this.radioButtonDictionaryFixed.Text = "CtfIdf";
+            this.radioButtonDictionaryFixed.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDictionaryCtfIdf
+            // 
+            this.radioButtonDictionaryCtfIdf.AutoSize = true;
+            this.radioButtonDictionaryCtfIdf.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.Fixed;
+            this.radioButtonDictionaryCtfIdf.Location = new System.Drawing.Point(25, 44);
+            this.radioButtonDictionaryCtfIdf.Name = "radioButtonDictionaryCtfIdf";
+            this.radioButtonDictionaryCtfIdf.Size = new System.Drawing.Size(50, 17);
+            this.radioButtonDictionaryCtfIdf.TabIndex = 2;
+            this.radioButtonDictionaryCtfIdf.Text = "Fixed";
+            this.radioButtonDictionaryCtfIdf.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDocumentRepresentationBinary
+            // 
+            this.radioButtonDocumentRepresentationBinary.AutoSize = true;
+            this.radioButtonDocumentRepresentationBinary.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.Binary;
+            this.radioButtonDocumentRepresentationBinary.Location = new System.Drawing.Point(31, 44);
+            this.radioButtonDocumentRepresentationBinary.Name = "radioButtonDocumentRepresentationBinary";
+            this.radioButtonDocumentRepresentationBinary.Size = new System.Drawing.Size(54, 17);
+            this.radioButtonDocumentRepresentationBinary.TabIndex = 2;
+            this.radioButtonDocumentRepresentationBinary.Text = "Binary";
+            this.radioButtonDocumentRepresentationBinary.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDocumentRepresentationOwn
+            // 
+            this.radioButtonDocumentRepresentationOwn.AutoSize = true;
+            this.radioButtonDocumentRepresentationOwn.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.Own;
+            this.radioButtonDocumentRepresentationOwn.Location = new System.Drawing.Point(33, 67);
+            this.radioButtonDocumentRepresentationOwn.Name = "radioButtonDocumentRepresentationOwn";
+            this.radioButtonDocumentRepresentationOwn.Size = new System.Drawing.Size(47, 17);
+            this.radioButtonDocumentRepresentationOwn.TabIndex = 1;
+            this.radioButtonDocumentRepresentationOwn.Text = "Own";
+            this.radioButtonDocumentRepresentationOwn.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDocumentRepresentationTfIdf
+            // 
+            this.radioButtonDocumentRepresentationTfIdf.AutoSize = true;
+            this.radioButtonDocumentRepresentationTfIdf.Checked = true;
+            this.radioButtonDocumentRepresentationTfIdf.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.TfIdf;
+            this.radioButtonDocumentRepresentationTfIdf.Location = new System.Drawing.Point(33, 21);
+            this.radioButtonDocumentRepresentationTfIdf.Name = "radioButtonDocumentRepresentationTfIdf";
+            this.radioButtonDocumentRepresentationTfIdf.Size = new System.Drawing.Size(47, 17);
+            this.radioButtonDocumentRepresentationTfIdf.TabIndex = 0;
+            this.radioButtonDocumentRepresentationTfIdf.TabStop = true;
+            this.radioButtonDocumentRepresentationTfIdf.Text = "TfIdf";
+            this.radioButtonDocumentRepresentationTfIdf.UseVisualStyleBackColor = true;
+            // 
             // fileInput2
             // 
             this.fileInput2.Location = new System.Drawing.Point(-16, 19);
@@ -952,7 +955,7 @@ namespace DocClass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(905, 447);
+            this.ClientSize = new System.Drawing.Size(959, 447);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.splitContainerMain);
             this.Controls.Add(this.menuStripMain);
@@ -967,14 +970,14 @@ namespace DocClass
             this.tabControlUse.ResumeLayout(false);
             this.tabPageLearning.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
             this.groupBoxLearningParameters.ResumeLayout(false);
             this.groupBoxLearningParameters.PerformLayout();
             this.groupBoxDictionary.ResumeLayout(false);
             this.groupBoxDictionary.PerformLayout();
             this.groupBoxDocumentRepresentation.ResumeLayout(false);
             this.groupBoxDocumentRepresentation.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.tableLayoutPanel4.ResumeLayout(false);
             this.tabPageClasyfication.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -992,17 +995,9 @@ namespace DocClass
 
         private System.Windows.Forms.MenuStrip menuStripMain;
         private System.Windows.Forms.SplitContainer splitContainerMain;
-        private System.Windows.Forms.GroupBox groupBoxDictionary;
-        private System.Windows.Forms.GroupBox groupBoxDocumentRepresentation;
         private System.Windows.Forms.ToolStripMenuItem programToolStripMenuItemProgram;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private FileInput fileInput2;
-        private RadioButtonDictionary radioButtonDictionaryFixed;
-        private RadioButtonDictionary radioButtonDictionaryCtfIdf;
-        private RadioButtonDictionary radioButtonDictionaryFrequance;
-        private RadioButtonDocumentRepresentation radioButtonDocumentRepresentationBinary;
-        private RadioButtonDocumentRepresentation radioButtonDocumentRepresentationOwn;
-        private RadioButtonDocumentRepresentation radioButtonDocumentRepresentationTfIdf;
         private System.Windows.Forms.ToolStripMenuItem metodaKlasyfikacjiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem BayesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RadialNetworkToolStripMenuItem;
@@ -1014,7 +1009,39 @@ namespace DocClass
         private System.Windows.Forms.OpenFileDialog openFileDialogDateLoad;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogDateLoad;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.Button buttonLearningStart;
+        private System.Windows.Forms.Button buttonLearningStop;
+        private System.Windows.Forms.ToolStripMenuItem preproccesingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadNetworkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveNetworkToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem saveBayesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadBayesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.TabControl tabControlUse;
+        private System.Windows.Forms.TabPage tabPageLearning;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.GroupBox groupBoxLearningParameters;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.ProgressBar progressBarLearn;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.Button buttonLearningStart1;
+        private System.Windows.Forms.Button buttonLearningStop1;
+        private System.Windows.Forms.GroupBox groupBoxDictionary;
+        private RadioButtonDictionary radioButtonDictionaryFrequance;
+        private RadioButtonDictionary radioButtonDictionaryFixed;
+        private RadioButtonDictionary radioButtonDictionaryCtfIdf;
+        private System.Windows.Forms.Label labelLearningValueNumberOutNerons;
+        private System.Windows.Forms.GroupBox groupBoxDocumentRepresentation;
+        private RadioButtonDocumentRepresentation radioButtonDocumentRepresentationBinary;
+        private RadioButtonDocumentRepresentation radioButtonDocumentRepresentationOwn;
+        private RadioButtonDocumentRepresentation radioButtonDocumentRepresentationTfIdf;
+        private System.Windows.Forms.Label labelLearningNameNumberOutNerons;
+        private System.Windows.Forms.Label labelLearningValuePathDir;
+        private System.Windows.Forms.Label labelLearningNamePathDir;
         private System.Windows.Forms.Label labelLearningValueNumberAllWords;
         private System.Windows.Forms.Label labelLearningValueNumbersHiddenNerons;
         private System.Windows.Forms.Label labelLearningValueNumbersDocumentsInLearning;
@@ -1025,55 +1052,31 @@ namespace DocClass
         private System.Windows.Forms.Label labelLearningNameNumbersCategoriesInLearning;
         private System.Windows.Forms.Label labelLearningNameNumbersCategoriesAll;
         private System.Windows.Forms.Label labelLearningNameNumbersDocumentsInLearning;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private System.Windows.Forms.Button buttonLearningStart;
-        private System.Windows.Forms.Button buttonLearningStop;
-        private System.Windows.Forms.TabControl tabControlUse;
         private System.Windows.Forms.TabPage tabPageClasyfication;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridView dataGridViewClassificationResults;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Button buttonClassificationStop;
-        private System.Windows.Forms.Button buttonClassificationStart;
-        private System.Windows.Forms.TabPage tabPageLearning;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.Button buttonLearningStop1;
-        private System.Windows.Forms.Button buttonLearningStart1;
-        private System.Windows.Forms.Label labelLearningValuePathDir;
-        private System.Windows.Forms.Label labelLearningNamePathDir;
-        private System.Windows.Forms.Label labelLearningValueNumberOutNerons;
-        private System.Windows.Forms.Label labelLearningNameNumberOutNerons;
-        private System.Windows.Forms.ProgressBar progressBarClassification;
-        private System.Windows.Forms.ToolStripMenuItem preproccesingToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadNetworkToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveNetworkToolStripMenuItem;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem saveBayesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadBayesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.Label labelClassificationValueDirectory;
+        private System.Windows.Forms.Label labelClassificationNameDirectory;
+        private System.Windows.Forms.Label labelClassificationValueDocument;
+        private System.Windows.Forms.Label labelClassificationNameDocument;
+        private System.Windows.Forms.Label labelClassificationValueClassificatorState;
+        private System.Windows.Forms.Label labelClassificationNameClassificatorState;
         private System.Windows.Forms.Label labelClassificationValueEfficiency;
         private System.Windows.Forms.Label labelClassificationNameEfficiency;
         private System.Windows.Forms.Label labelClassificationValueNumberGoodDocuments;
         private System.Windows.Forms.Label labelClassificationNameNumberGoodDocuments;
         private System.Windows.Forms.Label labelClassificationValueNumberAllDocuments;
         private System.Windows.Forms.Label labelClassificationNameNumberAllDocuments;
-        private System.Windows.Forms.ProgressBar progressBarLearn;
-        private System.Windows.Forms.Label labelClassificationValueClassificatorState;
-        private System.Windows.Forms.Label labelClassificationNameClassificatorState;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Button buttonClassificationStop;
+        private System.Windows.Forms.Button buttonClassificationStart;
+        private System.Windows.Forms.ProgressBar progressBarClassification;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCategory;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCategoryFind;
         private System.Windows.Forms.DataGridViewLinkColumn ColumnShow;
-        private System.Windows.Forms.Label labelClassificationValueDirectory;
-        private System.Windows.Forms.Label labelClassificationNameDirectory;
-        private System.Windows.Forms.Label labelClassificationValueDocument;
-        private System.Windows.Forms.Label labelClassificationNameDocument;
     }
 }
 

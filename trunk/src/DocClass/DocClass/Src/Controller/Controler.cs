@@ -90,6 +90,22 @@ namespace DocClass.Src.Controller
 
         private int allWordsInBayesCategory;
 
+        private DictionaryType learnDictionaryType;
+
+        public DictionaryType LearnDictionaryType
+        {
+            get { return learnDictionaryType; }
+            set { learnDictionaryType = value; }
+        }
+
+        private DocumentRepresentationType learnDocumentRepresentationType;
+
+        internal DocumentRepresentationType LearnDocumentRepresentationType
+        {
+            get { return learnDocumentRepresentationType; }
+            set { learnDocumentRepresentationType = value; }
+        }
+
         #endregion
 
         #region CONSTRUCTOR
@@ -124,33 +140,18 @@ namespace DocClass.Src.Controller
 
         void OnLearningWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            form.ProgressBarLearn.Maximum = allWordsInBayesCategory;
-            form.ProgressBarLearn.Increment(1);
+            if (!((BackgroundWorker)sender).CancellationPending)
+            {
+                form.ProgressBarLearn.Maximum = allWordsInBayesCategory;
+                form.ProgressBarLearn.Increment(1);
+            }
         }
 
         void OnLearningWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (!learningWorker.CancellationPending)
-            {
-                switch ((ClasyficatorType)Properties.Settings.Default.clasificatorType)
-                {
-                    case ClasyficatorType.Bayes:
-                        //DocumentClass??
-                        bayesClassificator =null;
-                        this.allWordsInBayesCategory = 0;
-                        break;
-                    case ClasyficatorType.RadialNeural:
-                        //DocumentClass??
-                        dictionary = null;
-                        radialNetwork = null;
-
-                        break;
-                    default:
-                        break;
-                }
-            }
-
             form.LearnEnd();
+            this.learnDocumentRepresentationType = (DocumentRepresentationType)Settings.Default.documentRepresentationType;
+            this.LearnDictionaryType = (DictionaryType)Settings.Default.dictionaryType;
         }
 
         void OnClassificationWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -205,8 +206,6 @@ namespace DocClass.Src.Controller
         /// </summary>
         public void Learn()
         {
-            
-
             if (((ClasyficatorType)Settings.Default.clasificatorType)==ClasyficatorType.RadialNeural){
                 form.ProgressBarLearn.Style = ProgressBarStyle.Marquee;
             }
@@ -254,7 +253,11 @@ namespace DocClass.Src.Controller
             radialNetwork = new RadialNetwork(Settings.Default.numberNeuronsHidden, DocumentClass.CategoriesCount);
 
             DocumentList dl = PreprocessingUtility.CreateLearningDocumentList(Settings.Default.pathLearningDir, dictionary, (DocumentRepresentationType)Settings.Default.documentRepresentationType, learningDocInfo);
-            radialNetwork.Learn(dl);
+            if (radialNetwork.Learn(dl) == false)
+            {
+                radialNetwork = null;
+                dictionary = null;
+            }
         }
 
         private void BayesLearn()
@@ -270,7 +273,11 @@ namespace DocClass.Src.Controller
             this.allWordsInBayesCategory = categoryList.AllWordsCount;
 
             //nauka
-            bayesClassificator.Learn(categoryList);
+            if (bayesClassificator.Learn(categoryList) == false)
+            {
+                bayesClassificator = null;
+                this.allWordsInBayesCategory = 0;
+            }
         }
 
         public void StopLearning()
@@ -313,8 +320,7 @@ namespace DocClass.Src.Controller
                         break;
                     case (ClasyficatorType.RadialNeural):
                         int result = RadialNeuralClassificate(path);
-                        categoryName = result.ToString();
-                        //categoryName = DocumentClass.GetClassName(result);
+                        categoryName = DocumentClass.GetClassName(result);
                         break;
                     default:
                         throw new NotImplementedException("Nieznany typ klasyfikacji.");
@@ -386,6 +392,9 @@ namespace DocClass.Src.Controller
             bFormatter.Serialize(stream, this.radialNetwork);
             bFormatter.Serialize(stream, this.dictionary);
             bFormatter.Serialize(stream, this.learningDocInfo);
+            bFormatter.Serialize(stream, DocumentClass.DocumentCategories);
+            bFormatter.Serialize(stream, this.learnDocumentRepresentationType);
+            bFormatter.Serialize(stream, this.learnDictionaryType);
             SaveSettings(stream, bFormatter);
             stream.Close();
         }
@@ -401,6 +410,9 @@ namespace DocClass.Src.Controller
             this.radialNetwork = (RadialNetwork)bFormatter.Deserialize(stream);
             this.dictionary = (Dictionary)bFormatter.Deserialize(stream);
             this.learningDocInfo = (LearningDocInfo)bFormatter.Deserialize(stream);
+            DocumentClass.DocumentCategories = (List<String>)bFormatter.Deserialize(stream);
+            this.learnDocumentRepresentationType = (DocumentRepresentationType)bFormatter.Deserialize(stream);
+            this.learnDictionaryType = (DictionaryType)bFormatter.Deserialize(stream);
             LoadSettings(stream, bFormatter);
             stream.Close();
 
@@ -416,6 +428,7 @@ namespace DocClass.Src.Controller
             Stream stream = File.Open(pathFile, FileMode.OpenOrCreate);
             BinaryFormatter bFormatter = new BinaryFormatter();
             bFormatter.Serialize(stream, this.bayesClassificator);
+            bFormatter.Serialize(stream, DocumentClass.DocumentCategories);
             SaveSettings(stream, bFormatter);
             stream.Close();
         }
@@ -429,6 +442,7 @@ namespace DocClass.Src.Controller
             Stream stream = File.Open(pathFile, FileMode.Open);
             BinaryFormatter bFormatter = new BinaryFormatter();
             this.bayesClassificator = (BayesClassificator)bFormatter.Deserialize(stream);
+            DocumentClass.DocumentCategories = (List<String>)bFormatter.Deserialize(stream);
             LoadSettings(stream, bFormatter);
             stream.Close();
 

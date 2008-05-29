@@ -170,6 +170,7 @@ namespace DocClass.Src.Controller
             {
                 preprocessingForm.PreprocessingEnd();
                 preprocessingForm.Close();
+
             }
         }
 

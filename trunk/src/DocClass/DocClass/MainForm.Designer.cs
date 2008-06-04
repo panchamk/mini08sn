@@ -881,9 +881,9 @@ namespace DocClass
             this.radioButtonDictionaryFrequance.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.Frequent;
             this.radioButtonDictionaryFrequance.Location = new System.Drawing.Point(25, 67);
             this.radioButtonDictionaryFrequance.Name = "radioButtonDictionaryFrequance";
-            this.radioButtonDictionaryFrequance.Size = new System.Drawing.Size(67, 17);
+            this.radioButtonDictionaryFrequance.Size = new System.Drawing.Size(111, 17);
             this.radioButtonDictionaryFrequance.TabIndex = 3;
-            this.radioButtonDictionaryFrequance.Text = "Frequent";
+            this.radioButtonDictionaryFrequance.Text = "Czêstotliwoœciowa";
             this.radioButtonDictionaryFrequance.UseVisualStyleBackColor = true;
             // 
             // radioButtonDictionaryFixed
@@ -905,16 +905,16 @@ namespace DocClass
             this.radioButtonDictionaryCtfIdf.DictionaryType = DocClass.Src.Dictionaries.DictionaryType.Fixed;
             this.radioButtonDictionaryCtfIdf.Location = new System.Drawing.Point(25, 44);
             this.radioButtonDictionaryCtfIdf.Name = "radioButtonDictionaryCtfIdf";
-            this.radioButtonDictionaryCtfIdf.Size = new System.Drawing.Size(50, 17);
+            this.radioButtonDictionaryCtfIdf.Size = new System.Drawing.Size(70, 17);
             this.radioButtonDictionaryCtfIdf.TabIndex = 2;
-            this.radioButtonDictionaryCtfIdf.Text = "Fixed";
+            this.radioButtonDictionaryCtfIdf.Text = "Mieszana";
             this.radioButtonDictionaryCtfIdf.UseVisualStyleBackColor = true;
             // 
             // radioButtonDocumentRepresentationBinary
             // 
             this.radioButtonDocumentRepresentationBinary.AutoSize = true;
             this.radioButtonDocumentRepresentationBinary.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.Binary;
-            this.radioButtonDocumentRepresentationBinary.Location = new System.Drawing.Point(31, 44);
+            this.radioButtonDocumentRepresentationBinary.Location = new System.Drawing.Point(21, 44);
             this.radioButtonDocumentRepresentationBinary.Name = "radioButtonDocumentRepresentationBinary";
             this.radioButtonDocumentRepresentationBinary.Size = new System.Drawing.Size(55, 17);
             this.radioButtonDocumentRepresentationBinary.TabIndex = 2;
@@ -925,11 +925,11 @@ namespace DocClass
             // 
             this.radioButtonDocumentRepresentationOwn.AutoSize = true;
             this.radioButtonDocumentRepresentationOwn.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.Own;
-            this.radioButtonDocumentRepresentationOwn.Location = new System.Drawing.Point(33, 67);
+            this.radioButtonDocumentRepresentationOwn.Location = new System.Drawing.Point(21, 67);
             this.radioButtonDocumentRepresentationOwn.Name = "radioButtonDocumentRepresentationOwn";
-            this.radioButtonDocumentRepresentationOwn.Size = new System.Drawing.Size(63, 17);
+            this.radioButtonDocumentRepresentationOwn.Size = new System.Drawing.Size(35, 17);
             this.radioButtonDocumentRepresentationOwn.TabIndex = 1;
-            this.radioButtonDocumentRepresentationOwn.Text = "W³asna";
+            this.radioButtonDocumentRepresentationOwn.Text = "Tf";
             this.radioButtonDocumentRepresentationOwn.UseVisualStyleBackColor = true;
             // 
             // radioButtonDocumentRepresentationTfIdf
@@ -937,7 +937,7 @@ namespace DocClass
             this.radioButtonDocumentRepresentationTfIdf.AutoSize = true;
             this.radioButtonDocumentRepresentationTfIdf.Checked = true;
             this.radioButtonDocumentRepresentationTfIdf.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.TfIdf;
-            this.radioButtonDocumentRepresentationTfIdf.Location = new System.Drawing.Point(33, 21);
+            this.radioButtonDocumentRepresentationTfIdf.Location = new System.Drawing.Point(21, 21);
             this.radioButtonDocumentRepresentationTfIdf.Name = "radioButtonDocumentRepresentationTfIdf";
             this.radioButtonDocumentRepresentationTfIdf.Size = new System.Drawing.Size(47, 17);
             this.radioButtonDocumentRepresentationTfIdf.TabIndex = 0;

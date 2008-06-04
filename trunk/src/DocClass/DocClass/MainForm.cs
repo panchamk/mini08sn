@@ -724,7 +724,19 @@ namespace DocClass
             }
             catch (Exception)
             {
-                MessageBox.Show("Nie mo¿na otworzyæ dokumentu.");
+                try
+                {
+                    Process p = new Process();
+                    p.EnableRaisingEvents = false;
+                    p.StartInfo.FileName = "notepad";
+                    p.StartInfo.Arguments = "\"" + path + "\"";
+                    p.Start();
+                    p.WaitForExit();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Nie mo¿na otworzyæ dokumentu.","Otwieranie dokumentu",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                }
             }
         }
 

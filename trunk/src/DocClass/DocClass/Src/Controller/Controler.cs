@@ -149,9 +149,9 @@ namespace DocClass.Src.Controller
 
         void OnLearningWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            form.LearnEnd();
             this.learnDocumentRepresentationType = (DocumentRepresentationType)Settings.Default.documentRepresentationType;
             this.LearnDictionaryType = (DictionaryType)Settings.Default.dictionaryType;
+            form.LearnEnd();
         }
 
         void OnClassificationWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

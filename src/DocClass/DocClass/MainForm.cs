@@ -637,8 +637,8 @@ namespace DocClass
         {
             if (classificationType == ClasyficatorType.RadialNeural && this.controller.IsAfterLearn(ClasyficatorType.RadialNeural))
             {
-                labelClassificationValueDirectory.Text = controller.LearnDictionaryType.ToString();
-                labelClassificationValueDocument.Text = controller.LearnDocumentRepresentationType.ToString();
+                labelClassificationValueDirectory.Text = DictionaryTypeUtil.ToString(controller.LearnDictionaryType);
+                labelClassificationValueDocument.Text = DocumentRepresentationTypeUtil.ToString(controller.LearnDocumentRepresentationType);
             }
         }
 

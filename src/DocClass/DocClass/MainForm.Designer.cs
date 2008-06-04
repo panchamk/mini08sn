@@ -684,7 +684,7 @@ namespace DocClass
             // labelClassificationValueDirectory
             // 
             this.labelClassificationValueDirectory.AutoSize = true;
-            this.labelClassificationValueDirectory.Location = new System.Drawing.Point(155, 271);
+            this.labelClassificationValueDirectory.Location = new System.Drawing.Point(66, 308);
             this.labelClassificationValueDirectory.Name = "labelClassificationValueDirectory";
             this.labelClassificationValueDirectory.Size = new System.Drawing.Size(0, 13);
             this.labelClassificationValueDirectory.TabIndex = 20;
@@ -692,7 +692,7 @@ namespace DocClass
             // labelClassificationNameDirectory
             // 
             this.labelClassificationNameDirectory.AutoSize = true;
-            this.labelClassificationNameDirectory.Location = new System.Drawing.Point(-1, 271);
+            this.labelClassificationNameDirectory.Location = new System.Drawing.Point(2, 284);
             this.labelClassificationNameDirectory.Name = "labelClassificationNameDirectory";
             this.labelClassificationNameDirectory.Size = new System.Drawing.Size(125, 13);
             this.labelClassificationNameDirectory.TabIndex = 19;
@@ -701,7 +701,7 @@ namespace DocClass
             // labelClassificationValueDocument
             // 
             this.labelClassificationValueDocument.AutoSize = true;
-            this.labelClassificationValueDocument.Location = new System.Drawing.Point(155, 243);
+            this.labelClassificationValueDocument.Location = new System.Drawing.Point(66, 255);
             this.labelClassificationValueDocument.Name = "labelClassificationValueDocument";
             this.labelClassificationValueDocument.Size = new System.Drawing.Size(0, 13);
             this.labelClassificationValueDocument.TabIndex = 18;
@@ -709,7 +709,7 @@ namespace DocClass
             // labelClassificationNameDocument
             // 
             this.labelClassificationNameDocument.AutoSize = true;
-            this.labelClassificationNameDocument.Location = new System.Drawing.Point(0, 243);
+            this.labelClassificationNameDocument.Location = new System.Drawing.Point(2, 233);
             this.labelClassificationNameDocument.Name = "labelClassificationNameDocument";
             this.labelClassificationNameDocument.Size = new System.Drawing.Size(143, 13);
             this.labelClassificationNameDocument.TabIndex = 17;
@@ -718,7 +718,7 @@ namespace DocClass
             // labelClassificationValueClassificatorState
             // 
             this.labelClassificationValueClassificatorState.AutoSize = true;
-            this.labelClassificationValueClassificatorState.Location = new System.Drawing.Point(107, 213);
+            this.labelClassificationValueClassificatorState.Location = new System.Drawing.Point(66, 204);
             this.labelClassificationValueClassificatorState.Name = "labelClassificationValueClassificatorState";
             this.labelClassificationValueClassificatorState.Size = new System.Drawing.Size(73, 13);
             this.labelClassificationValueClassificatorState.TabIndex = 16;

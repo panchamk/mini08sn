@@ -187,5 +187,17 @@ namespace DocClass.Properties {
                 this["numberNeuronsOut"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public int dictionarySzie {
+            get {
+                return ((int)(this["dictionarySzie"]));
+            }
+            set {
+                this["dictionarySzie"] = value;
+            }
+        }
     }
 }

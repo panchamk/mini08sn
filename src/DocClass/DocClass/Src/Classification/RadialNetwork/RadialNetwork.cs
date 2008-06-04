@@ -26,7 +26,7 @@ namespace DocClass.Src.Classification.RadialNetwork
 
         public const int HIDDEN_LAYER_MAX_NEURON_COUNT = 40;
 
-        private const int TH_DOCUMENT_TO_CHECK = 2;
+        private const int TH_DOCUMENT_TO_CHECK = 4;
 
 
 

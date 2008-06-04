@@ -254,6 +254,10 @@ namespace DocClass
 
         private void changeLearningButtons(bool isShowStart)
         {
+            if ((ClasyficatorType)Settings.Default.clasificatorType == ClasyficatorType.RadialNeural)
+            {
+                this.buttonLearningStop1.Enabled = !isShowStart;
+            }
             this.buttonLearningStop1.Visible = isShowStart;
             this.buttonLearningStart1.Visible = !isShowStart;
             this.tableLayoutPanel4.ColumnStyles[0].SizeType = SizeType.Percent;

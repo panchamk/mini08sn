@@ -260,7 +260,7 @@ namespace DocClass.Src.Classification.RadialNetwork
                 num2 = num1;
                 num1 = LearnCheck();
             } while (num1 > num2);
-            MessageBox.Show("Koniec nauki");
+            //MessageBox.Show("Koniec nauki");
             foreach (LinearNeuron n in neuronOutputLayer)
                 n.BackToPrevWeights();
             return true;

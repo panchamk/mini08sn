@@ -13,7 +13,7 @@ namespace DocClass.Src.DocumentRepresentation
                 case DocumentRepresentationType.Binary:
                     return "Binrna";
                 case DocumentRepresentationType.Own:
-                    return "Własna";
+                    return "Tf";
                 case DocumentRepresentationType.TfIdf:
                     return "TfIdf";
                 default:

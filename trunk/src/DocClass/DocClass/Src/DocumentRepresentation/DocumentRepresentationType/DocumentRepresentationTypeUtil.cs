@@ -11,9 +11,9 @@ namespace DocClass.Src.DocumentRepresentation
             switch (documentRepresentationType)
             {
                 case DocumentRepresentationType.Binary:
-                    return "Binary";
+                    return "Binrna";
                 case DocumentRepresentationType.Own:
-                    return "Own";
+                    return "Własna";
                 case DocumentRepresentationType.TfIdf:
                     return "TfIdf";
                 default:

@@ -113,7 +113,7 @@ namespace DocClass.Src.Classification.RadialNetwork
             for (int i = 0; i < min.Length; i++)
             {
                 cellCenter[i] = min[i] + r.NextDouble() * Math.Abs(max[i] - min[i]);
-                sigma[i] = r.NextDouble()*(Math.Abs(max[i] - min[i]));
+                sigma[i] = r.NextDouble()*(Math.Abs(max[i] - min[i])+1);
             }
             //TODO: rozwiazac kwestie szerokoscie zakresu losowania srodkow komorek
             this.ToString();

@@ -191,7 +191,7 @@ namespace DocClass
             // 
             this.preproccesingToolStripMenuItem.Name = "preproccesingToolStripMenuItem";
             this.preproccesingToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-            this.preproccesingToolStripMenuItem.Text = "Preproccesing";
+            this.preproccesingToolStripMenuItem.Text = "Preprocessing";
             this.preproccesingToolStripMenuItem.Click += new System.EventHandler(this.OnPreproccesingToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
@@ -244,7 +244,7 @@ namespace DocClass
             this.exitToolStripMenuItem.Image = global::DocClass.Properties.Resources.delete;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Text = "Wjœcie";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.OnExitToolStripMenuItem_Click);
             // 
             // metodaKlasyfikacjiToolStripMenuItem
@@ -754,7 +754,7 @@ namespace DocClass
             // labelClassificationValueNumberGoodDocuments
             // 
             this.labelClassificationValueNumberGoodDocuments.AutoSize = true;
-            this.labelClassificationValueNumberGoodDocuments.Location = new System.Drawing.Point(161, 135);
+            this.labelClassificationValueNumberGoodDocuments.Location = new System.Drawing.Point(159, 135);
             this.labelClassificationValueNumberGoodDocuments.Name = "labelClassificationValueNumberGoodDocuments";
             this.labelClassificationValueNumberGoodDocuments.Size = new System.Drawing.Size(13, 13);
             this.labelClassificationValueNumberGoodDocuments.TabIndex = 12;
@@ -772,7 +772,7 @@ namespace DocClass
             // labelClassificationValueNumberAllDocuments
             // 
             this.labelClassificationValueNumberAllDocuments.AutoSize = true;
-            this.labelClassificationValueNumberAllDocuments.Location = new System.Drawing.Point(161, 106);
+            this.labelClassificationValueNumberAllDocuments.Location = new System.Drawing.Point(159, 106);
             this.labelClassificationValueNumberAllDocuments.Name = "labelClassificationValueNumberAllDocuments";
             this.labelClassificationValueNumberAllDocuments.Size = new System.Drawing.Size(13, 13);
             this.labelClassificationValueNumberAllDocuments.TabIndex = 10;

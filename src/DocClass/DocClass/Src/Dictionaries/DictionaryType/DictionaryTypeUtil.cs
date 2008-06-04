@@ -13,9 +13,9 @@ namespace DocClass.Src.Dictionaries
                 case DictionaryType.CtfIdf:
                     return "CtfIdf";
                 case DictionaryType.Fixed:
-                    return "Fixed";
+                    return "Mieszana";
                 case DictionaryType.Frequent:
-                    return "Frequent";
+                    return "Częstotliwościowa";
                 default:
                     throw new Exception("Methode not implemented for this type.");
             }

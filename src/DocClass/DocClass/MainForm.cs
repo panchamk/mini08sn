@@ -569,6 +569,7 @@ namespace DocClass
 
         public void LearnEnd()
         {
+            MessageBox.Show("Nauka zosta³a zakoñczona pomyœlnie.","Nauka",MessageBoxButtons.OK,MessageBoxIcon.Information);
             SetFormStateAfterLearn((ClasyficatorType)Settings.Default.clasificatorType);
             
         }
@@ -952,6 +953,11 @@ namespace DocClass
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void labelLearningNameNumberAllWords_Click(object sender, EventArgs e)
         {
 
         }

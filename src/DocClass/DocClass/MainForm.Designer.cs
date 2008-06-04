@@ -80,6 +80,10 @@ namespace DocClass
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridViewClassificationResults = new System.Windows.Forms.DataGridView();
+            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnCategoryFind = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnShow = new System.Windows.Forms.DataGridViewLinkColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.labelClassificationValueDirectory = new System.Windows.Forms.Label();
             this.labelClassificationNameDirectory = new System.Windows.Forms.Label();
@@ -109,10 +113,6 @@ namespace DocClass
             this.radioButtonDocumentRepresentationOwn = new DocClass.RadioButtonDocumentRepresentation();
             this.radioButtonDocumentRepresentationTfIdf = new DocClass.RadioButtonDocumentRepresentation();
             this.fileInput2 = new DocClass.FileInput();
-            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnCategoryFind = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnShow = new System.Windows.Forms.DataGridViewLinkColumn();
             this.menuStripMain.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
             this.splitContainerMain.SuspendLayout();
@@ -387,7 +387,7 @@ namespace DocClass
             this.groupBoxDictionary.Size = new System.Drawing.Size(232, 100);
             this.groupBoxDictionary.TabIndex = 1;
             this.groupBoxDictionary.TabStop = false;
-            this.groupBoxDictionary.Text = "Dobieranie s³ów do s³ownika";
+            this.groupBoxDictionary.Text = "Reprezentacja  s³ownika";
             // 
             // labelLearningValueNumberOutNerons
             // 
@@ -489,9 +489,10 @@ namespace DocClass
             this.labelLearningNameNumberAllWords.AutoSize = true;
             this.labelLearningNameNumberAllWords.Location = new System.Drawing.Point(25, 141);
             this.labelLearningNameNumberAllWords.Name = "labelLearningNameNumberAllWords";
-            this.labelLearningNameNumberAllWords.Size = new System.Drawing.Size(121, 13);
+            this.labelLearningNameNumberAllWords.Size = new System.Drawing.Size(161, 13);
             this.labelLearningNameNumberAllWords.TabIndex = 4;
-            this.labelLearningNameNumberAllWords.Text = "Liczba wszystkich s³ów:";
+            this.labelLearningNameNumberAllWords.Text = "Liczba wszystkich ró¿nych s³ów:";
+            this.labelLearningNameNumberAllWords.Click += new System.EventHandler(this.labelLearningNameNumberAllWords_Click);
             // 
             // labelLearningNameNumbersCategoriesInLearning
             // 
@@ -626,6 +627,35 @@ namespace DocClass
             this.dataGridViewClassificationResults.Size = new System.Drawing.Size(727, 364);
             this.dataGridViewClassificationResults.TabIndex = 5;
             this.dataGridViewClassificationResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnDataGridViewClassificationResults_CellClick);
+            // 
+            // ColumnName
+            // 
+            this.ColumnName.HeaderText = "Nazwa";
+            this.ColumnName.Name = "ColumnName";
+            this.ColumnName.ReadOnly = true;
+            this.ColumnName.Width = 175;
+            // 
+            // ColumnCategory
+            // 
+            this.ColumnCategory.HeaderText = "Kategoria";
+            this.ColumnCategory.Name = "ColumnCategory";
+            this.ColumnCategory.Width = 175;
+            // 
+            // ColumnCategoryFind
+            // 
+            this.ColumnCategoryFind.HeaderText = "Kategoria znaleziona";
+            this.ColumnCategoryFind.Name = "ColumnCategoryFind";
+            this.ColumnCategoryFind.ReadOnly = true;
+            this.ColumnCategoryFind.Width = 175;
+            // 
+            // ColumnShow
+            // 
+            this.ColumnShow.HeaderText = "Podgl¹d";
+            this.ColumnShow.Name = "ColumnShow";
+            this.ColumnShow.ReadOnly = true;
+            this.ColumnShow.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnShow.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ColumnShow.Width = 175;
             // 
             // panel3
             // 
@@ -886,9 +916,9 @@ namespace DocClass
             this.radioButtonDocumentRepresentationBinary.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.Binary;
             this.radioButtonDocumentRepresentationBinary.Location = new System.Drawing.Point(31, 44);
             this.radioButtonDocumentRepresentationBinary.Name = "radioButtonDocumentRepresentationBinary";
-            this.radioButtonDocumentRepresentationBinary.Size = new System.Drawing.Size(54, 17);
+            this.radioButtonDocumentRepresentationBinary.Size = new System.Drawing.Size(55, 17);
             this.radioButtonDocumentRepresentationBinary.TabIndex = 2;
-            this.radioButtonDocumentRepresentationBinary.Text = "Binary";
+            this.radioButtonDocumentRepresentationBinary.Text = "Binrna";
             this.radioButtonDocumentRepresentationBinary.UseVisualStyleBackColor = true;
             // 
             // radioButtonDocumentRepresentationOwn
@@ -897,9 +927,9 @@ namespace DocClass
             this.radioButtonDocumentRepresentationOwn.DocumentRepresentationType = DocClass.Src.DocumentRepresentation.DocumentRepresentationType.Own;
             this.radioButtonDocumentRepresentationOwn.Location = new System.Drawing.Point(33, 67);
             this.radioButtonDocumentRepresentationOwn.Name = "radioButtonDocumentRepresentationOwn";
-            this.radioButtonDocumentRepresentationOwn.Size = new System.Drawing.Size(47, 17);
+            this.radioButtonDocumentRepresentationOwn.Size = new System.Drawing.Size(63, 17);
             this.radioButtonDocumentRepresentationOwn.TabIndex = 1;
-            this.radioButtonDocumentRepresentationOwn.Text = "Own";
+            this.radioButtonDocumentRepresentationOwn.Text = "W³asna";
             this.radioButtonDocumentRepresentationOwn.UseVisualStyleBackColor = true;
             // 
             // radioButtonDocumentRepresentationTfIdf
@@ -921,35 +951,6 @@ namespace DocClass
             this.fileInput2.Name = "fileInput2";
             this.fileInput2.Size = new System.Drawing.Size(357, 27);
             this.fileInput2.TabIndex = 0;
-            // 
-            // ColumnName
-            // 
-            this.ColumnName.HeaderText = "Nazwa";
-            this.ColumnName.Name = "ColumnName";
-            this.ColumnName.ReadOnly = true;
-            this.ColumnName.Width = 175;
-            // 
-            // ColumnCategory
-            // 
-            this.ColumnCategory.HeaderText = "Kategoria";
-            this.ColumnCategory.Name = "ColumnCategory";
-            this.ColumnCategory.Width = 175;
-            // 
-            // ColumnCategoryFind
-            // 
-            this.ColumnCategoryFind.HeaderText = "Kategoria znaleziona";
-            this.ColumnCategoryFind.Name = "ColumnCategoryFind";
-            this.ColumnCategoryFind.ReadOnly = true;
-            this.ColumnCategoryFind.Width = 175;
-            // 
-            // ColumnShow
-            // 
-            this.ColumnShow.HeaderText = "Podgl¹d";
-            this.ColumnShow.Name = "ColumnShow";
-            this.ColumnShow.ReadOnly = true;
-            this.ColumnShow.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColumnShow.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.ColumnShow.Width = 175;
             // 
             // MainForm
             // 

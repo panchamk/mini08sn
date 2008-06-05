@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using DocClass.Src.DocumentRepresentation;
 using DocClass.Src.Dictionaries;
+using System.ComponentModel;
 
 namespace DocClass.Src.Preprocessing
 {
@@ -88,16 +89,25 @@ namespace DocClass.Src.Preprocessing
         /// </summary>
         /// <param name="sourceDir">Katalog zawieraj¹ce pliki wejœciowe.</param>
         /// <param name="stopWords">Lista "stop words"</param>
-        public static void StemDir(String sourceDir, Dictionary<int, String> stopWords)
+        public static void StemDir(String sourceDir, Dictionary<int, String> stopWords,BackgroundWorker bWorker)
         {
             DirectoryInfo sourceDirInfo = new DirectoryInfo(sourceDir);
             DirectoryInfo destDirInfo = Directory.CreateDirectory(sourceDirInfo.FullName + "\\stem");
             String destFile;
             foreach (FileInfo sourceFile in sourceDirInfo.GetFiles())
             {
+
                 Console.WriteLine("Processing file: " + sourceFile);
                 destFile = sourceFile.Name + PreprocessingConsts.StemmedFileExtension;//".stm";
                 PreprocessingUtility.StemFile(sourceFile.FullName, destDirInfo.FullName + "\\" + destFile, stopWords);
+                
+                //worer
+                if (bWorker != null)
+                {
+                    if (bWorker.CancellationPending)
+                        return;
+                    bWorker.ReportProgress(1);
+                }
             }
         }
         

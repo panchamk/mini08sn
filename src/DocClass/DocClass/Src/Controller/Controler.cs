@@ -181,8 +181,6 @@ namespace DocClass.Src.Controller
 
         #endregion 
 
-
-
         /// <summary>
         /// Dodaje plik o danej scieżce do listy klasyfikacyjnej.
         /// </summary>
@@ -343,15 +341,27 @@ namespace DocClass.Src.Controller
         /// <param name="sourcePath"></param>
         public void PreprocessingDir(String sourcePath)
         {
-            int dirNumber = new DirectoryInfo(sourcePath).GetDirectories().Length;
+            int dirNumber = PreprocessingUtility.GetDocumentsNumber(sourcePath);
 
             preprocessingForm = new PreprocessingForm(this);
             preprocessingForm.MaxProgress = dirNumber;
             preprocessingPath = sourcePath;
             preprocessingWorker.RunWorkerAsync();
             preprocessingForm.ShowDialog();
+        }
 
-
+        /// <summary>
+        /// Metoda robiąca preprocessing piku.
+        /// </summary>
+        /// <param name="sourcePath"></param>
+        /// <param name="destinationFile"></param>
+        public void PreprocessingFile(String sourcePath, String destinationFile)
+        {
+            if (stopWords == null)
+            {
+                stopWords = PreprocessingUtility.LoadStopWords(Settings.Default.pathStopWords);
+            }
+            PreprocessingUtility.StemFile(sourcePath, destinationFile, stopWords);
         }
 
         /// <summary>
@@ -368,9 +378,10 @@ namespace DocClass.Src.Controller
             DirectoryInfo rootDirInfo = new DirectoryInfo(preprocessingPath);
             foreach (DirectoryInfo sourceDirInfo in rootDirInfo.GetDirectories())
             {
-                PreprocessingUtility.StemDir(sourceDirInfo.FullName, stopWords);
+                PreprocessingUtility.StemDir(sourceDirInfo.FullName, stopWords, preprocessingWorker);
+                if (preprocessingWorker.CancellationPending)
+                    return;
                 PreprocessingUtility.SumWords(sourceDirInfo.FullName + "\\stem\\", PreprocessingConsts.StemmedFilePattern, rootDirInfo + "\\" + sourceDirInfo.Name + PreprocessingConsts.CategoryFileExtension);
-                preprocessingWorker.ReportProgress(1);
             }
             PreprocessingUtility.SumWords(preprocessingPath, PreprocessingConsts.CategoryFilePattern, rootDirInfo + "\\" + PreprocessingConsts.SummaryFileName);
         }
@@ -407,6 +418,7 @@ namespace DocClass.Src.Controller
         /// <param name="pathFile">Scieżka do pliku.</param>
         public void LoadRadialNetwork(String pathFile)
         {
+
             Stream stream = File.Open(pathFile, FileMode.Open);
             BinaryFormatter bFormatter = new BinaryFormatter();
             this.radialNetwork = (RadialNetwork)bFormatter.Deserialize(stream);
@@ -417,7 +429,7 @@ namespace DocClass.Src.Controller
             this.learnDictionaryType = (DictionaryType)bFormatter.Deserialize(stream);
             LoadSettings(stream, bFormatter);
             stream.Close();
-
+            
             this.form.LoadClassificatorEnd(ClasyficatorType.RadialNeural);
         }
 
@@ -441,12 +453,13 @@ namespace DocClass.Src.Controller
         /// <param name="pathFile">Scieżka do pliku.</param>
         public void LoadBayes(String pathFile)
         {
-            Stream stream = File.Open(pathFile, FileMode.Open);
-            BinaryFormatter bFormatter = new BinaryFormatter();
-            this.bayesClassificator = (BayesClassificator)bFormatter.Deserialize(stream);
-            DocumentClass.DocumentCategories = (List<String>)bFormatter.Deserialize(stream);
-            LoadSettings(stream, bFormatter);
-            stream.Close();
+           Stream stream = File.Open(pathFile, FileMode.Open);
+           BinaryFormatter bFormatter = new BinaryFormatter();
+           this.bayesClassificator = (BayesClassificator)bFormatter.Deserialize(stream);
+           DocumentClass.DocumentCategories = (List<String>)bFormatter.Deserialize(stream);
+           LoadSettings(stream, bFormatter);
+           stream.Close();
+            
 
             this.form.LoadClassificatorEnd(ClasyficatorType.Bayes);
         }
@@ -478,7 +491,10 @@ namespace DocClass.Src.Controller
             }
         }
 
-
+        public void StopPreprocessing()
+        {
+            preprocessingWorker.CancelAsync();
+        }
 
         #region PRIVATE METHODS
 
@@ -631,20 +647,6 @@ namespace DocClass.Src.Controller
                 }
             }
             return path;
-        }
-
-        /// <summary>
-        /// Metoda robiąca preprocessing piku.
-        /// </summary>
-        /// <param name="sourcePath"></param>
-        /// <param name="destinationFile"></param>
-        public void PreprocessingFile(String sourcePath, String destinationFile)
-        {
-            if (stopWords == null)
-            {
-                stopWords = PreprocessingUtility.LoadStopWords(Settings.Default.pathStopWords);
-            }
-            PreprocessingUtility.StemFile(sourcePath, destinationFile, stopWords);
         }
 
         private ICollection<string> GetWordsFromFile(String pathFile)

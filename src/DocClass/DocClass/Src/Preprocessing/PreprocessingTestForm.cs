@@ -49,7 +49,7 @@ namespace DocClass.Src.Preprocessing
                 FileConverter.StemFile(sourceFile.FullName,destDir.FullName + "\\" + destFile, stopWords);
             }
               */
-            PreprocessingUtility.StemDir(folderTextBox.Text, stopWords);
+            PreprocessingUtility.StemDir(folderTextBox.Text, stopWords,null);
             MessageBox.Show("All done in:" + (DateTime.Now.Subtract(startTime)).ToString());
         }
 
@@ -133,7 +133,7 @@ namespace DocClass.Src.Preprocessing
                 DateTime startTime = DateTime.Now;
                 foreach (DirectoryInfo sourceDirInfo in rootDirInfo.GetDirectories())
                 {
-                    PreprocessingUtility.StemDir(sourceDirInfo.FullName, stopWords);
+                    PreprocessingUtility.StemDir(sourceDirInfo.FullName, stopWords,null);
                     PreprocessingUtility.SumWords(sourceDirInfo.FullName + "\\stem\\", PreprocessingConsts.StemmedFilePattern, rootDirInfo + "\\" + sourceDirInfo.Name + PreprocessingConsts.CategoryFileExtension);
                 }
                 //sumowanie kategorii

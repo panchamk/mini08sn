@@ -67,6 +67,7 @@ namespace DocClass
         private void OnMainForm_Load(object sender, EventArgs e)
         {
             SetLearningInfo();
+            this.fileToolStripMenuItem.Enabled = (((OperationType)Settings.Default.operationType) == OperationType.Classification);
         }
 
         /// <summary>
@@ -144,7 +145,7 @@ namespace DocClass
                     String pathSummaryTemp = pathTemp + "\\" + PreprocessingConsts.SummaryFileName;
                     if (!IsPrepocessingDone(pathTemp))
                     {
-                        MessageBox.Show("Dokonaj preprocessing'u dla danych ucz¹cych.");
+                        MessageBox.Show("Dokonaj preprocessing'u dla danych ucz¹cych.","Preprocessing",MessageBoxButtons.OK,MessageBoxIcon.Information);
                         return;
                     }
 
@@ -201,22 +202,23 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnButtonClassificationStart_Click(object sender, EventArgs e)
         {
-            changeClassificationButtons(true);
+            
 
             if (!this.controller.IsAfterLearn())
             {
                 switch ((ClasyficatorType)Settings.Default.clasificatorType)
                 {
                     case ClasyficatorType.Bayes:
-                        MessageBox.Show("Klasyfikator Bayes'a nie zosta³ nauczony.");
+                        MessageBox.Show("Klasyfikator Bayes'a nie zosta³ nauczony.", "Preprocessing", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     case ClasyficatorType.RadialNeural:
-                        MessageBox.Show("Sieæ nie zosta³a nauczona.");
+                        MessageBox.Show("Sieæ nie zosta³a nauczona.", "Preprocessing", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     default:
                         break;
                 }
             }
+            changeClassificationButtons(true);
             SetFormStateBeforeClassification();
             this.controller.Classificate();
         }
@@ -240,14 +242,13 @@ namespace DocClass
         /// <param name="e"></param>
         private void OnButtonLearningStart1_Click(object sender, EventArgs e)
         {
-            changeLearningButtons(true);
-
             String s = Settings.Default.pathLearningDir;
             if (!System.IO.Directory.Exists(Settings.Default.pathLearningDir))
             {
-                MessageBox.Show("Nie mo¿na odnaleœæ katalogu z danymi ucz¹cymi.");
+                MessageBox.Show("Nie mo¿na odnaleœæ katalogu z danymi ucz¹cymi.", "Preprocessing", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            changeLearningButtons(true);
             this.SetFormStateBeforeLearn();
             this.controller.Learn();
         }
@@ -286,6 +287,7 @@ namespace DocClass
         private void OnTabControlUse_SelectedIndexChanged(object sender, EventArgs e)
         {
             Settings.Default.operationType = this.tabControlUse.SelectedIndex;
+            this.fileToolStripMenuItem.Enabled = (((OperationType)Settings.Default.operationType)==OperationType.Classification);
         }
 
         /// <summary>
@@ -301,7 +303,7 @@ namespace DocClass
 
             if (IsPrepocessingDone(pathTemp))
             {
-                MessageBox.Show("Preproccesing ju¿ jest zrobiony w tym katalogu.");
+                MessageBox.Show("Preproccesing ju¿ jest zrobiony w tym katalogu.", "Preprocessing", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             controller.PreprocessingDir(pathTemp);
@@ -317,8 +319,15 @@ namespace DocClass
             String pathTemp = ShowOpenFileDialog(radialNetworkFilePattern);
             if (pathTemp != null)
             {
-                controller.LoadRadialNetwork(pathTemp);
-                MessageBox.Show("Sieæ zosta³a odczytana.");
+                try
+                {
+                    controller.LoadRadialNetwork(pathTemp);
+                    MessageBox.Show("Sieæ zosta³a odczytana.", "Preprocessing", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Nie mo¿na odczytaæ sieci.", "Preprocessing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } 
             }
         }
 
@@ -332,8 +341,15 @@ namespace DocClass
             String pathTemp = ShowSaveFileDialog(radialNetworkFilePattern,radialNetworkFileExt);
             if (pathTemp != null)
             {
-                controller.SaveRadialNetwork(pathTemp);
-                MessageBox.Show("Sieæ zosta³a zapisana.");
+                try
+                {
+                    controller.SaveRadialNetwork(pathTemp);
+                    MessageBox.Show("Sieæ zosta³a zapisana.", "Preprocessing", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Nie mo¿na zapisaæ sieci.", "Preprocessing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } 
             }
         }
 
@@ -347,8 +363,16 @@ namespace DocClass
             String pathTemp = ShowSaveFileDialog(bayesFilePattern,bayesFileExt);
             if (pathTemp != null)
             {
-                controller.SaveBayes(pathTemp);
-                MessageBox.Show("Klasyfikator Bayes'a zosta³ zapisany.");
+                try
+                {
+                    controller.SaveBayes(pathTemp);
+                    MessageBox.Show("Klasyfikator Bayes'a zosta³ zapisany.", "Preprocessing", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Nie mo¿na zapisæ klasyfikatora.", "Preprocessing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
+                }
             }
         }
 
@@ -362,8 +386,16 @@ namespace DocClass
             String pathTemp = ShowOpenFileDialog(bayesFilePattern);
             if (pathTemp != null)
             {
-                controller.LoadBayes(pathTemp);
-                MessageBox.Show("Klasyfikator Bayes'a zosta³ odczytany.");
+                try
+                {
+                    controller.LoadBayes(pathTemp);
+                    MessageBox.Show("Klasyfikator Bayes'a zosta³ odczytany.", "Preprocessing", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Nie mo¿na odczytaæ klasyfikatora.", "Preprocessing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
             }
         }
         #endregion
@@ -447,19 +479,6 @@ namespace DocClass
         public void LoadClassificatorEnd(ClasyficatorType classificationType)
         {
             this.SetFormStateArferLoadClassificator(classificationType);
-            
-            
-            switch (classificationType)
-            {
-                case ClasyficatorType.Bayes:
-                    MessageBox.Show("Klasyfikator Bayes'a zosta³ odczytany.");
-                    break;
-                case ClasyficatorType.RadialNeural:
-                    MessageBox.Show("Seiæ radialna zost³a odczytana.");
-                    break;
-                default:
-                    break;
-            }
         }
 
         //LOAD LEARNING DATA
@@ -573,8 +592,9 @@ namespace DocClass
 
         public void LearnEnd()
         {
-            MessageBox.Show("Nauka zosta³a zakoñczona pomyœlnie.","Nauka",MessageBoxButtons.OK,MessageBoxIcon.Information);
             SetFormStateAfterLearn((ClasyficatorType)Settings.Default.clasificatorType);
+            MessageBox.Show("Nauka zosta³a zakoñczona pomyœlnie.","Nauka",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            
             
         }
 
@@ -693,7 +713,7 @@ namespace DocClass
             dataGridViewClassificationResults.Rows.Clear();
             controller.ClearFileToClassification();
             FileInfo f = new FileInfo(path);
-            AddItemsToClassificationResults(new string[] { f.Name, "", "Podglad" }, f.FullName);
+            AddItemsToClassificationResults(new string[] { f.Name,f.Directory.Name ,"", "Podglad" }, f.FullName);
         }
 
         /// <summary>
@@ -821,6 +841,9 @@ namespace DocClass
             this.loadNetworkToolStripMenuItem.Enabled = false;
             this.loadToolStripMenuItem.Enabled = false;
 
+            this.buttonLearningStart1.Enabled = false;
+            this.buttonClassificationStart.Enabled = false;
+
             //this.tableLayoutPanel4.ColumnStyles[0].SizeType = SizeType.Percent;
             //this.tableLayoutPanel4.ColumnStyles[0].Width = 100;
             //this.tableLayoutPanel4.ColumnStyles[1].SizeType = SizeType.Percent;
@@ -850,6 +873,9 @@ namespace DocClass
             this.loadBayesToolStripMenuItem.Enabled = false;
             this.loadNetworkToolStripMenuItem.Enabled = false;
             this.loadToolStripMenuItem.Enabled = false;
+
+            this.buttonLearningStart1.Enabled = false;
+            this.buttonClassificationStart.Enabled = false;
 
             //this.tableLayoutPanel3.ColumnStyles[0].SizeType = SizeType.Percent;
             //this.tableLayoutPanel3.ColumnStyles[0].Width = 100;
@@ -884,6 +910,9 @@ namespace DocClass
             this.loadNetworkToolStripMenuItem.Enabled = true;
             this.loadToolStripMenuItem.Enabled = true;
 
+            this.buttonLearningStart1.Enabled = true;
+            this.buttonClassificationStart.Enabled = true;
+
             //menu (NA KONCU)
             SetMenuSaveClassificatorState();
         }
@@ -909,6 +938,9 @@ namespace DocClass
             this.loadNetworkToolStripMenuItem.Enabled = true;
             this.loadToolStripMenuItem.Enabled = true;
             this.SetMenuSaveClassificatorState();
+
+            this.buttonLearningStart1.Enabled = true;
+            this.buttonClassificationStart.Enabled = true;
         }
 
         private void SetFormStateAfterChangeClassificationType()
@@ -976,6 +1008,11 @@ namespace DocClass
         private void labelLearningNameNumberAllWords_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void descriptionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new AboutBox().ShowDialog();
         }
 
 

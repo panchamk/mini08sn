@@ -36,5 +36,25 @@ namespace DocClass.Src.GUI
             get { return this.progressBarPreprocessing.Maximum; }
             set { this.progressBarPreprocessing.Maximum = value; }
         }
+
+        private void PreprocessingForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelMain_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonEnd_Click(object sender, EventArgs e)
+        {
+            controller.StopPreprocessing();
+        }
+
+        private void PreprocessingForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            controller.StopPreprocessing();
+        }
     }
 }

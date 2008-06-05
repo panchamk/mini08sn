@@ -453,7 +453,7 @@ namespace DocClass
             this.radioButtonDocumentRepresentationBinary.Name = "radioButtonDocumentRepresentationBinary";
             this.radioButtonDocumentRepresentationBinary.Size = new System.Drawing.Size(55, 17);
             this.radioButtonDocumentRepresentationBinary.TabIndex = 2;
-            this.radioButtonDocumentRepresentationBinary.Text = "Binrna";
+            this.radioButtonDocumentRepresentationBinary.Text = "Binarna";
             this.radioButtonDocumentRepresentationBinary.UseVisualStyleBackColor = true;
             // 
             // radioButtonDocumentRepresentationOwn

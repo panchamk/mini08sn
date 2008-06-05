@@ -89,6 +89,7 @@ namespace DocClass
         {
             Settings.Default.clasificatorType = (int)ClasyficatorType.Bayes;
             SetFormStateAfterChangeClassificationType();
+            progressBarLearn.Style = ProgressBarStyle.Blocks;
 
         }
 
@@ -101,6 +102,7 @@ namespace DocClass
         {
             Settings.Default.clasificatorType = (int)ClasyficatorType.RadialNeural;
             SetFormStateAfterChangeClassificationType();
+            progressBarLearn.Style = ProgressBarStyle.Marquee;
         }
 
         /// <summary>
